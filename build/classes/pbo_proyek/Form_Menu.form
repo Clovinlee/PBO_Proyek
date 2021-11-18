@@ -390,7 +390,7 @@
               <Color blue="de" green="de" red="de" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="4"/>
-            <Property name="text" type="java.lang.String" value="&lt;Jabatan&gt;"/>
+            <Property name="text" type="java.lang.String" value="Manager"/>
           </Properties>
         </Component>
       </SubComponents>
