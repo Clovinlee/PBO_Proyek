@@ -296,7 +296,7 @@ public class Form_Menu extends javax.swing.JFrame {
         lbl_jabatan.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         lbl_jabatan.setForeground(new java.awt.Color(222, 222, 222));
         lbl_jabatan.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lbl_jabatan.setText("Manager");
+        lbl_jabatan.setText("<Jabatan>");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
