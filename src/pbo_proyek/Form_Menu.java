@@ -203,8 +203,6 @@ public class Form_Menu extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(222, 222, 222));
         jLabel3.setText("Enterprise Edition");
 
-        jSeparator1.setBackground(new java.awt.Color(255, 255, 255));
-
         javax.swing.GroupLayout pl_topbarLayout = new javax.swing.GroupLayout(pl_topbar);
         pl_topbar.setLayout(pl_topbarLayout);
         pl_topbarLayout.setHorizontalGroup(
@@ -293,7 +291,7 @@ public class Form_Menu extends javax.swing.JFrame {
         lbl_nama.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         lbl_nama.setForeground(new java.awt.Color(222, 222, 222));
         lbl_nama.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lbl_nama.setText("Welcome, Chrisanto");
+        lbl_nama.setText("Welcome, Kevin");
 
         lbl_jabatan.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         lbl_jabatan.setForeground(new java.awt.Color(222, 222, 222));
@@ -318,7 +316,7 @@ public class Form_Menu extends javax.swing.JFrame {
                 .addComponent(lbl_nama)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbl_jabatan)
-                .addContainerGap(9, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pl_menu.setBackground(new java.awt.Color(84, 84, 96));
