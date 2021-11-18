@@ -291,7 +291,7 @@ public class Form_Menu extends javax.swing.JFrame {
         lbl_nama.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         lbl_nama.setForeground(new java.awt.Color(222, 222, 222));
         lbl_nama.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lbl_nama.setText("Welcome, Kevin");
+        lbl_nama.setText("Welcome, Chrisanto");
 
         lbl_jabatan.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         lbl_jabatan.setForeground(new java.awt.Color(222, 222, 222));
