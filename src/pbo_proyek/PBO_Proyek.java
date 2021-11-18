@@ -19,7 +19,7 @@ public class PBO_Proyek {
     public static void main(String[] args) {
          Form_Login frm_login = new Form_Login();
          frm_login.setVisible(true);
-         System.out.println("DEBUG TESTING");
+         System.out.println("DEBUGGING TESTING");
 //         Form_Menu frm_menu = new Form_Menu();
 //         frm_menu.setVisible(true);
 //         TestForm frm_test = new TestForm();
