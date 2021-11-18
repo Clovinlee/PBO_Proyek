@@ -378,7 +378,7 @@
               <Color blue="de" green="de" red="de" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="4"/>
-            <Property name="text" type="java.lang.String" value="Welcome, Chrisanto"/>
+            <Property name="text" type="java.lang.String" value="Welcome, &lt;USER&gt;"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lbl_jabatan">
