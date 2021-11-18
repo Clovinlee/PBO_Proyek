@@ -1,6 +1,7 @@
 nbproject/
 dist/
 build/
+lib/
 *.xml
 *.mf
 nbproject/private/private.xml
