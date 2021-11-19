@@ -22,6 +22,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
+import java.util.ArrayList;
+
 /**
  *
  * @author chris
@@ -44,7 +46,6 @@ public class Form_Menu extends javax.swing.JFrame {
     public Form_Menu() {
         initComponents();
         initSubForm();
-        DB.init();
         // logo = originalImage.getScaledInstance(jPanel1.getWidth(),jPanel1.getHeight(),Image.SCALE_SMOOTH);
         BufferedImage bi;
         // InputStream is = Form_Login.class.getResourceAsStream("Resources/Font Awesome 5 Free-Solid-900.otf");
@@ -55,18 +56,47 @@ public class Form_Menu extends javax.swing.JFrame {
             logo = bi.getScaledInstance(lb_logo.getWidth()*50/100,lb_logo.getHeight(),Image.SCALE_SMOOTH);
             ImageIcon ic = new ImageIcon(logo);
             lb_logo.setIcon(ic);
-            System.out.println(logo);
             
         } catch (Exception e) {
             System.out.println(e);
         }
-        prev_btn = btn_stock;
+    }
+    
+    public void restartForm(User usr){
+        prev_btn = btn_transaction;
         pl_menu.setLayout(new BorderLayout());
         buttonPress(btn_stock);
+        
+        this.user_login = usr;
+        lbl_nama.setText("Welcome, "+user_login.getNama());
+        jabatan = (DB.query("SELECT nama_jabatan FROM jabatan WHERE id = "+user_login.getFk_jabatan())).get(0)[0];
+        lbl_jabatan.setText(jabatan);
+        
+        btn_laporan.setVisible(jabatan.equalsIgnoreCase("Manager"));
+        btn_account.setVisible(jabatan.equalsIgnoreCase("Manager"));
     }
     
     public Form_Login getFrm_login() {
         return frm_login;
+    }
+    
+    User user_login;
+    String jabatan;
+    
+    public User getUser_login() {
+        return user_login;
+    }
+    
+    public void setUser_login(User user_login) {
+        this.user_login = user_login;
+    }
+    
+    public String getJabatan() {
+        return jabatan;
+    }
+    
+    public void setJabatan(String jabatan) {
+        this.jabatan = jabatan;
     }
     
     public void setFrm_login(Form_Login frm_login) {
@@ -92,7 +122,7 @@ public class Form_Menu extends javax.swing.JFrame {
         pl_leftbar = new java.awt.Panel();
         btn_stock = new javax.swing.JButton();
         btn_account = new javax.swing.JButton();
-        btn_history = new javax.swing.JButton();
+        btn_laporan = new javax.swing.JButton();
         btn_transaction = new javax.swing.JButton();
         lb_logo = new javax.swing.JLabel();
         pl_topbar = new java.awt.Panel();
@@ -106,16 +136,21 @@ public class Form_Menu extends javax.swing.JFrame {
         lbl_jabatan = new javax.swing.JLabel();
         pl_menu = new javax.swing.JPanel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentResized(java.awt.event.ComponentEvent evt) {
                 formComponentResized(evt);
             }
         });
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         pl_leftbar.setBackground(new java.awt.Color(41, 40, 48));
 
-        btn_stock.setBackground(new java.awt.Color(73, 72, 84));
+        btn_stock.setBackground(new java.awt.Color(41, 40, 48));
         btn_stock.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btn_stock.setForeground(new java.awt.Color(222, 222, 222));
         btn_stock.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pbo_proyek/Images/box-solid.png"))); // NOI18N
@@ -151,21 +186,21 @@ public class Form_Menu extends javax.swing.JFrame {
             }
         });
 
-        btn_history.setBackground(new java.awt.Color(41, 40, 48));
-        btn_history.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        btn_history.setForeground(new java.awt.Color(222, 222, 222));
-        btn_history.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pbo_proyek/Images/file-invoice-solid.png"))); // NOI18N
-        btn_history.setText("Laporan");
-        btn_history.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 15, 1, 1));
-        btn_history.setBorderPainted(false);
-        btn_history.setDefaultCapable(false);
-        btn_history.setFocusPainted(false);
-        btn_history.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btn_history.setIconTextGap(20);
-        btn_history.setName("2"); // NOI18N
-        btn_history.addActionListener(new java.awt.event.ActionListener() {
+        btn_laporan.setBackground(new java.awt.Color(41, 40, 48));
+        btn_laporan.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        btn_laporan.setForeground(new java.awt.Color(222, 222, 222));
+        btn_laporan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pbo_proyek/Images/file-invoice-solid.png"))); // NOI18N
+        btn_laporan.setText("Laporan");
+        btn_laporan.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 15, 1, 1));
+        btn_laporan.setBorderPainted(false);
+        btn_laporan.setDefaultCapable(false);
+        btn_laporan.setFocusPainted(false);
+        btn_laporan.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btn_laporan.setIconTextGap(20);
+        btn_laporan.setName("2"); // NOI18N
+        btn_laporan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_historyActionPerformed(evt);
+                btn_laporanActionPerformed(evt);
             }
         });
 
@@ -225,7 +260,8 @@ public class Form_Menu extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14))
         );
 
         btn_toggle.setBackground(new java.awt.Color(41, 40, 48));
@@ -253,7 +289,7 @@ public class Form_Menu extends javax.swing.JFrame {
             .addComponent(btn_stock, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btn_account, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btn_transaction, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btn_history, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btn_laporan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(pl_leftbarLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pl_leftbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -267,7 +303,7 @@ public class Form_Menu extends javax.swing.JFrame {
         pl_leftbarLayout.setVerticalGroup(
             pl_leftbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pl_leftbarLayout.createSequentialGroup()
-                .addGap(0, 33, Short.MAX_VALUE)
+                .addGap(33, 33, 33)
                 .addComponent(lb_logo, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(pl_topbar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -276,15 +312,15 @@ public class Form_Menu extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_transaction, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_history, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btn_laporan, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_account, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_toggle)
-                .addContainerGap(109, Short.MAX_VALUE))
+                .addContainerGap(111, Short.MAX_VALUE))
         );
 
-        pl_leftbarLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btn_account, btn_history, btn_stock, btn_transaction});
+        pl_leftbarLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btn_account, btn_laporan, btn_stock, btn_transaction});
 
         jPanel1.setBackground(new java.awt.Color(41, 40, 48));
 
@@ -374,9 +410,9 @@ public class Form_Menu extends javax.swing.JFrame {
         buttonPress((JButton)evt.getSource());
     }//GEN-LAST:event_btn_transactionActionPerformed
 
-    private void btn_historyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_historyActionPerformed
+    private void btn_laporanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_laporanActionPerformed
         buttonPress((JButton)evt.getSource());
-    }//GEN-LAST:event_btn_historyActionPerformed
+    }//GEN-LAST:event_btn_laporanActionPerformed
 
     private void btn_accountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_accountActionPerformed
         buttonPress((JButton)evt.getSource());
@@ -392,6 +428,11 @@ public class Form_Menu extends javax.swing.JFrame {
     
     //60 244
     private void btn_toggleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_toggleActionPerformed
+        panelToggle();
+        
+    }//GEN-LAST:event_btn_toggleActionPerformed
+    
+    public void panelToggle(){
         lb_logo.setVisible(!lb_logo.isVisible());
         pl_topbar.setVisible(!pl_topbar.isVisible());
         
@@ -402,8 +443,17 @@ public class Form_Menu extends javax.swing.JFrame {
         }else{
             pl_leftbar.setPreferredSize(new Dimension(60,h));
         }
-        
-    }//GEN-LAST:event_btn_toggleActionPerformed
+    }
+    
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        frm_login.setVisible(true);
+        prev_btn.setBackground(Palette.getDark1());
+        if(pl_leftbar.getWidth() <= 60){
+            panelToggle();
+        }
+        this.setVisible(false);
+    }//GEN-LAST:event_formWindowClosing
     
     
     /**
@@ -443,7 +493,7 @@ public class Form_Menu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_account;
-    private javax.swing.JButton btn_history;
+    private javax.swing.JButton btn_laporan;
     private javax.swing.JButton btn_stock;
     private javax.swing.JButton btn_toggle;
     private javax.swing.JButton btn_transaction;

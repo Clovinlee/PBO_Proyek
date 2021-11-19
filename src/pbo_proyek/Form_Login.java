@@ -10,6 +10,13 @@ import javax.swing.JOptionPane;
 
 import ExternalCode.ComponentResizer;
 import java.awt.Dimension;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -26,7 +33,10 @@ public class Form_Login extends javax.swing.JFrame {
         ComponentResizer cr = new ComponentResizer();
         cr.registerComponent(this);
         cr.setMinimumSize(new Dimension(669, 377));
+        btn_login.requestFocus();
     }
+    
+    Form_Menu frm_menu;
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -329,7 +339,7 @@ public class Form_Login extends javax.swing.JFrame {
             tb_username.setForeground(Palette.getDarkGrey1());
         }
     }//GEN-LAST:event_tb_usernameFocusLost
-
+    
     private void tb_passwordFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tb_passwordFocusGained
         String pw = new String(tb_password.getPassword());
         if(pw.equals("Password ")){
@@ -347,18 +357,51 @@ public class Form_Login extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tb_passwordFocusLost
 
-    private void btn_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loginActionPerformed
-        // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null, "yey");
-        Form_Menu frm_menu = new Form_Menu();
-        frm_menu.setVisible(true);
-        frm_menu.setFrm_login(this);
-        this.setVisible(false);
-        tb_password.setText("Password ");
-        tb_password.setForeground(Palette.getDarkGrey1());
+    public void resetInput(){
         tb_username.setText("Username ");
         tb_username.setForeground(Palette.getDarkGrey1());
+        tb_password.setText("Password ");
+        tb_password.setForeground(Palette.getDarkGrey1());
+        btn_login.requestFocus();
+    }
+    
+    private void btn_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loginActionPerformed
+        // TODO add your handling code here:
+        User u = getUserFromDB();
+        if(u == null){
+            JOptionPane.showMessageDialog(null, "Username / Password salah", "Erorr Login", JOptionPane.ERROR_MESSAGE);
+        }else{
+            if(frm_menu == null){
+                frm_menu = new Form_Menu();
+                frm_menu.setFrm_login(this);
+            }
+            frm_menu.restartForm(u);
+            frm_menu.setVisible(true);
+            this.setVisible(false);
+            resetInput();
+        }
     }//GEN-LAST:event_btn_loginActionPerformed
+    
+    public User getUserFromDB(){
+        User u = null;
+        
+        ArrayList<String[]> s = new ArrayList<>();
+        s = DB.query("select * from karyawan where username = ? AND password = ?", new Object[] {tb_username.getText(),String.valueOf(tb_password.getPassword())});
+        if(!s.isEmpty()){
+            // User(String id, String kode, String nama, String gender, String alamat, Date tanggal_lahir, String status)
+            
+            Date dt = null;
+            int x = 0;
+            
+            try {
+                dt = new SimpleDateFormat("dd-MM-yyyy").parse(s.get(x)[6]);
+            } catch (ParseException ex) {}
+            
+            u = new User(s.get(x)[0], s.get(x)[1], s.get(x)[2], s.get(x)[3], s.get(x)[4], s.get(x)[5], dt, s.get(x)[7],s.get(x)[8],s.get(x)[9]);
+        }
+        
+        return u;
+    }
     
     private int x,y;
     private void pl_titlebarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pl_titlebarMousePressed

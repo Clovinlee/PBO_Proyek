@@ -45,7 +45,7 @@ public class DB {
             try {
                 Statement s = DB.c.createStatement();
                 //DataSet
-                ResultSet rs = s.executeQuery(sql);
+               ResultSet rs = s.executeQuery(sql);
                 
                 ResultSetMetaData md = rs.getMetaData();
                 int totalColumn = md.getColumnCount();
@@ -54,7 +54,7 @@ public class DB {
                     //Idx mulai dari 1 sampe n
                     String[] temp = new String[totalColumn];
                     for(int i = 1; i <= totalColumn; i++){
-                        temp[i-1] = String.valueOf(rs.getObject(i));
+                         temp[i-1] = String.valueOf(rs.getObject(i));
                     }
                     resultData.add(temp);
                 }
