@@ -45,6 +45,7 @@ public class Form_Menu extends javax.swing.JFrame {
     
     public Form_Menu() {
         initComponents();
+        interruptor.setVisible(false);
         initSubForm();
         // logo = originalImage.getScaledInstance(jPanel1.getWidth(),jPanel1.getHeight(),Image.SCALE_SMOOTH);
         BufferedImage bi;
@@ -60,7 +61,11 @@ public class Form_Menu extends javax.swing.JFrame {
         } catch (Exception e) {
             System.out.println(e);
         }
+        interruptor_default = interruptor.getSize();
+        this.setMinimumSize(new Dimension(1030,612));
     }
+    
+    Dimension interruptor_default;
     
     public void restartForm(User usr){
         prev_btn = btn_transaction;
@@ -74,6 +79,15 @@ public class Form_Menu extends javax.swing.JFrame {
         
         btn_laporan.setVisible(jabatan.equalsIgnoreCase("Manager"));
         btn_account.setVisible(jabatan.equalsIgnoreCase("Manager"));
+        
+        if(!jabatan.equalsIgnoreCase("Manager")){
+            interruptor.setSize(interruptor.getWidth(),interruptor.getHeight()+50);
+        }else{
+            interruptor.setSize(interruptor_default);
+        }
+        this.setSize(this.getMinimumSize());
+        this.setExtendedState(this.NORMAL);
+        this.setLocationRelativeTo(null);
     }
     
     public Form_Login getFrm_login() {
@@ -131,6 +145,7 @@ public class Form_Menu extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         btn_toggle = new javax.swing.JButton();
+        interruptor = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         lbl_nama = new javax.swing.JLabel();
         lbl_jabatan = new javax.swing.JLabel();
@@ -253,7 +268,7 @@ public class Form_Menu extends javax.swing.JFrame {
         pl_topbarLayout.setVerticalGroup(
             pl_topbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pl_topbarLayout.createSequentialGroup()
-                .addContainerGap(14, Short.MAX_VALUE)
+                .addGap(14, 14, 14)
                 .addComponent(jLabel1)
                 .addGap(0, 0, 0)
                 .addGroup(pl_topbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -282,6 +297,8 @@ public class Form_Menu extends javax.swing.JFrame {
             }
         });
 
+        interruptor.setEnabled(false);
+
         javax.swing.GroupLayout pl_leftbarLayout = new javax.swing.GroupLayout(pl_leftbar);
         pl_leftbar.setLayout(pl_leftbarLayout);
         pl_leftbarLayout.setHorizontalGroup(
@@ -293,8 +310,9 @@ public class Form_Menu extends javax.swing.JFrame {
             .addGroup(pl_leftbarLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pl_leftbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lb_logo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(interruptor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(pl_topbar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lb_logo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pl_leftbarLayout.createSequentialGroup()
                         .addComponent(btn_toggle)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -303,11 +321,13 @@ public class Form_Menu extends javax.swing.JFrame {
         pl_leftbarLayout.setVerticalGroup(
             pl_leftbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pl_leftbarLayout.createSequentialGroup()
-                .addGap(33, 33, 33)
+                .addContainerGap()
+                .addComponent(interruptor, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lb_logo, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pl_topbar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(2, 2, 2)
                 .addComponent(btn_stock, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_transaction, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -317,7 +337,7 @@ public class Form_Menu extends javax.swing.JFrame {
                 .addComponent(btn_account, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_toggle)
-                .addContainerGap(111, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pl_leftbarLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btn_account, btn_laporan, btn_stock, btn_transaction});
@@ -338,21 +358,21 @@ public class Form_Menu extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(283, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lbl_nama, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
-                    .addComponent(lbl_jabatan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lbl_nama, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lbl_jabatan, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
+                .addContainerGap()
                 .addComponent(lbl_nama)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbl_jabatan)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
 
         pl_menu.setBackground(new java.awt.Color(84, 84, 96));
@@ -361,11 +381,11 @@ public class Form_Menu extends javax.swing.JFrame {
         pl_menu.setLayout(pl_menuLayout);
         pl_menuLayout.setHorizontalGroup(
             pl_menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 828, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         pl_menuLayout.setVerticalGroup(
             pl_menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 585, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -374,18 +394,19 @@ public class Form_Menu extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(pl_leftbar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pl_menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, 0)
+                        .addComponent(pl_menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-            .addComponent(pl_leftbar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(pl_menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(pl_leftbar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -420,9 +441,9 @@ public class Form_Menu extends javax.swing.JFrame {
 
     private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
         // TODO add your handling code here:
-//        JPanel pl_show = (JPanel)pl_menu.getComponent(0);
-//        pl_show.setSize(pl_menu.getSize());
-//        pl_menu.validate();
+        // JPanel pl_show = (JPanel)pl_menu.getComponent(0);
+        // pl_show.setSize(pl_menu.getSize());
+        // pl_menu.validate();
     }//GEN-LAST:event_formComponentResized
     
     
@@ -440,8 +461,10 @@ public class Form_Menu extends javax.swing.JFrame {
         
         if(pl_leftbar.getWidth() <= 60){
             pl_leftbar.setPreferredSize(new Dimension(244,h));
+            interruptor.setVisible(false);
         }else{
             pl_leftbar.setPreferredSize(new Dimension(60,h));
+            interruptor.setVisible(true);
         }
     }
     
@@ -497,6 +520,7 @@ public class Form_Menu extends javax.swing.JFrame {
     private javax.swing.JButton btn_stock;
     private javax.swing.JButton btn_toggle;
     private javax.swing.JButton btn_transaction;
+    private javax.swing.JLabel interruptor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

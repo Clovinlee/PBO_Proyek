@@ -356,13 +356,19 @@ public class Form_Login extends javax.swing.JFrame {
             tb_password.setForeground(Palette.getDarkGrey1());
         }
     }//GEN-LAST:event_tb_passwordFocusLost
-
-    public void resetInput(){
+    
+    public void resetForm(){
         tb_username.setText("Username ");
         tb_username.setForeground(Palette.getDarkGrey1());
         tb_password.setText("Password ");
         tb_password.setForeground(Palette.getDarkGrey1());
         btn_login.requestFocus();
+        
+        this.setSize(this.getMinimumSize());
+        this.setExtendedState(this.NORMAL);
+        lbl_maximize.setIcon(new ImageIcon(getClass().getResource("Images/window-maximize-solid.png")));
+        
+        this.setLocationRelativeTo(null);
     }
     
     private void btn_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loginActionPerformed
@@ -378,7 +384,7 @@ public class Form_Login extends javax.swing.JFrame {
             frm_menu.restartForm(u);
             frm_menu.setVisible(true);
             this.setVisible(false);
-            resetInput();
+            resetForm();
         }
     }//GEN-LAST:event_btn_loginActionPerformed
     
