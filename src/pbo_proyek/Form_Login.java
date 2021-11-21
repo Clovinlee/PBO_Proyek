@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import ExternalCode.ComponentResizer;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.UIManager;
 
 /**
  *
@@ -34,6 +36,9 @@ public class Form_Login extends javax.swing.JFrame {
         cr.registerComponent(this);
         cr.setMinimumSize(new Dimension(669, 377));
         btn_login.requestFocus();
+        try{
+        }catch(Exception ex){
+        }
     }
     
     Form_Menu frm_menu;
@@ -115,8 +120,10 @@ public class Form_Login extends javax.swing.JFrame {
         btn_login.setForeground(new java.awt.Color(222, 222, 222));
         btn_login.setText("Login");
         btn_login.setBorder(null);
+        btn_login.setContentAreaFilled(false);
         btn_login.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn_login.setFocusPainted(false);
+        btn_login.setOpaque(true);
         btn_login.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_loginActionPerformed(evt);
@@ -207,10 +214,10 @@ public class Form_Login extends javax.swing.JFrame {
             pl_titlebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pl_titlebarLayout.createSequentialGroup()
                 .addGroup(pl_titlebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pl_titlebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(lbl_maximize)
-                        .addGroup(pl_titlebarLayout.createSequentialGroup()
-                            .addGap(3, 3, 3)
+                    .addGroup(pl_titlebarLayout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addGroup(pl_titlebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lbl_maximize)
                             .addComponent(lbl_close)))
                     .addComponent(lbl_minimize))
                 .addGap(0, 11, Short.MAX_VALUE))
@@ -375,16 +382,21 @@ public class Form_Login extends javax.swing.JFrame {
         // TODO add your handling code here:
         User u = getUserFromDB();
         if(u == null){
-            JOptionPane.showMessageDialog(null, "Username / Password salah", "Erorr Login", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Username / Password salah", "Error Login", JOptionPane.ERROR_MESSAGE);
         }else{
-            if(frm_menu == null){
-                frm_menu = new Form_Menu();
-                frm_menu.setFrm_login(this);
+            if(u.getFk_jabatan().equalsIgnoreCase("1") || u.getFk_jabatan().equalsIgnoreCase("2")){
+                if(frm_menu == null){
+                    frm_menu = new Form_Menu();
+                    frm_menu.setFrm_login(this);
+                }
+                frm_menu.restartForm(u);
+                frm_menu.setVisible(true);
+                this.setVisible(false);
+                resetForm();
+            }else{
+                JOptionPane.showMessageDialog(null, "Insufficient Privileges. Hanya untuk Manajer / Inventaris!", "Error Login", JOptionPane.ERROR_MESSAGE);
             }
-            frm_menu.restartForm(u);
-            frm_menu.setVisible(true);
-            this.setVisible(false);
-            resetForm();
+            
         }
     }//GEN-LAST:event_btn_loginActionPerformed
     

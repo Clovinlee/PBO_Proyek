@@ -5,7 +5,26 @@
 */
 package pbo_proyek;
 
+import ExternalCode.JTableEdit;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Font;
+import javax.swing.BorderFactory;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.ListCellRenderer;
+import javax.swing.UIManager;
+import javax.swing.plaf.ColorUIResource;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -17,11 +36,40 @@ public class Form_Account extends javax.swing.JFrame {
      * Creates new form Form_Account
      */
     public Form_Account() {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            UIManager.put("ComboBox.selectionBackground",new ColorUIResource(Palette.getTableDark1()));
+        } catch (Exception e) {
+        }
         initComponents();
+        styleDgv();
+        
+        tb_kode.setBackground(Palette.getTableDark1());
+        tb_nama.setBackground(Palette.getTableDark1());
+        tb_username.setBackground(Palette.getTableDark1());
+        
     }
     public JPanel getPl() {
         return pl;
     }
+    
+    public void styleDgv(){
+        JTableHeader header = dgv_account.getTableHeader();
+        jScrollPane1.getViewport().setBackground(Palette.getDark4());
+        
+        
+        header.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        header.setOpaque(false);
+        
+        JTableEdit.setJTableColumnsWidth(dgv_account, 375, 10,20,40,15,15);
+        
+        jScrollPane1.setBorder(BorderFactory.createEmptyBorder());
+        dgv_account.getTableHeader().setBackground(Palette.getDark1());
+        dgv_account.getTableHeader().setForeground(Palette.getSilver1());
+        
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -32,35 +80,208 @@ public class Form_Account extends javax.swing.JFrame {
     private void initComponents() {
 
         pl = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        dgv_account = new javax.swing.JTable();
+        btn_detail = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        tb_kode = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        tb_nama = new javax.swing.JTextField();
+        tb_username = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        cb_gender = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        pl.setBackground(new java.awt.Color(255, 102, 102));
+        pl.setBackground(new java.awt.Color(84, 84, 96));
+
+        dgv_account.setBackground(new java.awt.Color(58, 58, 58));
+        dgv_account.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        dgv_account.setForeground(new java.awt.Color(222, 222, 222));
+        dgv_account.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {"1", "CABE0001", "Caca Bernerd", "cacab", "Perempuan"},
+                {"2", "BEBE0002", "Belinda Bergusawada", "bebeca", "Laki - Laki"},
+                {"3", "KAKA0001", "Kalvin Kawasaki Nintendo Bugisoka", "kal", "Laki - Laki"}
+            },
+            new String [] {
+                "No", "Kode", "Nama", "Username", "Gender"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        dgv_account.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
+        dgv_account.setGridColor(new java.awt.Color(255, 255, 255));
+        dgv_account.setOpaque(false);
+        dgv_account.setRowHeight(25);
+        dgv_account.setSelectionBackground(new java.awt.Color(90, 90, 90));
+        dgv_account.setSelectionForeground(new java.awt.Color(222, 222, 222));
+        dgv_account.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        dgv_account.setShowVerticalLines(false);
+        dgv_account.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(dgv_account);
+        if (dgv_account.getColumnModel().getColumnCount() > 0) {
+            dgv_account.getColumnModel().getColumn(0).setResizable(false);
+            dgv_account.getColumnModel().getColumn(1).setResizable(false);
+            dgv_account.getColumnModel().getColumn(2).setResizable(false);
+            dgv_account.getColumnModel().getColumn(3).setResizable(false);
+        }
+
+        btn_detail.setBackground(new java.awt.Color(58, 58, 58));
+        btn_detail.setFont(new java.awt.Font("Yu Gothic UI", 1, 16)); // NOI18N
+        btn_detail.setForeground(new java.awt.Color(222, 222, 222));
+        btn_detail.setText("Details");
+        btn_detail.setBorder(null);
+        btn_detail.setContentAreaFilled(false);
+        btn_detail.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_detail.setFocusPainted(false);
+        btn_detail.setOpaque(true);
+        btn_detail.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_detailMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btn_detailMouseExited(evt);
+            }
+        });
+        btn_detail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_detailActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(222, 222, 222));
+        jLabel1.setText("Gender");
+
+        tb_kode.setBackground(new java.awt.Color(58, 58, 58));
+        tb_kode.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        tb_kode.setForeground(new java.awt.Color(222, 222, 222));
+        tb_kode.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        tb_kode.setCaretColor(new java.awt.Color(222, 222, 222));
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(222, 222, 222));
+        jLabel2.setText("Kode");
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(222, 222, 222));
+        jLabel3.setText("Nama");
+
+        tb_nama.setBackground(new java.awt.Color(58, 58, 58));
+        tb_nama.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        tb_nama.setForeground(new java.awt.Color(222, 222, 222));
+        tb_nama.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        tb_nama.setCaretColor(new java.awt.Color(222, 222, 222));
+
+        tb_username.setBackground(new java.awt.Color(58, 58, 58));
+        tb_username.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        tb_username.setForeground(new java.awt.Color(222, 222, 222));
+        tb_username.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        tb_username.setCaretColor(new java.awt.Color(222, 222, 222));
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(222, 222, 222));
+        jLabel4.setText("Username");
+
+        cb_gender.setBackground(new java.awt.Color(222, 222, 222));
+        cb_gender.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        cb_gender.setForeground(new java.awt.Color(58, 58, 58));
+        cb_gender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Semua", "Laki - Laki", "Perempuan" }));
+        cb_gender.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        cb_gender.setOpaque(false);
 
         javax.swing.GroupLayout plLayout = new javax.swing.GroupLayout(pl);
         pl.setLayout(plLayout);
         plLayout.setHorizontalGroup(
             plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 675, Short.MAX_VALUE)
+            .addGroup(plLayout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(plLayout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addGap(19, 19, 19))
+                    .addGroup(plLayout.createSequentialGroup()
+                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tb_kode, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
+                        .addGap(18, 18, 18)
+                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(tb_username, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tb_nama, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
+                        .addGap(18, 18, 18)
+                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(cb_gender, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 104, Short.MAX_VALUE))
+                    .addGroup(plLayout.createSequentialGroup()
+                        .addComponent(btn_detail, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         plLayout.setVerticalGroup(
             plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 443, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, plLayout.createSequentialGroup()
+                .addContainerGap(8, Short.MAX_VALUE)
+                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4))
+                .addGap(8, 8, 8)
+                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tb_kode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tb_nama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tb_username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cb_gender, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16)
+                .addComponent(btn_detail, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(73, 73, 73))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(pl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(pl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_detailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_detailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_detailActionPerformed
+
+    private void btn_detailMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_detailMouseEntered
+        // TODO add your handling code here:
+        btn_detail.setBackground(new Color(72,72,72));
+    }//GEN-LAST:event_btn_detailMouseEntered
+
+    private void btn_detailMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_detailMouseExited
+        // TODO add your handling code here:
+        btn_detail.setBackground(Palette.getTableDark1());
+    }//GEN-LAST:event_btn_detailMouseExited
     
     /**
      * @param args the command line arguments
@@ -88,7 +309,6 @@ public class Form_Account extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Form_Account.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -98,6 +318,17 @@ public class Form_Account extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_detail;
+    private javax.swing.JComboBox<String> cb_gender;
+    private javax.swing.JTable dgv_account;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel pl;
+    private javax.swing.JTextField tb_kode;
+    private javax.swing.JTextField tb_nama;
+    private javax.swing.JTextField tb_username;
     // End of variables declaration//GEN-END:variables
 }

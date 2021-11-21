@@ -35,6 +35,15 @@ public class User {
         this.alamat = alamat;
         this.status = status;
         this.fk_jabatan = fk_jabatan;
+        this.nama_jabatan = DB.query("SELECT nama_jabatan from jabatan where id = "+fk_jabatan).get(0)[0];
+    }
+
+    public String getNama_jabatan() {
+        return nama_jabatan;
+    }
+
+    public void setNama_jabatan(String nama_jabatan) {
+        this.nama_jabatan = nama_jabatan;
     }
 
     public String getId() {

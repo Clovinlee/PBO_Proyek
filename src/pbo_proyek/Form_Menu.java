@@ -6,6 +6,7 @@
 package pbo_proyek;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
@@ -23,6 +24,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -57,7 +59,6 @@ public class Form_Menu extends javax.swing.JFrame {
             logo = bi.getScaledInstance(lb_logo.getWidth()*50/100,lb_logo.getHeight(),Image.SCALE_SMOOTH);
             ImageIcon ic = new ImageIcon(logo);
             lb_logo.setIcon(ic);
-            
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -74,13 +75,12 @@ public class Form_Menu extends javax.swing.JFrame {
         
         this.user_login = usr;
         lbl_nama.setText("Welcome, "+user_login.getNama());
-        jabatan = (DB.query("SELECT nama_jabatan FROM jabatan WHERE id = "+user_login.getFk_jabatan())).get(0)[0];
-        lbl_jabatan.setText(jabatan);
+        lbl_jabatan.setText(usr.getNama_jabatan());
         
-        btn_laporan.setVisible(jabatan.equalsIgnoreCase("Manager"));
-        btn_account.setVisible(jabatan.equalsIgnoreCase("Manager"));
+        btn_laporan.setVisible(usr.getNama_jabatan().equalsIgnoreCase("Manager"));
+        btn_account.setVisible(usr.getNama_jabatan().equalsIgnoreCase("Manager"));
         
-        if(!jabatan.equalsIgnoreCase("Manager")){
+        if(!usr.getNama_jabatan().equalsIgnoreCase("Manager")){
             interruptor.setSize(interruptor.getWidth(),interruptor.getHeight()+50);
         }else{
             interruptor.setSize(interruptor_default);
@@ -95,7 +95,6 @@ public class Form_Menu extends javax.swing.JFrame {
     }
     
     User user_login;
-    String jabatan;
     
     public User getUser_login() {
         return user_login;
@@ -104,15 +103,7 @@ public class Form_Menu extends javax.swing.JFrame {
     public void setUser_login(User user_login) {
         this.user_login = user_login;
     }
-    
-    public String getJabatan() {
-        return jabatan;
-    }
-    
-    public void setJabatan(String jabatan) {
-        this.jabatan = jabatan;
-    }
-    
+
     public void setFrm_login(Form_Login frm_login) {
         this.frm_login = frm_login;
     }
@@ -177,6 +168,14 @@ public class Form_Menu extends javax.swing.JFrame {
         btn_stock.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btn_stock.setIconTextGap(20);
         btn_stock.setName("0"); // NOI18N
+        btn_stock.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_laporanMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btn_laporanMouseExited(evt);
+            }
+        });
         btn_stock.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_stockActionPerformed(evt);
@@ -195,6 +194,14 @@ public class Form_Menu extends javax.swing.JFrame {
         btn_account.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btn_account.setIconTextGap(20);
         btn_account.setName("3"); // NOI18N
+        btn_account.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_laporanMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btn_laporanMouseExited(evt);
+            }
+        });
         btn_account.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_accountActionPerformed(evt);
@@ -213,6 +220,14 @@ public class Form_Menu extends javax.swing.JFrame {
         btn_laporan.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btn_laporan.setIconTextGap(20);
         btn_laporan.setName("2"); // NOI18N
+        btn_laporan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_laporanMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btn_laporanMouseExited(evt);
+            }
+        });
         btn_laporan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_laporanActionPerformed(evt);
@@ -231,6 +246,14 @@ public class Form_Menu extends javax.swing.JFrame {
         btn_transaction.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btn_transaction.setIconTextGap(20);
         btn_transaction.setName("1"); // NOI18N
+        btn_transaction.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_laporanMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btn_laporanMouseExited(evt);
+            }
+        });
         btn_transaction.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_transactionActionPerformed(evt);
@@ -329,11 +352,11 @@ public class Form_Menu extends javax.swing.JFrame {
                 .addComponent(pl_topbar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(2, 2, 2)
                 .addComponent(btn_stock, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
                 .addComponent(btn_transaction, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
                 .addComponent(btn_laporan, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
                 .addComponent(btn_account, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_toggle)
@@ -358,11 +381,14 @@ public class Form_Menu extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(283, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lbl_nama, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lbl_jabatan, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lbl_nama, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(411, Short.MAX_VALUE)
+                        .addComponent(lbl_jabatan, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -396,9 +422,7 @@ public class Form_Menu extends javax.swing.JFrame {
                 .addComponent(pl_leftbar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, 0)
-                        .addComponent(pl_menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addComponent(pl_menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -420,6 +444,7 @@ public class Form_Menu extends javax.swing.JFrame {
         pl_menu.removeAll();
         pl_menu.revalidate();
         pl_menu.repaint();
+        listPanel.get(Integer.parseInt(own.getName())).setSize(pl_menu.getSize());
         pl_menu.add(listPanel.get(Integer.parseInt(own.getName())),BorderLayout.CENTER);
     }
     
@@ -477,6 +502,22 @@ public class Form_Menu extends javax.swing.JFrame {
         }
         this.setVisible(false);
     }//GEN-LAST:event_formWindowClosing
+
+    private void btn_laporanMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_laporanMouseEntered
+        // TODO add your handling code here:
+        JButton own = (JButton)evt.getSource();
+        if(own != prev_btn){
+            own.setBackground(new Color(50,49,59));
+        }
+    }//GEN-LAST:event_btn_laporanMouseEntered
+
+    private void btn_laporanMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_laporanMouseExited
+        // TODO add your handling code here:
+        JButton own = (JButton)evt.getSource();
+        if(own != prev_btn){
+            own.setBackground(Palette.getDark1());
+        }
+    }//GEN-LAST:event_btn_laporanMouseExited
     
     
     /**
