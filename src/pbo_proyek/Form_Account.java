@@ -7,24 +7,12 @@ package pbo_proyek;
 
 import ExternalCode.JTableEdit;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Font;
 import javax.swing.BorderFactory;
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.ListCellRenderer;
 import javax.swing.UIManager;
 import javax.swing.plaf.ColorUIResource;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -66,8 +54,6 @@ public class Form_Account extends javax.swing.JFrame {
         jScrollPane1.setBorder(BorderFactory.createEmptyBorder());
         dgv_account.getTableHeader().setBackground(Palette.getDark1());
         dgv_account.getTableHeader().setForeground(Palette.getSilver1());
-        
-        
     }
     
     /**
@@ -231,8 +217,8 @@ public class Form_Account extends javax.swing.JFrame {
         );
         plLayout.setVerticalGroup(
             plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, plLayout.createSequentialGroup()
-                .addContainerGap(8, Short.MAX_VALUE)
+            .addGroup(plLayout.createSequentialGroup()
+                .addGap(8, 8, 8)
                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
