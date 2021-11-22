@@ -12,11 +12,14 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
 /**
@@ -34,7 +37,7 @@ public class Form_Stock extends javax.swing.JFrame {
         }
         initComponents();
         styleDgv();
-        
+        loadDgv();
     }
     
     public JPanel getPl() {
@@ -60,10 +63,90 @@ public class Form_Stock extends javax.swing.JFrame {
         cellRenderer.setHorizontalAlignment(JLabel.CENTER);
         dgv_barang.getColumnModel().getColumn(0).setCellRenderer(cellRenderer);
     }
-   
-
-   
-    
+        DefaultTableModel tbl;
+        ArrayList<String[]> listStok;
+        ArrayList<String[]> listJenis;
+    public void loadDgv(){
+        
+        listStok = DB.query("SELECT * FROM barang where status = 1");
+        tbl = new DefaultTableModel(new Object[] {"No","Kode","Nama","Stok","Harga","Jenis"}, 0);
+        dgv_barang.setDefaultEditor(Object.class, null);
+        listJenis = DB.query("SELECT * FROM JENIS_BARANG");
+        
+        for (String[] s :listJenis) {
+            cb_jenisbarang.addItem(s[1]);
+        }
+        
+        int ctr = 1;
+        String jenis="";
+        for (String[] s : listStok) {
+            for(String[] j:listJenis){
+                if(s[6].equals(j[0])){
+                    jenis = j[1];
+                }
+            }                
+            tbl.addRow(new Object[] {ctr,s[1],s[2],s[3],s[4],jenis});
+            ctr++;
+        }
+        dgv_barang.setModel(tbl);
+        
+    }
+    public void search(){    
+        tbl = new DefaultTableModel(new Object[] {"No","Kode","Nama","Stok","Harga","Jenis"}, 0);
+        dgv_barang.setDefaultEditor(Object.class, null);
+        String jns="";
+  
+        int ctr = 1;
+        for(String [] s: listStok){
+            jns ="Semua";
+            if(s[6].equals("1")){            
+                jns = "Monitor";
+            }else if(s[6].equals("2")){
+                jns = "CPU";
+            }else if(s[6].equals("3")){
+                jns = "Mouse";
+            }else if(s[6].equals("4")){
+                jns = "Keyboard";
+            }else if(s[6].equals("5")){
+                jns = "Ram";
+            }else if(s[6].equals("6")){
+                jns = "Hardisk";
+            }else if(s[6].equals("7")){
+                jns = "Printer";
+            }
+            if(validSearch(tb_kode.getText(),tb_namabarang.getText(),tb_harga1.getText(),tb_harga2.getText(),cb_jenisbarang.getSelectedItem().toString(),jns,s)){               
+               tbl.addRow(new Object[] {ctr,s[1],s[2],s[3],s[4],jns});
+                ctr++; 
+            }
+        }
+        dgv_barang.setModel(tbl);   
+    }
+    public boolean validSearch(String kode, String nama, String hrgawal, String hrgakhir, String jenis,String jns, String[] data){
+        int start=0;
+        int end=99999999;
+        if(data[1].toLowerCase().contains(kode.toLowerCase())){
+            if(data[2].toLowerCase().contains(nama.toLowerCase())){
+                if(!hrgawal.equals("")){start = Integer.parseInt(hrgawal);}
+                if(!hrgakhir.equals("")){end = Integer.parseInt(hrgakhir);}    
+                if(Integer.parseInt(data[4])>=start && Integer.parseInt(data[4])<=end){
+                    if(jenis.equalsIgnoreCase(jns) || jenis.equalsIgnoreCase("Semua")){
+                        return true;
+                    }  
+                }               
+            }
+        }
+        return false;
+    }
+     public int getIdx(int selected_idx){
+        int temp_idx = -1;
+        String kode_search = dgv_barang.getValueAt(selected_idx, 1).toString();
+        for(int i = 0; i < listStok.size(); i++){
+            if(listStok.get(i)[1].equalsIgnoreCase(kode_search)){
+                temp_idx = i;
+            }
+        }
+        return temp_idx;
+    }
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -100,7 +183,6 @@ public class Form_Stock extends javax.swing.JFrame {
 
         dgv_barang.setBackground(new java.awt.Color(58, 58, 58));
         dgv_barang.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        dgv_barang.setForeground(new java.awt.Color(222, 222, 222));
         dgv_barang.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"1", "CABE0001", "Caca Bernerd", "cacab", "Perempuan", null},
@@ -124,7 +206,6 @@ public class Form_Stock extends javax.swing.JFrame {
         dgv_barang.setOpaque(false);
         dgv_barang.setRowHeight(25);
         dgv_barang.setSelectionBackground(new java.awt.Color(90, 90, 90));
-        dgv_barang.setSelectionForeground(new java.awt.Color(222, 222, 222));
         dgv_barang.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         dgv_barang.setShowVerticalLines(false);
         dgv_barang.getTableHeader().setReorderingAllowed(false);
@@ -141,7 +222,6 @@ public class Form_Stock extends javax.swing.JFrame {
 
         btn_detail.setBackground(new java.awt.Color(58, 58, 58));
         btn_detail.setFont(new java.awt.Font("Yu Gothic UI", 1, 16)); // NOI18N
-        btn_detail.setForeground(new java.awt.Color(222, 222, 222));
         btn_detail.setText("Details");
         btn_detail.setBorder(null);
         btn_detail.setContentAreaFilled(false);
@@ -156,51 +236,64 @@ public class Form_Stock extends javax.swing.JFrame {
                 btn_detailMouseExited(evt);
             }
         });
+        btn_detail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_detailActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(222, 222, 222));
         jLabel1.setText("Jenis Barang");
 
         tb_kode.setBackground(new java.awt.Color(58, 58, 58));
         tb_kode.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        tb_kode.setForeground(new java.awt.Color(222, 222, 222));
         tb_kode.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-        tb_kode.setCaretColor(new java.awt.Color(222, 222, 222));
+        tb_kode.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tb_kodeKeyReleased(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(222, 222, 222));
         jLabel2.setText("Kode");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(222, 222, 222));
         jLabel3.setText("Range Harga");
 
         tb_harga1.setBackground(new java.awt.Color(58, 58, 58));
         tb_harga1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        tb_harga1.setForeground(new java.awt.Color(222, 222, 222));
         tb_harga1.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-        tb_harga1.setCaretColor(new java.awt.Color(222, 222, 222));
+        tb_harga1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tb_harga1KeyReleased(evt);
+            }
+        });
 
         tb_namabarang.setBackground(new java.awt.Color(58, 58, 58));
         tb_namabarang.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        tb_namabarang.setForeground(new java.awt.Color(222, 222, 222));
         tb_namabarang.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-        tb_namabarang.setCaretColor(new java.awt.Color(222, 222, 222));
+        tb_namabarang.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tb_namabarangKeyReleased(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(222, 222, 222));
         jLabel4.setText("Nama Barang");
 
         cb_jenisbarang.setBackground(new java.awt.Color(222, 222, 222));
         cb_jenisbarang.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         cb_jenisbarang.setForeground(new java.awt.Color(58, 58, 58));
         cb_jenisbarang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Semua" }));
-        cb_jenisbarang.setBorder(null);
         cb_jenisbarang.setOpaque(false);
+        cb_jenisbarang.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_jenisbarangItemStateChanged(evt);
+            }
+        });
 
         btn_refresh.setBackground(new java.awt.Color(84, 84, 96));
         btn_refresh.setFont(new java.awt.Font("Yu Gothic UI", 1, 16)); // NOI18N
-        btn_refresh.setForeground(new java.awt.Color(222, 222, 222));
         btn_refresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pbo_proyek/Images/redo-alt-solid.png"))); // NOI18N
         btn_refresh.setBorder(null);
         btn_refresh.setContentAreaFilled(false);
@@ -218,10 +311,14 @@ public class Form_Stock extends javax.swing.JFrame {
                 btn_refreshMouseExited(evt);
             }
         });
+        btn_refresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_refreshActionPerformed(evt);
+            }
+        });
 
         btn_addbarang.setBackground(new java.awt.Color(58, 58, 58));
         btn_addbarang.setFont(new java.awt.Font("Yu Gothic UI", 1, 16)); // NOI18N
-        btn_addbarang.setForeground(new java.awt.Color(222, 222, 222));
         btn_addbarang.setText("Add Barang");
         btn_addbarang.setBorder(null);
         btn_addbarang.setContentAreaFilled(false);
@@ -239,12 +336,14 @@ public class Form_Stock extends javax.swing.JFrame {
 
         tb_harga2.setBackground(new java.awt.Color(58, 58, 58));
         tb_harga2.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        tb_harga2.setForeground(new java.awt.Color(222, 222, 222));
         tb_harga2.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-        tb_harga2.setCaretColor(new java.awt.Color(222, 222, 222));
+        tb_harga2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tb_harga2KeyReleased(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(222, 222, 222));
         jLabel5.setText("-");
 
         javax.swing.GroupLayout pl1Layout = new javax.swing.GroupLayout(pl1);
@@ -378,6 +477,55 @@ public class Form_Stock extends javax.swing.JFrame {
         // TODO add your handling code here:
         btn_addbarang.setBackground(Palette.getTableDark1());
     }//GEN-LAST:event_btn_addbarangMouseExited
+
+    private void tb_kodeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb_kodeKeyReleased
+        // TODO add your handling code here:
+        search();
+    }//GEN-LAST:event_tb_kodeKeyReleased
+
+    private void tb_namabarangKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb_namabarangKeyReleased
+        // TODO add your handling code here:
+        search();
+    }//GEN-LAST:event_tb_namabarangKeyReleased
+
+    private void tb_harga1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb_harga1KeyReleased
+        // TODO add your handling code here:
+        search();
+    }//GEN-LAST:event_tb_harga1KeyReleased
+
+    private void tb_harga2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb_harga2KeyReleased
+        // TODO add your handling code here:
+        search();
+    }//GEN-LAST:event_tb_harga2KeyReleased
+
+    private void cb_jenisbarangItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_jenisbarangItemStateChanged
+        // TODO add your handling code here:
+        search();
+    }//GEN-LAST:event_cb_jenisbarangItemStateChanged
+
+    private void btn_refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_refreshActionPerformed
+        // TODO add your handling code here:
+        tb_namabarang.setText("");
+        tb_kode.setText("");
+        tb_harga1.setText("");
+        tb_harga2.setText("");
+        cb_jenisbarang.setSelectedIndex(0);
+        search();
+    }//GEN-LAST:event_btn_refreshActionPerformed
+
+    private void btn_detailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_detailActionPerformed
+        // TODO add your handling code here:
+        if(idx == -1){
+            JOptionPane.showMessageDialog(null, "No item selected","Error",JOptionPane.ERROR_MESSAGE);
+        }else{
+            idx = getIdx(idx);
+            String[] data = listStok.get(idx);
+            DetailStok_Form ds_frm = new DetailStok_Form(data);
+            ds_frm.setFrm_stc(this);
+            ds_frm.setVisible(true);
+            idx = -1;
+        }
+    }//GEN-LAST:event_btn_detailActionPerformed
     
     /**
      * @param args the command line arguments
