@@ -12,7 +12,10 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.plaf.ColorUIResource;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -35,8 +38,29 @@ public class Form_Account extends javax.swing.JFrame {
         tb_kode.setBackground(Palette.getTableDark1());
         tb_nama.setBackground(Palette.getTableDark1());
         tb_username.setBackground(Palette.getTableDark1());
-        
+        loadDgv();
     }
+    
+    DefaultTableModel tbl;
+    ArrayList<String[]> listUser;
+    
+    public void loadDgv(){
+        listUser = DB.query("SELECT * FROM karyawan where status = 1");
+        tbl = new DefaultTableModel(new Object[] {"No","Kode","Nama","Username","Gender"}, 0);
+        dgv_account.setDefaultEditor(Object.class, null);
+        
+        int ctr = 1;
+        for (String[] s : listUser) {
+            String gndr = "Laki - Laki";
+            if(s[5].equalsIgnoreCase("P")){
+                gndr = "Perempuan";
+            }
+            tbl.addRow(new Object[] {ctr,s[1],s[4],s[2],gndr});
+            ctr++;
+        }
+        dgv_account.setModel(tbl);
+    }
+    
     public JPanel getPl() {
         return pl;
     }
@@ -77,8 +101,12 @@ public class Form_Account extends javax.swing.JFrame {
         tb_username = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         cb_gender = new javax.swing.JComboBox<>();
+        btn_refresh = new javax.swing.JButton();
+        btn_adduser = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(790, 540));
+        setPreferredSize(new java.awt.Dimension(790, 540));
 
         pl.setBackground(new java.awt.Color(84, 84, 96));
 
@@ -112,6 +140,11 @@ public class Form_Account extends javax.swing.JFrame {
         dgv_account.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         dgv_account.setShowVerticalLines(false);
         dgv_account.getTableHeader().setReorderingAllowed(false);
+        dgv_account.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                dgv_accountMousePressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(dgv_account);
         if (dgv_account.getColumnModel().getColumnCount() > 0) {
             dgv_account.getColumnModel().getColumn(0).setResizable(false);
@@ -152,6 +185,11 @@ public class Form_Account extends javax.swing.JFrame {
         tb_kode.setForeground(new java.awt.Color(222, 222, 222));
         tb_kode.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
         tb_kode.setCaretColor(new java.awt.Color(222, 222, 222));
+        tb_kode.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tb_search(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(222, 222, 222));
@@ -166,12 +204,22 @@ public class Form_Account extends javax.swing.JFrame {
         tb_nama.setForeground(new java.awt.Color(222, 222, 222));
         tb_nama.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
         tb_nama.setCaretColor(new java.awt.Color(222, 222, 222));
+        tb_nama.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tb_search(evt);
+            }
+        });
 
         tb_username.setBackground(new java.awt.Color(58, 58, 58));
         tb_username.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         tb_username.setForeground(new java.awt.Color(222, 222, 222));
         tb_username.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
         tb_username.setCaretColor(new java.awt.Color(222, 222, 222));
+        tb_username.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tb_search(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(222, 222, 222));
@@ -181,8 +229,62 @@ public class Form_Account extends javax.swing.JFrame {
         cb_gender.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         cb_gender.setForeground(new java.awt.Color(58, 58, 58));
         cb_gender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Semua", "Laki - Laki", "Perempuan" }));
-        cb_gender.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        cb_gender.setBorder(null);
         cb_gender.setOpaque(false);
+        cb_gender.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_genderItemStateChanged(evt);
+            }
+        });
+
+        btn_refresh.setBackground(new java.awt.Color(84, 84, 96));
+        btn_refresh.setFont(new java.awt.Font("Yu Gothic UI", 1, 16)); // NOI18N
+        btn_refresh.setForeground(new java.awt.Color(222, 222, 222));
+        btn_refresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pbo_proyek/Images/redo-alt-solid.png"))); // NOI18N
+        btn_refresh.setBorder(null);
+        btn_refresh.setContentAreaFilled(false);
+        btn_refresh.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_refresh.setFocusPainted(false);
+        btn_refresh.setMaximumSize(new java.awt.Dimension(30, 30));
+        btn_refresh.setMinimumSize(new java.awt.Dimension(30, 30));
+        btn_refresh.setOpaque(true);
+        btn_refresh.setPreferredSize(new java.awt.Dimension(30, 30));
+        btn_refresh.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_refreshMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btn_refreshMouseExited(evt);
+            }
+        });
+        btn_refresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_refreshActionPerformed(evt);
+            }
+        });
+
+        btn_adduser.setBackground(new java.awt.Color(58, 58, 58));
+        btn_adduser.setFont(new java.awt.Font("Yu Gothic UI", 1, 16)); // NOI18N
+        btn_adduser.setForeground(new java.awt.Color(222, 222, 222));
+        btn_adduser.setText("Add User");
+        btn_adduser.setBorder(null);
+        btn_adduser.setContentAreaFilled(false);
+        btn_adduser.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_adduser.setFocusPainted(false);
+        btn_adduser.setOpaque(true);
+        btn_adduser.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_adduserMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btn_adduserMouseExited(evt);
+            }
+        });
+        btn_adduser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_adduserActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout plLayout = new javax.swing.GroupLayout(pl);
         pl.setLayout(plLayout);
@@ -209,47 +311,53 @@ public class Form_Account extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addComponent(cb_gender, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 104, Short.MAX_VALUE))
+                            .addGroup(plLayout.createSequentialGroup()
+                                .addComponent(cb_gender, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 22, Short.MAX_VALUE))
                     .addGroup(plLayout.createSequentialGroup()
                         .addComponent(btn_detail, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btn_adduser, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         plLayout.setVerticalGroup(
             plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(plLayout.createSequentialGroup()
-                .addGap(8, 8, 8)
-                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
-                .addGap(8, 8, 8)
-                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tb_kode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tb_nama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tb_username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cb_gender, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(16, 16, 16)
+                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(plLayout.createSequentialGroup()
+                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(tb_kode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tb_nama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tb_username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cb_gender, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16)
-                .addComponent(btn_detail, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(73, 73, 73))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_detail, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_adduser, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(pl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+            .addComponent(pl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(pl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+            .addComponent(pl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -257,17 +365,103 @@ public class Form_Account extends javax.swing.JFrame {
 
     private void btn_detailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_detailActionPerformed
         // TODO add your handling code here:
+        if(idx == -1){
+            JOptionPane.showMessageDialog(null, "No user selected","Error",JOptionPane.ERROR_MESSAGE);
+        }else{
+            
+        }
     }//GEN-LAST:event_btn_detailActionPerformed
-
+    
+    public void search(){
+        tbl = new DefaultTableModel(new Object[] {"No","Kode","Nama","Username","Gender"}, 0);
+        
+        int ctr = 1;
+        for (String[] s : listUser) {
+            String gndr = "Laki - Laki";
+            if(s[5].equalsIgnoreCase("P")){
+                gndr = "Perempuan";
+            }
+            if(validSearch(tb_kode.getText(), tb_nama.getText(), tb_username.getText(), cb_gender.getSelectedItem().toString(), gndr, s)){
+                tbl.addRow(new Object[] {ctr,s[1],s[4],s[2],gndr});
+                ctr++;
+            }
+        }
+        dgv_account.setModel(tbl);
+    }
+    
+    public boolean validSearch(String kode, String nama, String username, String gender, String gndr, String[] data){
+        if(data[1].toLowerCase().contains(kode.toLowerCase())){
+            System.out.println("NOW : "+kode.toLowerCase()+" "+data[1].toLowerCase());
+            if(data[4].toLowerCase().contains(nama.toLowerCase())){
+                if(data[2].toLowerCase().contains(username.toLowerCase())){
+                    if(gender.equalsIgnoreCase(gndr) || gender.equalsIgnoreCase("Semua")){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    
     private void btn_detailMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_detailMouseEntered
         // TODO add your handling code here:
-        btn_detail.setBackground(new Color(72,72,72));
+        btn_detail.setBackground(Palette.getButtonSelectedColor());
     }//GEN-LAST:event_btn_detailMouseEntered
 
     private void btn_detailMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_detailMouseExited
         // TODO add your handling code here:
         btn_detail.setBackground(Palette.getTableDark1());
     }//GEN-LAST:event_btn_detailMouseExited
+
+    private void btn_refreshMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_refreshMouseEntered
+        // TODO add your handling code here:
+        btn_refresh.setBackground(new Color(106,106,115));
+    }//GEN-LAST:event_btn_refreshMouseEntered
+
+    private void btn_refreshMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_refreshMouseExited
+        // TODO add your handling code here:
+        btn_refresh.setBackground(Palette.getDark3());
+    }//GEN-LAST:event_btn_refreshMouseExited
+
+    private void btn_refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_refreshActionPerformed
+        // TODO add your handling code here:
+        idx = -1;
+        tb_kode.setText("");
+        tb_nama.setText("");
+        tb_username.setText("");
+        cb_gender.setSelectedIndex(0);
+        search();
+    }//GEN-LAST:event_btn_refreshActionPerformed
+
+    private void btn_adduserMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_adduserMouseEntered
+        // TODO add your handling code here:
+        btn_adduser.setBackground(Palette.getButtonSelectedColor());
+    }//GEN-LAST:event_btn_adduserMouseEntered
+
+    private void btn_adduserMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_adduserMouseExited
+        // TODO add your handling code here:
+        btn_adduser.setBackground(Palette.getTableDark1());
+    }//GEN-LAST:event_btn_adduserMouseExited
+
+    private void btn_adduserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_adduserActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_adduserActionPerformed
+    
+    int idx = -1;
+    private void dgv_accountMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dgv_accountMousePressed
+        // TODO add your handling code here:
+        idx = dgv_account.getSelectedRow();
+    }//GEN-LAST:event_dgv_accountMousePressed
+
+    private void cb_genderItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_genderItemStateChanged
+        // TODO add your handling code here:
+        search();
+    }//GEN-LAST:event_cb_genderItemStateChanged
+
+    private void tb_search(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb_search
+        // TODO add your handling code here:
+        search();
+    }//GEN-LAST:event_tb_search
     
     /**
      * @param args the command line arguments
@@ -304,7 +498,9 @@ public class Form_Account extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_adduser;
     private javax.swing.JButton btn_detail;
+    private javax.swing.JButton btn_refresh;
     private javax.swing.JComboBox<String> cb_gender;
     private javax.swing.JTable dgv_account;
     private javax.swing.JLabel jLabel1;

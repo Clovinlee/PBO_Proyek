@@ -18,9 +18,13 @@ public class PBO_Proyek {
      */
     public static void main(String[] args) {
         DB.init();
-        Form_Login frm_login = new Form_Login();
-        frm_login.setVisible(true);
-        System.out.println("DEBUG TESTING test");
+//         Form_Login frm_login = new Form_Login();
+//         frm_login.setVisible(true);
+DetailAccount_Form frm = new DetailAccount_Form();
+frm.setVisible(true);
+        // System.out.println("DEBUG TESTING test");
+//        Form_Account fa = new Form_Account();
+//        fa.setVisible(true);
         // Form_Menu frm_menu = new Form_Menu();
         // frm_menu.setVisible(true);
         // TestForm frm_test = new TestForm();
