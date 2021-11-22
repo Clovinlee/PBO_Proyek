@@ -25,10 +25,41 @@ public class Form_Laporan extends javax.swing.JFrame {
      * Creates new form Form_History
      */
     public Form_Laporan() {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            UIManager.put("ComboBox.selectionBackground",new ColorUIResource(Palette.getTableDark1()));
+        } catch (Exception e) {
+        }
         initComponents();
+        styleDgv();
     }
     public JPanel getPl() {
         return pl;
+    }
+    public void styleDgv(){
+        JTableHeader header = tb_Htrans.getTableHeader();
+        jScrollPane1.getViewport().setBackground(Palette.getDark4());
+            
+        header.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        header.setOpaque(false);
+        
+        //JTableEdit.setJTableColumnsWidth(dgv_stok, 375, 10,20,40,15,15);
+        
+        jScrollPane1.setBorder(BorderFactory.createEmptyBorder());
+        tb_Htrans.getTableHeader().setBackground(Palette.getDark1());
+        tb_Htrans.getTableHeader().setForeground(Palette.getSilver1());
+        
+        header = tb_Dtrans.getTableHeader();
+        jScrollPane2.getViewport().setBackground(Palette.getDark4());
+            
+        header.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        header.setOpaque(false);
+        
+        //JTableEdit.setJTableColumnsWidth(dgv_stok, 375, 10,20,40,15,15);
+        
+        jScrollPane1.setBorder(BorderFactory.createEmptyBorder());
+        tb_Dtrans.getTableHeader().setBackground(Palette.getDark1());
+        tb_Dtrans.getTableHeader().setForeground(Palette.getSilver1());
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -131,6 +162,11 @@ public class Form_Laporan extends javax.swing.JFrame {
                 "Nomor_Nota", "Tanggal_Transaksi", "Grand_Total", "Diskon", "Nama_Customer", "Nama_Karyawan"
             }
         ));
+        tb_Htrans.setGridColor(new java.awt.Color(255, 255, 255));
+        tb_Htrans.setRowHeight(25);
+        tb_Htrans.setSelectionBackground(new java.awt.Color(90, 90, 90));
+        tb_Htrans.setSelectionForeground(new java.awt.Color(222, 222, 222));
+        tb_Htrans.setShowVerticalLines(false);
         jScrollPane1.setViewportView(tb_Htrans);
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -153,6 +189,11 @@ public class Form_Laporan extends javax.swing.JFrame {
                 "ID_Barang", "Nama_Barang", "Harga_Barang", "Subtotal"
             }
         ));
+        tb_Dtrans.setGridColor(new java.awt.Color(255, 255, 255));
+        tb_Dtrans.setRowHeight(25);
+        tb_Dtrans.setSelectionBackground(new java.awt.Color(90, 90, 90));
+        tb_Dtrans.setSelectionForeground(new java.awt.Color(222, 222, 222));
+        tb_Dtrans.setShowVerticalLines(false);
         jScrollPane2.setViewportView(tb_Dtrans);
 
         javax.swing.GroupLayout plLayout = new javax.swing.GroupLayout(pl);
@@ -162,37 +203,39 @@ public class Form_Laporan extends javax.swing.JFrame {
             .addGroup(plLayout.createSequentialGroup()
                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(plLayout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(tb_nota, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(plLayout.createSequentialGroup()
-                                .addGap(15, 15, 15)
-                                .addComponent(jLabel3)
-                                .addGap(60, 60, 60))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, plLayout.createSequentialGroup()
+                                .addGap(26, 26, 26)
+                                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(tb_nota, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(plLayout.createSequentialGroup()
+                                        .addGap(15, 15, 15)
+                                        .addComponent(jLabel3)
+                                        .addGap(60, 60, 60))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, plLayout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(dp_tanggal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)))
+                                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(tb_customer, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(dp_tanggal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)))
-                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(tb_customer, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addGroup(plLayout.createSequentialGroup()
-                                .addComponent(tb_karyawan, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5)
+                                    .addComponent(tb_karyawan, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(10, 10, 10)
-                                .addComponent(btn_search, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(plLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel6)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 678, Short.MAX_VALUE)
-                            .addComponent(jLabel7)
-                            .addComponent(jScrollPane2))))
-                .addContainerGap(15, Short.MAX_VALUE))
+                                .addComponent(btn_search, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(plLayout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel7))))
+                        .addGap(0, 5, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
         );
         plLayout.setVerticalGroup(
             plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -202,9 +245,7 @@ public class Form_Laporan extends javax.swing.JFrame {
                     .addGroup(plLayout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(tb_karyawan)
-                            .addComponent(btn_search, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(tb_karyawan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(plLayout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -216,7 +257,8 @@ public class Form_Laporan extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(dp_tanggal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tb_customer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(tb_customer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(btn_search, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(13, 13, 13)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
