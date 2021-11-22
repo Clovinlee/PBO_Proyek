@@ -23,7 +23,16 @@ public class User {
     private String status;
     private String fk_jabatan;
     private String nama_jabatan;
+    private static User user_login;
 
+    public static User getUser_login() {
+        return user_login;
+    }
+
+    public static void setUser_login(User user_login) {
+        User.user_login = user_login;
+    }
+    
     public User(String id, String kode, String username, String password, String nama, String gender, Date tanggal_lahir, String alamat, String status, String fk_jabatan) {
         this.id = id;
         this.kode = kode;
@@ -38,6 +47,8 @@ public class User {
         this.nama_jabatan = DB.query("SELECT nama_jabatan from jabatan where id = "+fk_jabatan).get(0)[0];
     }
 
+    
+    
     public String getNama_jabatan() {
         return nama_jabatan;
     }

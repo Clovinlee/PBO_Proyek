@@ -59,11 +59,11 @@ public class DetailAccount_Form extends javax.swing.JFrame {
     private Form_Account frm_acc;
     private String[] data_user;
     private User user_login;
-
+    
     public User getUser_login() {
         return user_login;
     }
-
+    
     public void setUser_login(User user_login) {
         this.user_login = user_login;
     }
@@ -226,6 +226,11 @@ public class DetailAccount_Form extends javax.swing.JFrame {
         btn_deleteuser.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn_deleteuser.setFocusPainted(false);
         btn_deleteuser.setOpaque(true);
+        btn_deleteuser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_deleteuserActionPerformed(evt);
+            }
+        });
 
         btn_updateuser.setBackground(new java.awt.Color(58, 58, 58));
         btn_updateuser.setFont(new java.awt.Font("Yu Gothic UI", 1, 16)); // NOI18N
@@ -381,6 +386,23 @@ public class DetailAccount_Form extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_btn_updateuserActionPerformed
+
+    private void btn_deleteuserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteuserActionPerformed
+        // TODO add your handling code here:
+        if(lbl_kode.getText().equalsIgnoreCase(User.getUser_login().getKode())){
+            JOptionPane.showMessageDialog(null, "Tidak bisa menghapus user yang sedang login!","Error",JOptionPane.ERROR_MESSAGE);
+        }else{
+            int output = DB.delete("DELETE FROM karyawan WHERE id = ?",new Object[] {data_user[0]});
+            if(output <= 0){
+                JOptionPane.showMessageDialog(null, "Error saat menghapus!","Error",JOptionPane.ERROR_MESSAGE);
+            }else{
+                frm_acc.loadDgv();
+                frm_acc.search();
+                JOptionPane.showMessageDialog(null, "Sukses delete user","Sukses",JOptionPane.INFORMATION_MESSAGE);
+                this.dispose();
+            }
+        }
+    }//GEN-LAST:event_btn_deleteuserActionPerformed
     
     /**
      * @param args the command line arguments

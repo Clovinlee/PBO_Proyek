@@ -72,8 +72,7 @@ public class Form_Menu extends javax.swing.JFrame {
         prev_btn = btn_transaction;
         pl_menu.setLayout(new BorderLayout());
         buttonPress(btn_stock);
-        
-        this.user_login = usr;
+        User user_login = User.getUser_login();
         lbl_nama.setText("Welcome, "+user_login.getNama());
         lbl_jabatan.setText(usr.getNama_jabatan());
         
@@ -92,16 +91,6 @@ public class Form_Menu extends javax.swing.JFrame {
     
     public Form_Login getFrm_login() {
         return frm_login;
-    }
-    
-    User user_login;
-    
-    public User getUser_login() {
-        return user_login;
-    }
-    
-    public void setUser_login(User user_login) {
-        this.user_login = user_login;
     }
 
     public void setFrm_login(Form_Login frm_login) {
