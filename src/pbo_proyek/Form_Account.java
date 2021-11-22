@@ -15,7 +15,11 @@ import javax.swing.plaf.ColorUIResource;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.util.ArrayList;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
 
 /**
  *
@@ -33,12 +37,14 @@ public class Form_Account extends javax.swing.JFrame {
         } catch (Exception e) {
         }
         initComponents();
+        loadDgv();
         styleDgv();
+        
+        
         
         tb_kode.setBackground(Palette.getTableDark1());
         tb_nama.setBackground(Palette.getTableDark1());
         tb_username.setBackground(Palette.getTableDark1());
-        loadDgv();
     }
     
     DefaultTableModel tbl;
@@ -73,11 +79,17 @@ public class Form_Account extends javax.swing.JFrame {
         header.setFont(new Font("Segoe UI", Font.BOLD, 12));
         header.setOpaque(false);
         
-        JTableEdit.setJTableColumnsWidth(dgv_account, 375, 10,20,40,15,15);
-        
         jScrollPane1.setBorder(BorderFactory.createEmptyBorder());
         dgv_account.getTableHeader().setBackground(Palette.getDark1());
         dgv_account.getTableHeader().setForeground(Palette.getSilver1());
+        
+        dgv_account.getColumnModel().getColumn(0).setPreferredWidth(40);
+        dgv_account.getColumnModel().getColumn(0).setMinWidth(40);
+        dgv_account.getColumnModel().getColumn(0).setMaxWidth(40);
+        
+        DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer();
+        cellRenderer.setHorizontalAlignment(JLabel.CENTER);
+        dgv_account.getColumnModel().getColumn(0).setCellRenderer(cellRenderer);
     }
     
     /**
@@ -148,9 +160,7 @@ public class Form_Account extends javax.swing.JFrame {
         jScrollPane1.setViewportView(dgv_account);
         if (dgv_account.getColumnModel().getColumnCount() > 0) {
             dgv_account.getColumnModel().getColumn(0).setResizable(false);
-            dgv_account.getColumnModel().getColumn(1).setResizable(false);
-            dgv_account.getColumnModel().getColumn(2).setResizable(false);
-            dgv_account.getColumnModel().getColumn(3).setResizable(false);
+            dgv_account.getColumnModel().getColumn(0).setPreferredWidth(40);
         }
 
         btn_detail.setBackground(new java.awt.Color(58, 58, 58));

@@ -45,7 +45,7 @@
     <Container class="javax.swing.JPanel" name="pl">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="30" green="28" red="29" type="rgb"/>
+          <Color blue="3a" green="3a" red="3a" type="rgb"/>
         </Property>
       </Properties>
 
@@ -161,7 +161,7 @@
                       <Component id="btn_updateuser" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
                       <Component id="btn_deleteuser" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="20" max="32767" attributes="0"/>
+                  <EmptySpace pref="12" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -169,6 +169,9 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="14" style="1"/>
+            </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="de" green="de" red="de" type="rgb"/>
             </Property>
@@ -177,6 +180,9 @@
         </Component>
         <Component class="javax.swing.JLabel" name="lbl_kode">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="14" style="1"/>
+            </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="de" green="de" red="de" type="rgb"/>
             </Property>
@@ -288,7 +294,7 @@
         <Component class="javax.swing.JRadioButton" name="rb_laki">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="30" green="28" red="29" type="rgb"/>
+              <Color blue="3a" green="3a" red="3a" type="rgb"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="de" green="de" red="de" type="rgb"/>
@@ -299,7 +305,7 @@
         <Component class="javax.swing.JRadioButton" name="rb_perempuan">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="30" green="28" red="29" type="rgb"/>
+              <Color blue="3a" green="3a" red="3a" type="rgb"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="de" green="de" red="de" type="rgb"/>
@@ -409,13 +415,13 @@
         <Component class="javax.swing.JButton" name="btn_deleteuser">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="3a" green="3a" red="3a" type="rgb"/>
+              <Color blue="de" green="de" red="de" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Yu Gothic UI" size="16" style="1"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="de" green="de" red="de" type="rgb"/>
+              <Color blue="3a" green="3a" red="3a" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Delete"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -435,13 +441,13 @@
         <Component class="javax.swing.JButton" name="btn_updateuser">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="3a" green="3a" red="3a" type="rgb"/>
+              <Color blue="de" green="de" red="de" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Yu Gothic UI" size="16" style="1"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="de" green="de" red="de" type="rgb"/>
+              <Color blue="3a" green="3a" red="3a" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value=" Update"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">

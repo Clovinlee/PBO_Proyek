@@ -127,11 +127,13 @@ public class DetailAccount_Form extends javax.swing.JFrame {
             }
         });
 
-        pl.setBackground(new java.awt.Color(41, 40, 48));
+        pl.setBackground(new java.awt.Color(58, 58, 58));
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(222, 222, 222));
         jLabel1.setText("Kode :");
 
+        lbl_kode.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbl_kode.setForeground(new java.awt.Color(222, 222, 222));
         lbl_kode.setText("D<XXXX0001>");
 
@@ -170,11 +172,11 @@ public class DetailAccount_Form extends javax.swing.JFrame {
         tb_password.setText("Password");
         tb_password.setEnabled(false);
 
-        rb_laki.setBackground(new java.awt.Color(41, 40, 48));
+        rb_laki.setBackground(new java.awt.Color(58, 58, 58));
         rb_laki.setForeground(new java.awt.Color(222, 222, 222));
         rb_laki.setText("Laki - Laki");
 
-        rb_perempuan.setBackground(new java.awt.Color(41, 40, 48));
+        rb_perempuan.setBackground(new java.awt.Color(58, 58, 58));
         rb_perempuan.setForeground(new java.awt.Color(222, 222, 222));
         rb_perempuan.setText("Perempuan");
 
@@ -217,9 +219,9 @@ public class DetailAccount_Form extends javax.swing.JFrame {
         jLabel9.setForeground(new java.awt.Color(222, 222, 222));
         jLabel9.setText("Jabatan :");
 
-        btn_deleteuser.setBackground(new java.awt.Color(58, 58, 58));
+        btn_deleteuser.setBackground(new java.awt.Color(222, 222, 222));
         btn_deleteuser.setFont(new java.awt.Font("Yu Gothic UI", 1, 16)); // NOI18N
-        btn_deleteuser.setForeground(new java.awt.Color(222, 222, 222));
+        btn_deleteuser.setForeground(new java.awt.Color(58, 58, 58));
         btn_deleteuser.setText("Delete");
         btn_deleteuser.setBorder(null);
         btn_deleteuser.setContentAreaFilled(false);
@@ -232,9 +234,9 @@ public class DetailAccount_Form extends javax.swing.JFrame {
             }
         });
 
-        btn_updateuser.setBackground(new java.awt.Color(58, 58, 58));
+        btn_updateuser.setBackground(new java.awt.Color(222, 222, 222));
         btn_updateuser.setFont(new java.awt.Font("Yu Gothic UI", 1, 16)); // NOI18N
-        btn_updateuser.setForeground(new java.awt.Color(222, 222, 222));
+        btn_updateuser.setForeground(new java.awt.Color(58, 58, 58));
         btn_updateuser.setText(" Update");
         btn_updateuser.setBorder(null);
         btn_updateuser.setContentAreaFilled(false);
@@ -338,7 +340,7 @@ public class DetailAccount_Form extends javax.swing.JFrame {
                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_updateuser, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_deleteuser, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -392,14 +394,16 @@ public class DetailAccount_Form extends javax.swing.JFrame {
         if(lbl_kode.getText().equalsIgnoreCase(User.getUser_login().getKode())){
             JOptionPane.showMessageDialog(null, "Tidak bisa menghapus user yang sedang login!","Error",JOptionPane.ERROR_MESSAGE);
         }else{
-            int output = DB.delete("DELETE FROM karyawan WHERE id = ?",new Object[] {data_user[0]});
-            if(output <= 0){
-                JOptionPane.showMessageDialog(null, "Error saat menghapus!","Error",JOptionPane.ERROR_MESSAGE);
-            }else{
-                frm_acc.loadDgv();
-                frm_acc.search();
-                JOptionPane.showMessageDialog(null, "Sukses delete user","Sukses",JOptionPane.INFORMATION_MESSAGE);
-                this.dispose();
+            if(JOptionPane.showConfirmDialog(null, "Yakin hapus user "+data_user[2]+" ?","Hapus User",JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                int output = DB.delete("UPDATE karyawan SET STATUS = 0 WHERE id = ?",new Object[] {data_user[0]});
+                if(output <= 0){
+                    JOptionPane.showMessageDialog(null, "Error saat menghapus!","Error",JOptionPane.ERROR_MESSAGE);
+                }else{
+                    frm_acc.loadDgv();
+                    frm_acc.search();
+                    JOptionPane.showMessageDialog(null, "Sukses delete user","Sukses",JOptionPane.INFORMATION_MESSAGE);
+                    this.dispose();
+                }
             }
         }
     }//GEN-LAST:event_btn_deleteuserActionPerformed
