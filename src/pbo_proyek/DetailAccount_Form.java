@@ -1,23 +1,80 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+* To change this license header, choose License Headers in Project Properties.
+* To change this template file, choose Tools | Templates
+* and open the template in the editor.
+*/
 package pbo_proyek;
+
+import java.awt.Color;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ButtonGroup;
 
 /**
  *
  * @author chris
  */
 public class DetailAccount_Form extends javax.swing.JFrame {
-
+    
     /**
      * Creates new form DetailAccount_Form
      */
+    
+    ButtonGroup btng1;
+    
     public DetailAccount_Form() {
         initComponents();
+        btng1 = new ButtonGroup();
+        btng1.add(rb_laki);
+        btng1.add(rb_perempuan);
     }
-
+    
+    public DetailAccount_Form(String[] data){
+        this();
+        this.data_user = data;
+        tb_username.setText(data[2]);
+        tb_alamat.setText(data[7]);
+        tb_password.setText(data[3]);
+        tb_nama.setText(data[4]);
+        if(data[5].equalsIgnoreCase("l")){
+            rb_laki.setSelected(true);
+        }else{
+            rb_perempuan.setSelected(true);
+        }
+        cb_jabatan.setSelectedIndex(Integer.valueOf(data[9])-1);
+        Date dt = null;
+        try {
+            dt = new SimpleDateFormat("yyyy-MM-dd").parse(data[6]);
+        } catch (ParseException ex) {
+        }
+        dt_tgl.setDate(dt);
+        lbl_kode.setText(data[1]);
+    }
+    
+    private Form_Account frm_acc;
+    private String[] data_user;
+    
+    public Form_Account getFrm_acc() {
+        return frm_acc;
+    }
+    
+    public void setFrm_acc(Form_Account frm_acc) {
+        this.frm_acc = frm_acc;
+    }
+    
+    public String[] getData_user() {
+        return data_user;
+    }
+    
+    public void setData_user(String[] data_user) {
+        this.data_user = data_user;
+    }
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -29,59 +86,145 @@ public class DetailAccount_Form extends javax.swing.JFrame {
 
         pl = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        lbl_kode = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        tb_nama1 = new javax.swing.JTextField();
-        tb_nama2 = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        tb_nama = new javax.swing.JTextField();
+        tb_username = new javax.swing.JTextField();
+        tb_password = new javax.swing.JPasswordField();
+        rb_laki = new javax.swing.JRadioButton();
+        rb_perempuan = new javax.swing.JRadioButton();
+        dt_tgl = new com.toedter.calendar.JDateChooser();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tb_alamat = new javax.swing.JTextArea();
+        btn_ubahpass = new javax.swing.JButton();
+        cb_jabatan = new javax.swing.JComboBox<>();
+        jLabel9 = new javax.swing.JLabel();
+        btn_adduser1 = new javax.swing.JButton();
+        btn_adduser2 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(400, 530));
+        setPreferredSize(new java.awt.Dimension(400, 530));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         pl.setBackground(new java.awt.Color(41, 40, 48));
 
+        jLabel1.setForeground(new java.awt.Color(222, 222, 222));
         jLabel1.setText("Kode :");
 
-        jLabel2.setText("jLabel2");
+        lbl_kode.setForeground(new java.awt.Color(222, 222, 222));
+        lbl_kode.setText("D<XXXX0001>");
 
+        jLabel3.setForeground(new java.awt.Color(222, 222, 222));
         jLabel3.setText("Jenis Kelamin :");
 
+        jLabel4.setForeground(new java.awt.Color(222, 222, 222));
         jLabel4.setText("Nama :");
 
+        jLabel5.setForeground(new java.awt.Color(222, 222, 222));
         jLabel5.setText("Alamat :");
 
+        jLabel6.setForeground(new java.awt.Color(222, 222, 222));
         jLabel6.setText("Tanggal Lahir :");
 
+        jLabel7.setForeground(new java.awt.Color(222, 222, 222));
         jLabel7.setText("Username :");
 
+        jLabel8.setForeground(new java.awt.Color(222, 222, 222));
         jLabel8.setText("Password :");
 
-        tb_nama1.setBackground(new java.awt.Color(222, 222, 222));
-        tb_nama1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        tb_nama1.setForeground(new java.awt.Color(58, 58, 58));
-        tb_nama1.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-        tb_nama1.setCaretColor(new java.awt.Color(222, 222, 222));
+        tb_nama.setBackground(new java.awt.Color(244, 244, 244));
+        tb_nama.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        tb_nama.setForeground(new java.awt.Color(58, 58, 58));
+        tb_nama.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        tb_nama.setCaretColor(new java.awt.Color(58, 58, 58));
 
-        tb_nama2.setBackground(new java.awt.Color(222, 222, 222));
-        tb_nama2.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        tb_nama2.setForeground(new java.awt.Color(58, 58, 58));
-        tb_nama2.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-        tb_nama2.setCaretColor(new java.awt.Color(222, 222, 222));
+        tb_username.setBackground(new java.awt.Color(244, 244, 244));
+        tb_username.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        tb_username.setForeground(new java.awt.Color(58, 58, 58));
+        tb_username.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        tb_username.setCaretColor(new java.awt.Color(58, 58, 58));
 
-        jPasswordField1.setBackground(new java.awt.Color(222, 222, 222));
-        jPasswordField1.setForeground(new java.awt.Color(58, 58, 58));
-        jPasswordField1.setText("jPasswordField1");
+        tb_password.setBackground(new java.awt.Color(244, 244, 244));
+        tb_password.setForeground(new java.awt.Color(58, 58, 58));
+        tb_password.setText("Password");
+        tb_password.setEnabled(false);
 
-        jRadioButton1.setText("jRadioButton1");
+        rb_laki.setBackground(new java.awt.Color(41, 40, 48));
+        rb_laki.setForeground(new java.awt.Color(222, 222, 222));
+        rb_laki.setText("Laki - Laki");
 
-        jRadioButton2.setText("jRadioButton2");
+        rb_perempuan.setBackground(new java.awt.Color(41, 40, 48));
+        rb_perempuan.setForeground(new java.awt.Color(222, 222, 222));
+        rb_perempuan.setText("Perempuan");
+
+        dt_tgl.setBackground(new java.awt.Color(222, 222, 222));
+        dt_tgl.setForeground(new java.awt.Color(222, 222, 222));
+
+        tb_alamat.setBackground(new java.awt.Color(244, 244, 244));
+        tb_alamat.setColumns(20);
+        tb_alamat.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        tb_alamat.setForeground(new java.awt.Color(58, 58, 58));
+        tb_alamat.setRows(5);
+        tb_alamat.setCaretColor(new java.awt.Color(58, 58, 58));
+        jScrollPane1.setViewportView(tb_alamat);
+
+        btn_ubahpass.setBackground(new java.awt.Color(222, 222, 222));
+        btn_ubahpass.setFont(new java.awt.Font("Yu Gothic UI", 1, 12)); // NOI18N
+        btn_ubahpass.setForeground(new java.awt.Color(58, 58, 58));
+        btn_ubahpass.setText("Ubah Password");
+        btn_ubahpass.setBorder(null);
+        btn_ubahpass.setContentAreaFilled(false);
+        btn_ubahpass.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_ubahpass.setFocusPainted(false);
+        btn_ubahpass.setOpaque(true);
+        btn_ubahpass.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_ubahpassMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btn_ubahpassMouseExited(evt);
+            }
+        });
+
+        cb_jabatan.setBackground(new java.awt.Color(244, 244, 244));
+        cb_jabatan.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        cb_jabatan.setForeground(new java.awt.Color(58, 58, 58));
+        cb_jabatan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Manager", "Kasir", "Marketing" }));
+        cb_jabatan.setBorder(null);
+        cb_jabatan.setOpaque(false);
+
+        jLabel9.setForeground(new java.awt.Color(222, 222, 222));
+        jLabel9.setText("Jabatan :");
+
+        btn_adduser1.setBackground(new java.awt.Color(58, 58, 58));
+        btn_adduser1.setFont(new java.awt.Font("Yu Gothic UI", 1, 16)); // NOI18N
+        btn_adduser1.setForeground(new java.awt.Color(222, 222, 222));
+        btn_adduser1.setText("Delete");
+        btn_adduser1.setBorder(null);
+        btn_adduser1.setContentAreaFilled(false);
+        btn_adduser1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_adduser1.setFocusPainted(false);
+        btn_adduser1.setOpaque(true);
+
+        btn_adduser2.setBackground(new java.awt.Color(58, 58, 58));
+        btn_adduser2.setFont(new java.awt.Font("Yu Gothic UI", 1, 16)); // NOI18N
+        btn_adduser2.setForeground(new java.awt.Color(222, 222, 222));
+        btn_adduser2.setText(" Update");
+        btn_adduser2.setBorder(null);
+        btn_adduser2.setContentAreaFilled(false);
+        btn_adduser2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_adduser2.setFocusPainted(false);
+        btn_adduser2.setOpaque(true);
 
         javax.swing.GroupLayout plLayout = new javax.swing.GroupLayout(pl);
         pl.setLayout(plLayout);
@@ -91,86 +234,90 @@ public class DetailAccount_Form extends javax.swing.JFrame {
                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(plLayout.createSequentialGroup()
                         .addGap(17, 17, 17)
-                        .addComponent(jLabel2))
-                    .addGroup(plLayout.createSequentialGroup()
-                        .addGap(119, 119, 119)
-                        .addComponent(jRadioButton1))
-                    .addGroup(plLayout.createSequentialGroup()
-                        .addGap(129, 129, 129)
-                        .addComponent(jRadioButton2))
-                    .addGroup(plLayout.createSequentialGroup()
-                        .addGap(45, 45, 45)
                         .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbl_kode)
+                            .addComponent(jLabel1)))
+                    .addGroup(plLayout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel5)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, plLayout.createSequentialGroup()
+                                    .addComponent(rb_laki)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(rb_perempuan)
+                                    .addGap(123, 123, 123))
+                                .addComponent(dt_tgl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel6)
+                                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, plLayout.createSequentialGroup()
+                                        .addComponent(btn_adduser2, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btn_adduser1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(plLayout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING))
                                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(plLayout.createSequentialGroup()
-                                        .addGap(76, 76, 76)
-                                        .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(plLayout.createSequentialGroup()
-                                        .addGap(26, 26, 26)
-                                        .addComponent(tb_nama2, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(plLayout.createSequentialGroup()
-                                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel5))
-                                .addGap(61, 61, 61)
-                                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(239, Short.MAX_VALUE))
-            .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(plLayout.createSequentialGroup()
-                    .addGap(150, 150, 150)
-                    .addComponent(tb_nama1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(257, Short.MAX_VALUE)))
+                                    .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jLabel4)
+                                        .addComponent(jLabel7)
+                                        .addComponent(tb_nama)
+                                        .addComponent(tb_username, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel3))
+                                .addGap(18, 18, 18)
+                                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(tb_password, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel8)
+                                    .addComponent(btn_ubahpass, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cb_jabatan, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel9))))))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         plLayout.setVerticalGroup(
             plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(plLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2)
-                .addGap(30, 30, 30)
-                .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel4)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lbl_kode)
+                .addGap(14, 14, 14)
+                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel9))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tb_nama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cb_jabatan, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(plLayout.createSequentialGroup()
-                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(plLayout.createSequentialGroup()
-                                .addGap(27, 27, 27)
-                                .addComponent(tb_nama2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel6)
-                                .addGap(19, 19, 19)
-                                .addComponent(jLabel3)
-                                .addGap(18, 18, 18))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, plLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(32, 32, 32)))
-                        .addComponent(jLabel5)
-                        .addGap(36, 36, 36)
-                        .addComponent(jRadioButton1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jRadioButton2))
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tb_password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(8, 8, 8)
+                        .addComponent(btn_ubahpass, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(plLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
                         .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tb_username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel8)))
-                .addContainerGap(77, Short.MAX_VALUE))
-            .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(plLayout.createSequentialGroup()
-                    .addGap(96, 96, 96)
-                    .addComponent(tb_nama1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(361, Short.MAX_VALUE)))
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(rb_laki)
+                            .addComponent(rb_perempuan))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel6)
+                .addGap(7, 7, 7)
+                .addComponent(dt_tgl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_adduser2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_adduser1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -185,8 +332,24 @@ public class DetailAccount_Form extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btn_ubahpassMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_ubahpassMouseEntered
+        // TODO add your handling code here:
+        btn_ubahpass.setBackground(new Color(242,242,242));
+    }//GEN-LAST:event_btn_ubahpassMouseEntered
+
+    private void btn_ubahpassMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_ubahpassMouseExited
+        // TODO add your handling code here:
+        btn_ubahpass.setBackground(new Color(222,222,222));
+    }//GEN-LAST:event_btn_ubahpassMouseExited
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        frm_acc.setEnabled(true);
+    }//GEN-LAST:event_formWindowClosing
+    
     /**
      * @param args the command line arguments
      */
@@ -194,8 +357,8 @@ public class DetailAccount_Form extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+        * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+        */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -213,7 +376,7 @@ public class DetailAccount_Form extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(DetailAccount_Form.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -223,20 +386,27 @@ public class DetailAccount_Form extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private javax.swing.JButton btn_adduser1;
+    private javax.swing.JButton btn_adduser2;
+    private javax.swing.JButton btn_ubahpass;
+    private javax.swing.JComboBox<String> cb_jabatan;
+    private com.toedter.calendar.JDateChooser dt_tgl;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbl_kode;
     private javax.swing.JPanel pl;
-    private javax.swing.JTextField tb_nama1;
-    private javax.swing.JTextField tb_nama2;
+    private javax.swing.JRadioButton rb_laki;
+    private javax.swing.JRadioButton rb_perempuan;
+    private javax.swing.JTextArea tb_alamat;
+    private javax.swing.JTextField tb_nama;
+    private javax.swing.JPasswordField tb_password;
+    private javax.swing.JTextField tb_username;
     // End of variables declaration//GEN-END:variables
 }

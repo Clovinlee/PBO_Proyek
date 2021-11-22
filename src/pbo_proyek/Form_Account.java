@@ -368,7 +368,12 @@ public class Form_Account extends javax.swing.JFrame {
         if(idx == -1){
             JOptionPane.showMessageDialog(null, "No user selected","Error",JOptionPane.ERROR_MESSAGE);
         }else{
-            
+            String[] data = listUser.get(idx);
+            DetailAccount_Form da_frm = new DetailAccount_Form(data);
+            da_frm.setFrm_acc(this);
+            da_frm.setVisible(true);
+            this.setEnabled(false);
+            idx = -1;
         }
     }//GEN-LAST:event_btn_detailActionPerformed
     
@@ -391,7 +396,6 @@ public class Form_Account extends javax.swing.JFrame {
     
     public boolean validSearch(String kode, String nama, String username, String gender, String gndr, String[] data){
         if(data[1].toLowerCase().contains(kode.toLowerCase())){
-            System.out.println("NOW : "+kode.toLowerCase()+" "+data[1].toLowerCase());
             if(data[4].toLowerCase().contains(nama.toLowerCase())){
                 if(data[2].toLowerCase().contains(username.toLowerCase())){
                     if(gender.equalsIgnoreCase(gndr) || gender.equalsIgnoreCase("Semua")){
