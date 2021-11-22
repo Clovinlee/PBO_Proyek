@@ -22,6 +22,12 @@ public class Palette {
     
     private static Color Silver1 = new Color(222,222,222);
     private static Color DarkGrey1 = new Color(115,114,117);
+    
+    private static Color ButtonSelectedColor = new Color(72,72,72);
+
+    public static Color getButtonSelectedColor() {
+        return ButtonSelectedColor;
+    }
 
     public static Color getTableDark1() {
         return TableDark1;
