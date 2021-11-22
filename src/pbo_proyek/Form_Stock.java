@@ -127,6 +127,7 @@ public class Form_Stock extends javax.swing.JFrame {
 
         dgv_stok.setBackground(new java.awt.Color(58, 58, 58));
         dgv_stok.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        dgv_stok.setForeground(new java.awt.Color(222, 222, 222));
         dgv_stok.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"1", "MOLO0001", "Mouse Logitech M190", "400", "134.000", "Mouse"},
@@ -192,11 +193,11 @@ public class Form_Stock extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pl, javax.swing.GroupLayout.DEFAULT_SIZE, 774, Short.MAX_VALUE)
+            .addComponent(pl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pl, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
+            .addComponent(pl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
