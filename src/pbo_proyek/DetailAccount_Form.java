@@ -6,12 +6,14 @@
 package pbo_proyek;
 
 import java.awt.Color;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -56,6 +58,15 @@ public class DetailAccount_Form extends javax.swing.JFrame {
     
     private Form_Account frm_acc;
     private String[] data_user;
+    private User user_login;
+
+    public User getUser_login() {
+        return user_login;
+    }
+
+    public void setUser_login(User user_login) {
+        this.user_login = user_login;
+    }
     
     public Form_Account getFrm_acc() {
         return frm_acc;
@@ -104,8 +115,8 @@ public class DetailAccount_Form extends javax.swing.JFrame {
         btn_ubahpass = new javax.swing.JButton();
         cb_jabatan = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
-        btn_adduser1 = new javax.swing.JButton();
-        btn_adduser2 = new javax.swing.JButton();
+        btn_deleteuser = new javax.swing.JButton();
+        btn_updateuser = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(400, 530));
@@ -206,25 +217,30 @@ public class DetailAccount_Form extends javax.swing.JFrame {
         jLabel9.setForeground(new java.awt.Color(222, 222, 222));
         jLabel9.setText("Jabatan :");
 
-        btn_adduser1.setBackground(new java.awt.Color(58, 58, 58));
-        btn_adduser1.setFont(new java.awt.Font("Yu Gothic UI", 1, 16)); // NOI18N
-        btn_adduser1.setForeground(new java.awt.Color(222, 222, 222));
-        btn_adduser1.setText("Delete");
-        btn_adduser1.setBorder(null);
-        btn_adduser1.setContentAreaFilled(false);
-        btn_adduser1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btn_adduser1.setFocusPainted(false);
-        btn_adduser1.setOpaque(true);
+        btn_deleteuser.setBackground(new java.awt.Color(58, 58, 58));
+        btn_deleteuser.setFont(new java.awt.Font("Yu Gothic UI", 1, 16)); // NOI18N
+        btn_deleteuser.setForeground(new java.awt.Color(222, 222, 222));
+        btn_deleteuser.setText("Delete");
+        btn_deleteuser.setBorder(null);
+        btn_deleteuser.setContentAreaFilled(false);
+        btn_deleteuser.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_deleteuser.setFocusPainted(false);
+        btn_deleteuser.setOpaque(true);
 
-        btn_adduser2.setBackground(new java.awt.Color(58, 58, 58));
-        btn_adduser2.setFont(new java.awt.Font("Yu Gothic UI", 1, 16)); // NOI18N
-        btn_adduser2.setForeground(new java.awt.Color(222, 222, 222));
-        btn_adduser2.setText(" Update");
-        btn_adduser2.setBorder(null);
-        btn_adduser2.setContentAreaFilled(false);
-        btn_adduser2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btn_adduser2.setFocusPainted(false);
-        btn_adduser2.setOpaque(true);
+        btn_updateuser.setBackground(new java.awt.Color(58, 58, 58));
+        btn_updateuser.setFont(new java.awt.Font("Yu Gothic UI", 1, 16)); // NOI18N
+        btn_updateuser.setForeground(new java.awt.Color(222, 222, 222));
+        btn_updateuser.setText(" Update");
+        btn_updateuser.setBorder(null);
+        btn_updateuser.setContentAreaFilled(false);
+        btn_updateuser.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_updateuser.setFocusPainted(false);
+        btn_updateuser.setOpaque(true);
+        btn_updateuser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_updateuserActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout plLayout = new javax.swing.GroupLayout(pl);
         pl.setLayout(plLayout);
@@ -251,9 +267,9 @@ public class DetailAccount_Form extends javax.swing.JFrame {
                                 .addComponent(jLabel6)
                                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, plLayout.createSequentialGroup()
-                                        .addComponent(btn_adduser2, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btn_updateuser, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btn_adduser1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(btn_deleteuser, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(plLayout.createSequentialGroup()
                                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -315,8 +331,8 @@ public class DetailAccount_Form extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_adduser2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_adduser1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_updateuser, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_deleteuser, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
@@ -347,8 +363,24 @@ public class DetailAccount_Form extends javax.swing.JFrame {
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-        frm_acc.setEnabled(true);
     }//GEN-LAST:event_formWindowClosing
+
+    private void btn_updateuserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateuserActionPerformed
+        // TODO add your handling code here:
+        String pw = String.valueOf(tb_password.getPassword());
+        String gndr = "L";
+        if(rb_perempuan.isSelected()){
+            gndr = "P";
+        }
+        String dt = new SimpleDateFormat("yyyy-MM-dd").format(dt_tgl.getDate());
+        int output = DB.update("UPDATE Karyawan SET username = ?, password = ?, nama = ?, gender = ?, tanggal_lahir = ?, alamat = ?, fk_jabatan = ? WHERE id = ?", new Object[] {tb_username.getText(),pw,tb_nama.getText(),gndr,dt,tb_alamat.getText(),cb_jabatan.getSelectedIndex()+1,data_user[0]});
+        if(output != 0){
+            frm_acc.loadDgv();
+            frm_acc.search();
+            JOptionPane.showMessageDialog(null, "Sukses ubah data","Sukses",JOptionPane.INFORMATION_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_btn_updateuserActionPerformed
     
     /**
      * @param args the command line arguments
@@ -386,9 +418,9 @@ public class DetailAccount_Form extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_adduser1;
-    private javax.swing.JButton btn_adduser2;
+    private javax.swing.JButton btn_deleteuser;
     private javax.swing.JButton btn_ubahpass;
+    private javax.swing.JButton btn_updateuser;
     private javax.swing.JComboBox<String> cb_jabatan;
     private com.toedter.calendar.JDateChooser dt_tgl;
     private javax.swing.JLabel jLabel1;

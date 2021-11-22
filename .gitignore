@@ -5,3 +5,4 @@ lib/
 *.xml
 *.mf
 nbproject/private/private.xml
+src/pbo_proyek/PBO_Proyek.java

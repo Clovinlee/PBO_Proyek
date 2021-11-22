@@ -368,14 +368,25 @@ public class Form_Account extends javax.swing.JFrame {
         if(idx == -1){
             JOptionPane.showMessageDialog(null, "No user selected","Error",JOptionPane.ERROR_MESSAGE);
         }else{
+            idx = getIdx(idx);
             String[] data = listUser.get(idx);
             DetailAccount_Form da_frm = new DetailAccount_Form(data);
             da_frm.setFrm_acc(this);
             da_frm.setVisible(true);
-            this.setEnabled(false);
             idx = -1;
         }
     }//GEN-LAST:event_btn_detailActionPerformed
+    
+    public int getIdx(int selected_idx){
+        int temp_idx = -1;
+        String kode_search = dgv_account.getValueAt(selected_idx, 1).toString();
+        for(int i = 0; i < listUser.size(); i++){
+            if(listUser.get(i)[1].equalsIgnoreCase(kode_search)){
+                temp_idx = i;
+            }
+        }
+        return temp_idx;
+    }
     
     public void search(){
         tbl = new DefaultTableModel(new Object[] {"No","Kode","Nama","Username","Gender"}, 0);
