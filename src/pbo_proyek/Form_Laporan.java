@@ -78,7 +78,6 @@ public class Form_Laporan extends javax.swing.JFrame {
         tb_customer = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         tb_karyawan = new javax.swing.JTextField();
-        btn_search = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tb_Htrans = new javax.swing.JTable();
         jLabel6 = new javax.swing.JLabel();
@@ -87,6 +86,7 @@ public class Form_Laporan extends javax.swing.JFrame {
         tb_Dtrans = new javax.swing.JTable();
         dp_tanggal = new com.toedter.calendar.JDateChooser();
         btn_export = new javax.swing.JButton();
+        btn_refresh = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -126,29 +126,6 @@ public class Form_Laporan extends javax.swing.JFrame {
         tb_karyawan.setForeground(new java.awt.Color(222, 222, 222));
         tb_karyawan.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
         tb_karyawan.setCaretColor(new java.awt.Color(222, 222, 222));
-
-        btn_search.setBackground(new java.awt.Color(58, 58, 58));
-        btn_search.setFont(new java.awt.Font("Yu Gothic UI", 1, 16)); // NOI18N
-        btn_search.setForeground(new java.awt.Color(222, 222, 222));
-        btn_search.setText("Search");
-        btn_search.setBorder(null);
-        btn_search.setContentAreaFilled(false);
-        btn_search.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btn_search.setFocusPainted(false);
-        btn_search.setOpaque(true);
-        btn_search.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btn_searchMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btn_searchMouseExited(evt);
-            }
-        });
-        btn_search.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_searchActionPerformed(evt);
-            }
-        });
 
         tb_Htrans.setBackground(new java.awt.Color(58, 58, 58));
         tb_Htrans.setForeground(new java.awt.Color(222, 222, 222));
@@ -216,7 +193,7 @@ public class Form_Laporan extends javax.swing.JFrame {
         btn_export.setBackground(new java.awt.Color(58, 58, 58));
         btn_export.setFont(new java.awt.Font("Yu Gothic UI", 1, 16)); // NOI18N
         btn_export.setForeground(new java.awt.Color(222, 222, 222));
-        btn_export.setText("Export to .txt");
+        btn_export.setText("Export to txt");
         btn_export.setBorder(null);
         btn_export.setContentAreaFilled(false);
         btn_export.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -236,76 +213,91 @@ public class Form_Laporan extends javax.swing.JFrame {
             }
         });
 
+        btn_refresh.setBackground(new java.awt.Color(84, 84, 96));
+        btn_refresh.setFont(new java.awt.Font("Yu Gothic UI", 1, 16)); // NOI18N
+        btn_refresh.setForeground(new java.awt.Color(222, 222, 222));
+        btn_refresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pbo_proyek/Images/redo-alt-solid.png"))); // NOI18N
+        btn_refresh.setBorder(null);
+        btn_refresh.setContentAreaFilled(false);
+        btn_refresh.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_refresh.setFocusPainted(false);
+        btn_refresh.setMaximumSize(new java.awt.Dimension(30, 30));
+        btn_refresh.setMinimumSize(new java.awt.Dimension(30, 30));
+        btn_refresh.setOpaque(true);
+        btn_refresh.setPreferredSize(new java.awt.Dimension(30, 30));
+        btn_refresh.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_refreshMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btn_refreshMouseExited(evt);
+            }
+        });
+        btn_refresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_refreshActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout plLayout = new javax.swing.GroupLayout(pl);
         pl.setLayout(plLayout);
         plLayout.setHorizontalGroup(
             plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(plLayout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(tb_nota, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(plLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1)
-                            .addGroup(plLayout.createSequentialGroup()
-                                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel7))
-                                .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(32, 32, 32)
+                        .addComponent(jLabel3)
+                        .addGap(60, 60, 60))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, plLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(dp_tanggal, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(35, 35, 35)))
+                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(tb_customer, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(plLayout.createSequentialGroup()
-                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(plLayout.createSequentialGroup()
-                                .addGap(28, 28, 28)
-                                .addComponent(btn_export, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(plLayout.createSequentialGroup()
-                                .addGap(26, 26, 26)
-                                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(tb_nota, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(plLayout.createSequentialGroup()
-                                        .addGap(32, 32, 32)
-                                        .addComponent(jLabel3)
-                                        .addGap(60, 60, 60))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, plLayout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(dp_tanggal, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(35, 35, 35)))
-                                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(tb_customer, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(30, 30, 30)
-                                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(tb_karyawan, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel5))
-                                .addGap(18, 18, 18)
-                                .addComponent(btn_search, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 10, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(tb_karyawan, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel5))
+                .addGap(10, 99, Short.MAX_VALUE))
+            .addGroup(plLayout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_export, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel7)
+                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane2))
+                .addGap(20, 20, 20))
         );
         plLayout.setVerticalGroup(
             plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(plLayout.createSequentialGroup()
-                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(plLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tb_nota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(tb_customer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(tb_karyawan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(dp_tanggal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(plLayout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(btn_search, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addGap(20, 20, 20)
+                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(tb_nota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(tb_customer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(tb_karyawan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(dp_tanggal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(13, 13, 13)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -324,7 +316,7 @@ public class Form_Laporan extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(pl, javax.swing.GroupLayout.PREFERRED_SIZE, 736, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -335,20 +327,6 @@ public class Form_Laporan extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btn_searchMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_searchMouseEntered
-        // TODO add your handling code here:
-        btn_search.setBackground(new Color(72,72,72));
-    }//GEN-LAST:event_btn_searchMouseEntered
-
-    private void btn_searchMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_searchMouseExited
-        // TODO add your handling code here:
-        btn_search.setBackground(Palette.getTableDark1());
-    }//GEN-LAST:event_btn_searchMouseExited
-
-    private void btn_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_searchActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_searchActionPerformed
 
     private void btn_exportMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_exportMouseEntered
         // TODO add your handling code here:
@@ -364,6 +342,21 @@ public class Form_Laporan extends javax.swing.JFrame {
         // TODO add your handling code here:
         
     }//GEN-LAST:event_btn_exportActionPerformed
+
+    private void btn_refreshMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_refreshMouseEntered
+        // TODO add your handling code here:
+        btn_refresh.setBackground(new Color(106,106,115));
+    }//GEN-LAST:event_btn_refreshMouseEntered
+
+    private void btn_refreshMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_refreshMouseExited
+        // TODO add your handling code here:
+        btn_refresh.setBackground(Palette.getDark3());
+    }//GEN-LAST:event_btn_refreshMouseExited
+
+    private void btn_refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_refreshActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_btn_refreshActionPerformed
     
     /**
      * @param args the command line arguments
@@ -403,7 +396,7 @@ public class Form_Laporan extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_export;
-    private javax.swing.JButton btn_search;
+    private javax.swing.JButton btn_refresh;
     private com.toedter.calendar.JDateChooser dp_tanggal;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
