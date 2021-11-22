@@ -29,6 +29,8 @@ frm.setVisible(true);
         // frm_menu.setVisible(true);
         // TestForm frm_test = new TestForm();
         // frm_test.setVisible(true);
+        //Form_Stock frm_stok = new Form_Stock();
+        //frm_stok.setVisible(true);
     }
     
 }

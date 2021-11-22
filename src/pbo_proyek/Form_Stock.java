@@ -6,14 +6,16 @@
 
 package pbo_proyek;
 
-import ExternalCode.JTableEdit;
+
 import javax.swing.JPanel;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import javax.swing.BorderFactory;
 import javax.swing.UIManager;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.table.JTableHeader;
+
 /**
  *
  * @author chris
@@ -30,7 +32,8 @@ public class Form_Stock extends javax.swing.JFrame {
         initComponents();
         styleDgv();
         tb_kodebrg.setBackground(Palette.getTableDark1());
-        tb_namabrg.setBackground(Palette.getTableDark1());
+        tb_namabrg.setBackground(Palette.getTableDark1());        
+        //loadDgv();
     }
     public JPanel getPl() {
         return pl;
@@ -38,17 +41,20 @@ public class Form_Stock extends javax.swing.JFrame {
     public void styleDgv(){
         JTableHeader header = dgv_stok.getTableHeader();
         jScrollPane1.getViewport().setBackground(Palette.getDark4());
-        
-        
+            
         header.setFont(new Font("Segoe UI", Font.BOLD, 12));
         header.setOpaque(false);
         
-        JTableEdit.setJTableColumnsWidth(dgv_stok, 375, 10,20,40,15,15);
+        //JTableEdit.setJTableColumnsWidth(dgv_stok, 375, 10,20,40,15,15);
         
         jScrollPane1.setBorder(BorderFactory.createEmptyBorder());
         dgv_stok.getTableHeader().setBackground(Palette.getDark1());
         dgv_stok.getTableHeader().setForeground(Palette.getSilver1());
     }
+   
+
+   
+    
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -119,6 +125,8 @@ public class Form_Stock extends javax.swing.JFrame {
         cb_jenisbrg.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         cb_jenisbrg.setOpaque(false);
 
+        dgv_stok.setBackground(new java.awt.Color(58, 58, 58));
+        dgv_stok.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         dgv_stok.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"1", "MOLO0001", "Mouse Logitech M190", "400", "134.000", "Mouse"},
@@ -130,6 +138,11 @@ public class Form_Stock extends javax.swing.JFrame {
                 "No", "Kode", "Nama", "Stok", "Harga", "Jenis"
             }
         ));
+        dgv_stok.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
+        dgv_stok.setGridColor(new java.awt.Color(255, 255, 255));
+        dgv_stok.setMinimumSize(new java.awt.Dimension(75, 75));
+        dgv_stok.setSelectionBackground(new java.awt.Color(90, 90, 90));
+        dgv_stok.setShowVerticalLines(false);
         jScrollPane1.setViewportView(dgv_stok);
 
         javax.swing.GroupLayout plLayout = new javax.swing.GroupLayout(pl);
@@ -152,8 +165,8 @@ public class Form_Stock extends javax.swing.JFrame {
                             .addComponent(cb_jenisbrg, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1)))
                     .addComponent(btn_detail, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 835, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(28, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 724, Short.MAX_VALUE))
+                .addGap(28, 28, 28))
         );
         plLayout.setVerticalGroup(
             plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -172,18 +185,18 @@ public class Form_Stock extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btn_detail, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(85, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(pl, javax.swing.GroupLayout.DEFAULT_SIZE, 774, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(pl, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
         );
 
         pack();
