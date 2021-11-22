@@ -385,6 +385,7 @@ public class Form_Login extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Username / Password salah", "Error Login", JOptionPane.ERROR_MESSAGE);
         }else{
             if(u.getFk_jabatan().equalsIgnoreCase("1") || u.getFk_jabatan().equalsIgnoreCase("2")){
+                User.setUser_login(u);
                 if(frm_menu == null){
                     frm_menu = new Form_Menu();
                     frm_menu.setFrm_login(this);

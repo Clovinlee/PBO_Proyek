@@ -76,9 +76,9 @@
                                   <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
-                                          <Component id="btn_adduser2" min="-2" pref="114" max="-2" attributes="0"/>
+                                          <Component id="btn_updateuser" min="-2" pref="114" max="-2" attributes="0"/>
                                           <EmptySpace max="32767" attributes="0"/>
-                                          <Component id="btn_adduser1" min="-2" pref="114" max="-2" attributes="0"/>
+                                          <Component id="btn_deleteuser" min="-2" pref="114" max="-2" attributes="0"/>
                                       </Group>
                                       <Component id="jScrollPane1" alignment="0" min="-2" pref="266" max="-2" attributes="0"/>
                                   </Group>
@@ -158,8 +158,8 @@
                   <Component id="jScrollPane1" min="-2" pref="101" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="btn_adduser2" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
-                      <Component id="btn_adduser1" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
+                      <Component id="btn_updateuser" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
+                      <Component id="btn_deleteuser" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="20" max="32767" attributes="0"/>
               </Group>
@@ -406,7 +406,7 @@
             <Property name="text" type="java.lang.String" value="Jabatan :"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="btn_adduser1">
+        <Component class="javax.swing.JButton" name="btn_deleteuser">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="3a" green="3a" red="3a" type="rgb"/>
@@ -428,8 +428,11 @@
             <Property name="focusPainted" type="boolean" value="false"/>
             <Property name="opaque" type="boolean" value="true"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_deleteuserActionPerformed"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btn_adduser2">
+        <Component class="javax.swing.JButton" name="btn_updateuser">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="3a" green="3a" red="3a" type="rgb"/>
@@ -451,6 +454,9 @@
             <Property name="focusPainted" type="boolean" value="false"/>
             <Property name="opaque" type="boolean" value="true"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_updateuserActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
