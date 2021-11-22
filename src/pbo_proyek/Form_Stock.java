@@ -6,8 +6,14 @@
 
 package pbo_proyek;
 
+import ExternalCode.JTableEdit;
 import javax.swing.JPanel;
-
+import java.awt.Color;
+import java.awt.Font;
+import javax.swing.BorderFactory;
+import javax.swing.UIManager;
+import javax.swing.plaf.ColorUIResource;
+import javax.swing.table.JTableHeader;
 /**
  *
  * @author chris
@@ -16,10 +22,32 @@ public class Form_Stock extends javax.swing.JFrame {
     
     /** Creates new form Form_Stock */
     public Form_Stock() {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            UIManager.put("ComboBox.selectionBackground",new ColorUIResource(Palette.getTableDark1()));
+        } catch (Exception e) {
+        }
         initComponents();
+        styleDgv();
+        tb_kodebrg.setBackground(Palette.getTableDark1());
+        tb_namabrg.setBackground(Palette.getTableDark1());
     }
     public JPanel getPl() {
         return pl;
+    }
+    public void styleDgv(){
+        JTableHeader header = dgv_stok.getTableHeader();
+        jScrollPane1.getViewport().setBackground(Palette.getDark4());
+        
+        
+        header.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        header.setOpaque(false);
+        
+        JTableEdit.setJTableColumnsWidth(dgv_stok, 375, 10,20,40,15,15);
+        
+        jScrollPane1.setBorder(BorderFactory.createEmptyBorder());
+        dgv_stok.getTableHeader().setBackground(Palette.getDark1());
+        dgv_stok.getTableHeader().setForeground(Palette.getSilver1());
     }
     /** This method is called from within the constructor to
      * initialize the form.
@@ -31,35 +59,149 @@ public class Form_Stock extends javax.swing.JFrame {
     private void initComponents() {
 
         pl = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        tb_kodebrg = new javax.swing.JTextField();
+        tb_namabrg = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        btn_detail = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        cb_jenisbrg = new javax.swing.JComboBox<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        dgv_stok = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        pl.setBackground(new java.awt.Color(255, 255, 51));
+        pl.setBackground(new java.awt.Color(84, 84, 96));
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel2.setText("Kode");
+
+        tb_kodebrg.setBackground(new java.awt.Color(58, 58, 58));
+        tb_kodebrg.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        tb_kodebrg.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        tb_namabrg.setBackground(new java.awt.Color(58, 58, 58));
+        tb_namabrg.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        tb_namabrg.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel3.setText("Nama");
+
+        btn_detail.setBackground(new java.awt.Color(58, 58, 58));
+        btn_detail.setFont(new java.awt.Font("Yu Gothic UI", 1, 16)); // NOI18N
+        btn_detail.setText("Details");
+        btn_detail.setBorder(null);
+        btn_detail.setContentAreaFilled(false);
+        btn_detail.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_detail.setFocusPainted(false);
+        btn_detail.setOpaque(true);
+        btn_detail.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_detailMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btn_detailMouseExited(evt);
+            }
+        });
+        btn_detail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_detailActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel1.setText("Jenis");
+
+        cb_jenisbrg.setBackground(new java.awt.Color(222, 222, 222));
+        cb_jenisbrg.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        cb_jenisbrg.setForeground(new java.awt.Color(58, 58, 58));
+        cb_jenisbrg.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Semua", "Monitor", "CPU", "RAM", "Mouse", "Keyboard", "Hardisk", "Printer" }));
+        cb_jenisbrg.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        cb_jenisbrg.setOpaque(false);
+
+        dgv_stok.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {"1", "MOLO0001", "Mouse Logitech M190", "400", "134.000", "Mouse"},
+                {"2", "KELO0001", "Keyboard Logitech Classic K100", "500", "79.300", "Keyboard"},
+                {"3", "RAIM0001", "RAM Imperion 16GB DDR4", "300", "625.000", "RAM"},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "No", "Kode", "Nama", "Stok", "Harga", "Jenis"
+            }
+        ));
+        jScrollPane1.setViewportView(dgv_stok);
 
         javax.swing.GroupLayout plLayout = new javax.swing.GroupLayout(pl);
         pl.setLayout(plLayout);
         plLayout.setHorizontalGroup(
             plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 637, Short.MAX_VALUE)
+            .addGroup(plLayout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(plLayout.createSequentialGroup()
+                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tb_kodebrg, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
+                        .addGap(26, 26, 26)
+                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tb_namabrg, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
+                        .addGap(29, 29, 29)
+                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cb_jenisbrg, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1)))
+                    .addComponent(btn_detail, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 835, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         plLayout.setVerticalGroup(
             plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 441, Short.MAX_VALUE)
+            .addGroup(plLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tb_kodebrg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tb_namabrg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cb_jenisbrg, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btn_detail, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(85, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_detailMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_detailMouseEntered
+        // TODO add your handling code here:
+        btn_detail.setBackground(new Color(72,72,72));
+    }//GEN-LAST:event_btn_detailMouseEntered
+
+    private void btn_detailMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_detailMouseExited
+        // TODO add your handling code here:
+        btn_detail.setBackground(Palette.getTableDark1());
+    }//GEN-LAST:event_btn_detailMouseExited
+
+    private void btn_detailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_detailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_detailActionPerformed
     
     /**
      * @param args the command line arguments
@@ -97,7 +239,16 @@ public class Form_Stock extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_detail;
+    private javax.swing.JComboBox<String> cb_jenisbrg;
+    private javax.swing.JTable dgv_stok;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel pl;
+    private javax.swing.JTextField tb_kodebrg;
+    private javax.swing.JTextField tb_namabrg;
     // End of variables declaration//GEN-END:variables
     
 }
