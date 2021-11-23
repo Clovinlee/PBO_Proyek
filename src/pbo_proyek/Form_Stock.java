@@ -41,24 +41,33 @@ public class Form_Stock extends javax.swing.JFrame {
     }
     
     public JPanel getPl() {
+        pl.validate();
+        pl.revalidate();
         return pl;
+    }
+    
+    public void initJabatan(){
+        btn_addbarang.setVisible(User.getUser_login().getFk_jabatan().equals("1"));
+        btn_detail.setVisible(User.getUser_login().getFk_jabatan().equals("1"));
+        pl.revalidate();
+        pl.validate();
     }
     
     public void styleDgv(){
         JTableHeader header = dgv_barang.getTableHeader();
         jScrollPane1.getViewport().setBackground(Palette.getDark4());
-            
+        
         header.setFont(new Font("Segoe UI", Font.BOLD, 12));
         header.setOpaque(false);
         
         jScrollPane1.setBorder(BorderFactory.createEmptyBorder());
         dgv_barang.getTableHeader().setBackground(Palette.getDark1());
         dgv_barang.getTableHeader().setForeground(Palette.getSilver1());
-
+        
     }
-        DefaultTableModel tbl;
-        ArrayList<String[]> listStok;
-        ArrayList<String[]> listJenis;
+    DefaultTableModel tbl;
+    ArrayList<String[]> listStok;
+    ArrayList<String[]> listJenis;
     public void loadDgv(){
         
         listStok = DB.query("SELECT * FROM barang where status = 1");
@@ -77,22 +86,22 @@ public class Form_Stock extends javax.swing.JFrame {
                 if(s[6].equals(j[0])){
                     jenis = j[1];
                 }
-            }                
+            }
             tbl.addRow(new Object[] {ctr,s[1],s[2],s[3],s[4],jenis});
             ctr++;
         }
         dgv_barang.setModel(tbl);
         
     }
-    public void search(){    
+    public void search(){
         tbl = new DefaultTableModel(new Object[] {"No","Kode","Nama","Stok","Harga","Jenis"}, 0);
         dgv_barang.setDefaultEditor(Object.class, null);
         String jns="";
-  
+        
         int ctr = 1;
         for(String [] s: listStok){
             jns ="Semua";
-            if(s[6].equals("1")){            
+            if(s[6].equals("1")){
                 jns = "Monitor";
             }else if(s[6].equals("2")){
                 jns = "CPU";
@@ -107,12 +116,12 @@ public class Form_Stock extends javax.swing.JFrame {
             }else if(s[6].equals("7")){
                 jns = "Printer";
             }
-            if(validSearch(tb_kode.getText(),tb_namabarang.getText(),tb_harga1.getText(),tb_harga2.getText(),cb_jenisbarang.getSelectedItem().toString(),jns,s)){               
-               tbl.addRow(new Object[] {ctr,s[1],s[2],s[3],s[4],jns});
-                ctr++; 
+            if(validSearch(tb_kode.getText(),tb_namabarang.getText(),tb_harga1.getText(),tb_harga2.getText(),cb_jenisbarang.getSelectedItem().toString(),jns,s)){
+                tbl.addRow(new Object[] {ctr,s[1],s[2],s[3],s[4],jns});
+                ctr++;
             }
         }
-        dgv_barang.setModel(tbl);   
+        dgv_barang.setModel(tbl);
     }
     public boolean validSearch(String kode, String nama, String hrgawal, String hrgakhir, String jenis,String jns, String[] data){
         int start=0;
@@ -120,17 +129,17 @@ public class Form_Stock extends javax.swing.JFrame {
         if(data[1].toLowerCase().contains(kode.toLowerCase())){
             if(data[2].toLowerCase().contains(nama.toLowerCase())){
                 if(!hrgawal.equals("")){start = Integer.parseInt(hrgawal);}
-                if(!hrgakhir.equals("")){end = Integer.parseInt(hrgakhir);}    
+                if(!hrgakhir.equals("")){end = Integer.parseInt(hrgakhir);}
                 if(Integer.parseInt(data[4])>=start && Integer.parseInt(data[4])<=end){
                     if(jenis.equalsIgnoreCase(jns) || jenis.equalsIgnoreCase("Semua")){
                         return true;
-                    }  
-                }               
+                    }
+                }
             }
         }
         return false;
     }
-     public int getIdx(int selected_idx){
+    public int getIdx(int selected_idx){
         int temp_idx = -1;
         String kode_search = dgv_barang.getValueAt(selected_idx, 1).toString();
         for(int i = 0; i < listStok.size(); i++){
@@ -150,7 +159,6 @@ public class Form_Stock extends javax.swing.JFrame {
     private void initComponents() {
 
         pl = new javax.swing.JPanel();
-        pl1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         dgv_barang = new javax.swing.JTable();
         btn_detail = new javax.swing.JButton();
@@ -171,8 +179,6 @@ public class Form_Stock extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(772, 496));
 
         pl.setBackground(new java.awt.Color(84, 84, 96));
-
-        pl1.setBackground(new java.awt.Color(84, 84, 96));
 
         dgv_barang.setBackground(new java.awt.Color(58, 58, 58));
         dgv_barang.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
@@ -360,60 +366,60 @@ public class Form_Stock extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(222, 222, 222));
         jLabel5.setText("-");
 
-        javax.swing.GroupLayout pl1Layout = new javax.swing.GroupLayout(pl1);
-        pl1.setLayout(pl1Layout);
-        pl1Layout.setHorizontalGroup(
-            pl1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pl1Layout.createSequentialGroup()
+        javax.swing.GroupLayout plLayout = new javax.swing.GroupLayout(pl);
+        pl.setLayout(plLayout);
+        plLayout.setHorizontalGroup(
+            plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(plLayout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addGroup(pl1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pl1Layout.createSequentialGroup()
+                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(plLayout.createSequentialGroup()
                         .addComponent(jScrollPane1)
                         .addGap(19, 19, 19))
-                    .addGroup(pl1Layout.createSequentialGroup()
-                        .addGroup(pl1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(plLayout.createSequentialGroup()
+                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(tb_kode, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(pl1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
                             .addComponent(tb_namabarang, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(pl1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
-                            .addGroup(pl1Layout.createSequentialGroup()
+                            .addGroup(plLayout.createSequentialGroup()
                                 .addComponent(tb_harga1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(tb_harga2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(pl1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pl1Layout.createSequentialGroup()
+                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(plLayout.createSequentialGroup()
                                 .addComponent(cb_jenisbarang, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel1))
                         .addGap(0, 64, Short.MAX_VALUE))
-                    .addGroup(pl1Layout.createSequentialGroup()
+                    .addGroup(plLayout.createSequentialGroup()
                         .addComponent(btn_detail, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btn_addbarang, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
-        pl1Layout.setVerticalGroup(
-            pl1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pl1Layout.createSequentialGroup()
+        plLayout.setVerticalGroup(
+            plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(plLayout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addGroup(pl1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(pl1Layout.createSequentialGroup()
-                        .addGroup(pl1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(plLayout.createSequentialGroup()
+                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
                             .addComponent(jLabel3)
                             .addComponent(jLabel4)
                             .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pl1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(tb_kode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tb_harga1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tb_namabarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -424,21 +430,10 @@ public class Form_Stock extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pl1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_detail, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_addbarang, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(21, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout plLayout = new javax.swing.GroupLayout(pl);
-        pl.setLayout(plLayout);
-        plLayout.setHorizontalGroup(
-            plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pl1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        plLayout.setVerticalGroup(
-            plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pl1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -455,56 +450,52 @@ public class Form_Stock extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
-    int idx = -1;
-
-    public int getIdx() {
-        return idx;
-    }
-
-    public void setIdx(int idx) {
-        this.idx = idx;
-    }
-    
-    private void dgv_barangMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dgv_barangMousePressed
+    private void tb_harga2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb_harga2KeyReleased
         // TODO add your handling code here:
-        idx = dgv_barang.getSelectedRow();
-    }//GEN-LAST:event_dgv_barangMousePressed
+        search();
+    }//GEN-LAST:event_tb_harga2KeyReleased
 
-    private void btn_detailMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_detailMouseEntered
+    private void btn_addbarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addbarangActionPerformed
         // TODO add your handling code here:
-        btn_detail.setBackground(Palette.getButtonSelectedColor());
-    }//GEN-LAST:event_btn_detailMouseEntered
-
-    private void btn_detailMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_detailMouseExited
-        // TODO add your handling code here:
-        btn_detail.setBackground(Palette.getTableDark1());
-    }//GEN-LAST:event_btn_detailMouseExited
-
-    private void btn_refreshMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_refreshMouseEntered
-        // TODO add your handling code here:
-        btn_refresh.setBackground(new Color(106,106,115));
-    }//GEN-LAST:event_btn_refreshMouseEntered
-
-    private void btn_refreshMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_refreshMouseExited
-        // TODO add your handling code here:
-        btn_refresh.setBackground(Palette.getDark3());
-    }//GEN-LAST:event_btn_refreshMouseExited
-
-    private void btn_addbarangMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_addbarangMouseEntered
-        // TODO add your handling code here:
-        btn_addbarang.setBackground(Palette.getButtonSelectedColor());
-    }//GEN-LAST:event_btn_addbarangMouseEntered
+        InsertBarang_Form add_form = new InsertBarang_Form();
+        add_form.setFrm_acc(this);
+        add_form.setVisible(true);
+    }//GEN-LAST:event_btn_addbarangActionPerformed
 
     private void btn_addbarangMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_addbarangMouseExited
         // TODO add your handling code here:
         btn_addbarang.setBackground(Palette.getTableDark1());
     }//GEN-LAST:event_btn_addbarangMouseExited
 
-    private void tb_kodeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb_kodeKeyReleased
+    private void btn_addbarangMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_addbarangMouseEntered
+        // TODO add your handling code here:
+        btn_addbarang.setBackground(Palette.getButtonSelectedColor());
+    }//GEN-LAST:event_btn_addbarangMouseEntered
+
+    private void btn_refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_refreshActionPerformed
+        // TODO add your handling code here:
+        tb_namabarang.setText("");
+        tb_kode.setText("");
+        tb_harga1.setText("");
+        tb_harga2.setText("");
+        cb_jenisbarang.setSelectedIndex(0);
+        search();
+    }//GEN-LAST:event_btn_refreshActionPerformed
+
+    private void btn_refreshMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_refreshMouseExited
+        // TODO add your handling code here:
+        btn_refresh.setBackground(Palette.getDark3());
+    }//GEN-LAST:event_btn_refreshMouseExited
+
+    private void btn_refreshMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_refreshMouseEntered
+        // TODO add your handling code here:
+        btn_refresh.setBackground(new Color(106,106,115));
+    }//GEN-LAST:event_btn_refreshMouseEntered
+
+    private void cb_jenisbarangItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_jenisbarangItemStateChanged
         // TODO add your handling code here:
         search();
-    }//GEN-LAST:event_tb_kodeKeyReleased
+    }//GEN-LAST:event_cb_jenisbarangItemStateChanged
 
     private void tb_namabarangKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb_namabarangKeyReleased
         // TODO add your handling code here:
@@ -516,25 +507,10 @@ public class Form_Stock extends javax.swing.JFrame {
         search();
     }//GEN-LAST:event_tb_harga1KeyReleased
 
-    private void tb_harga2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb_harga2KeyReleased
+    private void tb_kodeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb_kodeKeyReleased
         // TODO add your handling code here:
         search();
-    }//GEN-LAST:event_tb_harga2KeyReleased
-
-    private void cb_jenisbarangItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_jenisbarangItemStateChanged
-        // TODO add your handling code here:
-        search();
-    }//GEN-LAST:event_cb_jenisbarangItemStateChanged
-
-    private void btn_refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_refreshActionPerformed
-        // TODO add your handling code here:
-        tb_namabarang.setText("");
-        tb_kode.setText("");
-        tb_harga1.setText("");
-        tb_harga2.setText("");
-        cb_jenisbarang.setSelectedIndex(0);
-        search();
-    }//GEN-LAST:event_btn_refreshActionPerformed
+    }//GEN-LAST:event_tb_kodeKeyReleased
 
     private void btn_detailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_detailActionPerformed
         // TODO add your handling code here:
@@ -550,12 +526,31 @@ public class Form_Stock extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_detailActionPerformed
 
-    private void btn_addbarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addbarangActionPerformed
+    private void btn_detailMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_detailMouseExited
         // TODO add your handling code here:
-        InsertBarang_Form add_form = new InsertBarang_Form();
-        add_form.setFrm_acc(this);
-        add_form.setVisible(true);
-    }//GEN-LAST:event_btn_addbarangActionPerformed
+        btn_detail.setBackground(Palette.getTableDark1());
+    }//GEN-LAST:event_btn_detailMouseExited
+
+    private void btn_detailMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_detailMouseEntered
+        // TODO add your handling code here:
+        btn_detail.setBackground(Palette.getButtonSelectedColor());
+    }//GEN-LAST:event_btn_detailMouseEntered
+
+    private void dgv_barangMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dgv_barangMousePressed
+        // TODO add your handling code here:
+        idx = dgv_barang.getSelectedRow();
+    }//GEN-LAST:event_dgv_barangMousePressed
+    
+    
+    int idx = -1;
+    
+    public int getIdx() {
+        return idx;
+    }
+    
+    public void setIdx(int idx) {
+        this.idx = idx;
+    }
     
     /**
      * @param args the command line arguments
@@ -605,7 +600,6 @@ public class Form_Stock extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel pl;
-    private javax.swing.JPanel pl1;
     private javax.swing.JTextField tb_harga1;
     private javax.swing.JTextField tb_harga2;
     private javax.swing.JTextField tb_kode;

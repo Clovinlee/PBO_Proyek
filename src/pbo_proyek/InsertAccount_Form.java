@@ -328,24 +328,10 @@ public class InsertAccount_Form extends javax.swing.JFrame {
         x = evt.getX();
         y = evt.getY();
     }//GEN-LAST:event_pl_titlebarMousePressed
-    
-    public boolean checkNama(String nama){
-        String[] temp = nama.split(" ");
-        if(temp.length >= 2){
-            if(temp[0].length() < 2 || temp[1].length() < 2){
-                return false;
-            }
-        }else{
-            if(nama.length() < 4){
-                return false;
-            }
-        }
-        return true;
-    }
-    
+
     private void btn_tambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambahActionPerformed
         // TODO add your handling code here:
-        
+
         if(!checkNama(tb_nama.getText())){
             JOptionPane.showMessageDialog(null, "Panjang minimal nama invalid!","Error",JOptionPane.ERROR_MESSAGE);
         }else{
@@ -379,6 +365,20 @@ public class InsertAccount_Form extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_tambahActionPerformed
     
+    public boolean checkNama(String nama){
+        String[] temp = nama.split(" ");
+        if(temp.length >= 2){
+            if(temp[0].length() < 2 || temp[1].length() < 2){
+                return false;
+            }
+        }else{
+            if(nama.length() < 4){
+                return false;
+            }
+        }
+        return true;
+    }
+        
     public String generateKode(String nama){
         String[] temp = nama.split(" ");
         String kode_final = "";

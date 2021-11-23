@@ -37,10 +37,6 @@ public class Form_Menu extends javax.swing.JFrame {
      */
     private Image logo;
     private JButton prev_btn;
-    private JPanel pl_stock;
-    private JPanel pl_transaction;
-    private JPanel pl_history;
-    private JPanel pl_account;
     private Form_Login frm_login;
     
     private ArrayList<JPanel> listPanel = new ArrayList<>();
@@ -69,6 +65,7 @@ public class Form_Menu extends javax.swing.JFrame {
     Dimension interruptor_default;
     
     public void restartForm(User usr){
+        initSubForm();
         prev_btn = btn_transaction;
         pl_menu.setLayout(new BorderLayout());
         buttonPress(btn_stock);
@@ -103,6 +100,8 @@ public class Form_Menu extends javax.swing.JFrame {
         Form_Laporan frm_his = new Form_Laporan();
         Form_Stock frm_stock = new Form_Stock();
         Form_Transaction frm_trans = new Form_Transaction();
+        listPanel.clear();
+        frm_stock.initJabatan();
         listPanel.add(frm_stock.getPl());
         listPanel.add(frm_trans.getPl());
         listPanel.add(frm_his.getPl());

@@ -1,8 +1,8 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+* To change this license header, choose License Headers in Project Properties.
+* To change this template file, choose Tools | Templates
+* and open the template in the editor.
+*/
 package pbo_proyek;
 
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
  * @author alan bulain
  */
 public class DetailStok_Form extends javax.swing.JFrame {
-
+    
     /**
      * Creates new form DetailStok_Form
      */
@@ -22,6 +22,7 @@ public class DetailStok_Form extends javax.swing.JFrame {
         initComponents();
         loadcmb();
     }
+    
     public DetailStok_Form(String[] data){
         this();
         this.data_stok = data;
@@ -62,7 +63,7 @@ public class DetailStok_Form extends javax.swing.JFrame {
     public Form_Stock getFrm_stc() {
         return frm_stc;
     }
-     public String[] getData_stock() {
+    public String[] getData_stock() {
         return data_stok;
     }
     
@@ -85,18 +86,20 @@ public class DetailStok_Form extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        tb_nama = new javax.swing.JTextField();
         tb_harga = new javax.swing.JTextField();
         cb_jenis = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
         tb_stok = new javax.swing.JTextField();
         btn_updatestok = new javax.swing.JButton();
         btn_deletestok = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tb_nama = new javax.swing.JTextArea();
         pl_titlebar = new javax.swing.JPanel();
         lbl_close = new javax.swing.JLabel();
         lbl_minimize = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(402, 317));
         setUndecorated(true);
 
         pl.setBackground(new java.awt.Color(58, 58, 58));
@@ -118,17 +121,12 @@ public class DetailStok_Form extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(222, 222, 222));
         jLabel8.setText("Harga :");
 
-        tb_nama.setBackground(new java.awt.Color(244, 244, 244));
-        tb_nama.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        tb_nama.setForeground(new java.awt.Color(58, 58, 58));
-        tb_nama.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-        tb_nama.setCaretColor(new java.awt.Color(58, 58, 58));
-
         tb_harga.setBackground(new java.awt.Color(244, 244, 244));
         tb_harga.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         tb_harga.setForeground(new java.awt.Color(58, 58, 58));
         tb_harga.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
         tb_harga.setCaretColor(new java.awt.Color(58, 58, 58));
+        tb_harga.setMaximumSize(new java.awt.Dimension(6, 22));
 
         cb_jenis.setBackground(new java.awt.Color(244, 244, 244));
         cb_jenis.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
@@ -143,6 +141,7 @@ public class DetailStok_Form extends javax.swing.JFrame {
         tb_stok.setForeground(new java.awt.Color(58, 58, 58));
         tb_stok.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
         tb_stok.setCaretColor(new java.awt.Color(58, 58, 58));
+        tb_stok.setMaximumSize(new java.awt.Dimension(6, 22));
 
         btn_updatestok.setBackground(new java.awt.Color(222, 222, 222));
         btn_updatestok.setFont(new java.awt.Font("Yu Gothic UI", 1, 16)); // NOI18N
@@ -173,6 +172,76 @@ public class DetailStok_Form extends javax.swing.JFrame {
                 btn_deletestokActionPerformed(evt);
             }
         });
+
+        tb_nama.setBackground(new java.awt.Color(244, 244, 244));
+        tb_nama.setColumns(20);
+        tb_nama.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        tb_nama.setForeground(new java.awt.Color(58, 58, 58));
+        tb_nama.setRows(5);
+        tb_nama.setCaretColor(new java.awt.Color(58, 58, 58));
+        jScrollPane1.setViewportView(tb_nama);
+
+        javax.swing.GroupLayout plLayout = new javax.swing.GroupLayout(pl);
+        pl.setLayout(plLayout);
+        plLayout.setHorizontalGroup(
+            plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(plLayout.createSequentialGroup()
+                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(plLayout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbl_kode)
+                            .addComponent(jLabel1)))
+                    .addGroup(plLayout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addComponent(tb_stok, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tb_harga, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8)
+                            .addGroup(plLayout.createSequentialGroup()
+                                .addComponent(btn_updatestok, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btn_deletestok, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(plLayout.createSequentialGroup()
+                                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel9)
+                                    .addComponent(cb_jenis, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addContainerGap(18, Short.MAX_VALUE))
+        );
+        plLayout.setVerticalGroup(
+            plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(plLayout.createSequentialGroup()
+                .addGap(7, 7, 7)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lbl_kode)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel9))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cb_jenis, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tb_stok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tb_harga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_updatestok, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_deletestok, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
 
         pl_titlebar.setBackground(new java.awt.Color(58, 58, 58));
         pl_titlebar.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -217,94 +286,24 @@ public class DetailStok_Form extends javax.swing.JFrame {
         pl_titlebarLayout.setVerticalGroup(
             pl_titlebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pl_titlebarLayout.createSequentialGroup()
-                .addGroup(pl_titlebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pl_titlebarLayout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(lbl_close))
-                    .addComponent(lbl_minimize))
-                .addGap(0, 5, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout plLayout = new javax.swing.GroupLayout(pl);
-        pl.setLayout(plLayout);
-        plLayout.setHorizontalGroup(
-            plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(plLayout.createSequentialGroup()
-                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(plLayout.createSequentialGroup()
-                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(plLayout.createSequentialGroup()
-                                .addGap(17, 17, 17)
-                                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lbl_kode)
-                                    .addComponent(jLabel1)))
-                            .addGroup(plLayout.createSequentialGroup()
-                                .addGap(42, 42, 42)
-                                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel8)
-                                    .addGroup(plLayout.createSequentialGroup()
-                                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(tb_harga, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
-                                            .addComponent(tb_stok, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(tb_nama, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel9)
-                                            .addComponent(cb_jenis, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(plLayout.createSequentialGroup()
-                                        .addComponent(btn_updatestok, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(btn_deletestok, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(0, 29, Short.MAX_VALUE))
-                    .addComponent(pl_titlebar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 0, 0))
-        );
-        plLayout.setVerticalGroup(
-            plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(plLayout.createSequentialGroup()
-                .addComponent(pl_titlebar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lbl_kode)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(plLayout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(tb_nama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cb_jenis, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(plLayout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addGap(32, 32, 32)))
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tb_stok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tb_harga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_updatestok, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_deletestok, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addGap(3, 3, 3)
+                .addComponent(lbl_close))
+            .addComponent(lbl_minimize)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(pl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(pl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pl_titlebar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(pl_titlebar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(pl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -328,7 +327,7 @@ public class DetailStok_Form extends javax.swing.JFrame {
 
     private void btn_deletestokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deletestokActionPerformed
         // TODO add your handling code here:
-
+        
         if(JOptionPane.showConfirmDialog(null, "Yakin hapus stok "+data_stok[2]+" ?","Hapus stok",JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
             int output = DB.delete("UPDATE barang SET STATUS = 0 WHERE id = ?",new Object[] {data_stok[0]});
             if(output <= 0){
@@ -352,7 +351,7 @@ public class DetailStok_Form extends javax.swing.JFrame {
         // TODO add your handling code here:
         setState(this.ICONIFIED);
     }//GEN-LAST:event_lbl_minimizeMouseClicked
-
+    
     int state_mode = -1; //-1 not full, 1 full screen
     private int x,y;
     
@@ -372,7 +371,7 @@ public class DetailStok_Form extends javax.swing.JFrame {
         x = evt.getX();
         y = evt.getY();
     }//GEN-LAST:event_pl_titlebarMousePressed
-
+    
     /**
      * @param args the command line arguments
      */
@@ -380,8 +379,8 @@ public class DetailStok_Form extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+        * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+        */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -399,7 +398,7 @@ public class DetailStok_Form extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(DetailStok_Form.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -417,13 +416,14 @@ public class DetailStok_Form extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbl_close;
     private javax.swing.JLabel lbl_kode;
     private javax.swing.JLabel lbl_minimize;
     private javax.swing.JPanel pl;
     private javax.swing.JPanel pl_titlebar;
     private javax.swing.JTextField tb_harga;
-    private javax.swing.JTextField tb_nama;
+    private javax.swing.JTextArea tb_nama;
     private javax.swing.JTextField tb_stok;
     // End of variables declaration//GEN-END:variables
 }

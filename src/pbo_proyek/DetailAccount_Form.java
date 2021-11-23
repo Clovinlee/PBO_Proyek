@@ -166,12 +166,14 @@ public class DetailAccount_Form extends javax.swing.JFrame {
         tb_nama.setForeground(new java.awt.Color(58, 58, 58));
         tb_nama.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
         tb_nama.setCaretColor(new java.awt.Color(58, 58, 58));
+        tb_nama.setMaximumSize(new java.awt.Dimension(6, 22));
 
         tb_username.setBackground(new java.awt.Color(244, 244, 244));
         tb_username.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         tb_username.setForeground(new java.awt.Color(58, 58, 58));
         tb_username.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
         tb_username.setCaretColor(new java.awt.Color(58, 58, 58));
+        tb_username.setMaximumSize(new java.awt.Dimension(6, 22));
 
         tb_password.setBackground(new java.awt.Color(244, 244, 244));
         tb_password.setForeground(new java.awt.Color(58, 58, 58));
@@ -316,15 +318,14 @@ public class DetailAccount_Form extends javax.swing.JFrame {
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(btn_deleteuser, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE)
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, plLayout.createSequentialGroup()
-                                    .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jLabel4)
-                                            .addComponent(jLabel7)
-                                            .addComponent(tb_nama)
-                                            .addComponent(tb_username, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(jLabel3))
+                                    .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jLabel4)
+                                        .addComponent(jLabel7)
+                                        .addComponent(tb_username, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel3)
+                                        .addComponent(tb_nama, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addGap(18, 18, 18)
                                     .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(jLabel8)
