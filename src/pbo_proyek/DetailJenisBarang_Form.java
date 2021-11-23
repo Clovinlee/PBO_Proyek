@@ -5,6 +5,10 @@
  */
 package pbo_proyek;
 
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author chris
@@ -14,12 +18,27 @@ public class DetailJenisBarang_Form extends javax.swing.JFrame {
     /**
      * Creates new form DetailJenisBarang_Form
      */
+    ArrayList<String[]> listJenis;
+    
+    String modejenis= "insert";
+    int idx=0;
+    int idakhir=1;
     public DetailJenisBarang_Form() {
         initComponents();
+        loadDt();
     }
-
+    private void loadDt(){
+        DefaultListModel listModel = new DefaultListModel();
+        listJenis = DB.query("SELECT * FROM JENIS_BARANG");
+        idakhir=1;
+        for (String[] s :listJenis) {
+            listModel.addElement(s[1]);
+            idakhir++;
+        }
+        jListjenis.setModel(listModel);
+    }
     private Form_Stock frm_stock = new Form_Stock();
-
+    
     public Form_Stock getFrm_stock() {
         return frm_stock;
     }
@@ -39,9 +58,9 @@ public class DetailJenisBarang_Form extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
-        btn_updateuser = new javax.swing.JButton();
-        btn_updateuser1 = new javax.swing.JButton();
+        jListjenis = new javax.swing.JList<>();
+        btn_clear = new javax.swing.JButton();
+        btn_updatejns = new javax.swing.JButton();
         tb_nama = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -55,32 +74,47 @@ public class DetailJenisBarang_Form extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(58, 58, 58));
         jPanel1.setPreferredSize(new java.awt.Dimension(772, 496));
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        jListjenis.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane1.setViewportView(jList1);
+        jListjenis.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jListjenisMousePressed(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jListjenis);
 
-        btn_updateuser.setBackground(new java.awt.Color(222, 222, 222));
-        btn_updateuser.setFont(new java.awt.Font("Yu Gothic UI", 1, 16)); // NOI18N
-        btn_updateuser.setForeground(new java.awt.Color(58, 58, 58));
-        btn_updateuser.setText("Clear");
-        btn_updateuser.setBorder(null);
-        btn_updateuser.setContentAreaFilled(false);
-        btn_updateuser.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btn_updateuser.setFocusPainted(false);
-        btn_updateuser.setOpaque(true);
+        btn_clear.setBackground(new java.awt.Color(222, 222, 222));
+        btn_clear.setFont(new java.awt.Font("Yu Gothic UI", 1, 16)); // NOI18N
+        btn_clear.setForeground(new java.awt.Color(58, 58, 58));
+        btn_clear.setText("Clear");
+        btn_clear.setBorder(null);
+        btn_clear.setContentAreaFilled(false);
+        btn_clear.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_clear.setFocusPainted(false);
+        btn_clear.setOpaque(true);
+        btn_clear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_clearActionPerformed(evt);
+            }
+        });
 
-        btn_updateuser1.setBackground(new java.awt.Color(222, 222, 222));
-        btn_updateuser1.setFont(new java.awt.Font("Yu Gothic UI", 1, 16)); // NOI18N
-        btn_updateuser1.setForeground(new java.awt.Color(58, 58, 58));
-        btn_updateuser1.setText("Insert");
-        btn_updateuser1.setBorder(null);
-        btn_updateuser1.setContentAreaFilled(false);
-        btn_updateuser1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btn_updateuser1.setFocusPainted(false);
-        btn_updateuser1.setOpaque(true);
+        btn_updatejns.setBackground(new java.awt.Color(222, 222, 222));
+        btn_updatejns.setFont(new java.awt.Font("Yu Gothic UI", 1, 16)); // NOI18N
+        btn_updatejns.setForeground(new java.awt.Color(58, 58, 58));
+        btn_updatejns.setText("Insert");
+        btn_updatejns.setBorder(null);
+        btn_updatejns.setContentAreaFilled(false);
+        btn_updatejns.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_updatejns.setFocusPainted(false);
+        btn_updatejns.setOpaque(true);
+        btn_updatejns.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_updatejnsActionPerformed(evt);
+            }
+        });
 
         tb_nama.setBackground(new java.awt.Color(244, 244, 244));
         tb_nama.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
@@ -89,11 +123,9 @@ public class DetailJenisBarang_Form extends javax.swing.JFrame {
         tb_nama.setCaretColor(new java.awt.Color(58, 58, 58));
         tb_nama.setMaximumSize(new java.awt.Dimension(6, 22));
 
-        jLabel4.setForeground(new java.awt.Color(222, 222, 222));
         jLabel4.setText("Nama Jenis :");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(222, 222, 222));
         jLabel2.setText("LIST JENIS BARANG");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -103,19 +135,15 @@ public class DetailJenisBarang_Form extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(21, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btn_updateuser, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(209, 209, 209))
+                    .addComponent(btn_clear, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
-                            .addComponent(btn_updateuser1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn_updatejns, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tb_nama, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(152, 152, 152)))
+                    .addComponent(jLabel2))
                 .addGap(14, 14, 14))
         );
         jPanel1Layout.setVerticalGroup(
@@ -130,10 +158,10 @@ public class DetailJenisBarang_Form extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tb_nama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btn_updateuser1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btn_updatejns, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_updateuser, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btn_clear, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(170, 170, 170))
         );
 
@@ -235,6 +263,52 @@ public class DetailJenisBarang_Form extends javax.swing.JFrame {
         y = evt.getY();
     }//GEN-LAST:event_pl_titlebar3MousePressed
 
+    private void jListjenisMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListjenisMousePressed
+        // TODO add your handling code here:
+        btn_updatejns.setText("Update");
+        modejenis="update";
+        idx=jListjenis.getSelectedIndex();
+        tb_nama.setText(jListjenis.getSelectedValue());
+    }//GEN-LAST:event_jListjenisMousePressed
+
+    private void btn_updatejnsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updatejnsActionPerformed
+        // TODO add your handling code here:
+        String namajenis = tb_nama.getText();
+        if(tb_nama.getText().isEmpty()){ JOptionPane.showMessageDialog(null, "Isi nama jenis!","Error",JOptionPane.INFORMATION_MESSAGE);}
+        else{
+        if(modejenis.equals("update")){
+                int up = DB.update("Update jenis_barang SET nama_jenis = ? WHERE id = ?", new Object[] {namajenis,idx+1});
+                if(up != 0){
+                frm_stock.loadDgv();
+                frm_stock.search();
+                frm_stock.setIdx(-1);
+                loadDt();
+                JOptionPane.showMessageDialog(null, "Sukses ubah data","Sukses",JOptionPane.INFORMATION_MESSAGE);
+        }
+        }else if(modejenis.equals("insert")){
+             boolean valid = DB.insert("INSERT INTO jenis_barang(id,nama_jenis) VALUES(?, ?)", new Object[] {idakhir,namajenis});
+                if(valid){
+                JOptionPane.showMessageDialog(null, "Insert Sukses!","Sukses",JOptionPane.INFORMATION_MESSAGE);
+                frm_stock.loadDgv();
+                frm_stock.search();
+                frm_stock.setIdx(-1);
+                loadDt();
+                //this.dispose();
+                }else{
+                    JOptionPane.showMessageDialog(null, "Insert gagal!","Error",JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
+    }//GEN-LAST:event_btn_updatejnsActionPerformed
+
+    private void btn_clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_clearActionPerformed
+        // TODO add your handling code here:
+        idx=0;
+        modejenis="insert";
+        tb_nama.setText("");
+        btn_updatejns.setText("Insert");
+    }//GEN-LAST:event_btn_clearActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -271,24 +345,15 @@ public class DetailJenisBarang_Form extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_updateuser;
-    private javax.swing.JButton btn_updateuser1;
+    private javax.swing.JButton btn_clear;
+    private javax.swing.JButton btn_updatejns;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JList<String> jList1;
+    private javax.swing.JList<String> jListjenis;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lbl_close;
-    private javax.swing.JLabel lbl_close1;
-    private javax.swing.JLabel lbl_close2;
     private javax.swing.JLabel lbl_close3;
-    private javax.swing.JLabel lbl_minimize;
-    private javax.swing.JLabel lbl_minimize1;
-    private javax.swing.JLabel lbl_minimize2;
     private javax.swing.JLabel lbl_minimize3;
-    private javax.swing.JPanel pl_titlebar;
-    private javax.swing.JPanel pl_titlebar1;
-    private javax.swing.JPanel pl_titlebar2;
     private javax.swing.JPanel pl_titlebar3;
     private javax.swing.JTextField tb_nama;
     // End of variables declaration//GEN-END:variables
