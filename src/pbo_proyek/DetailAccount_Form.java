@@ -121,6 +121,7 @@ public class DetailAccount_Form extends javax.swing.JFrame {
         pl_titlebar = new javax.swing.JPanel();
         lbl_close = new javax.swing.JLabel();
         lbl_minimize = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(400, 530));
@@ -289,6 +290,10 @@ public class DetailAccount_Form extends javax.swing.JFrame {
                 .addGap(0, 5, Short.MAX_VALUE))
         );
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(222, 222, 222));
+        jLabel2.setText("DETAIL ACCOUNT");
+
         javax.swing.GroupLayout plLayout = new javax.swing.GroupLayout(pl);
         pl.setLayout(plLayout);
         plLayout.setHorizontalGroup(
@@ -300,7 +305,10 @@ public class DetailAccount_Form extends javax.swing.JFrame {
                         .addGap(17, 17, 17)
                         .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbl_kode)
-                            .addComponent(jLabel1)))
+                            .addGroup(plLayout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel2))))
                     .addGroup(plLayout.createSequentialGroup()
                         .addGap(42, 42, 42)
                         .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -332,14 +340,16 @@ public class DetailAccount_Form extends javax.swing.JFrame {
                                         .addComponent(cb_jabatan, 0, 170, Short.MAX_VALUE)
                                         .addComponent(jLabel9)
                                         .addComponent(tb_password)))))))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap())
         );
         plLayout.setVerticalGroup(
             plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(plLayout.createSequentialGroup()
                 .addComponent(pl_titlebar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel1)
+                .addGap(0, 0, 0)
+                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbl_kode)
                 .addGap(14, 14, 14)
@@ -378,7 +388,7 @@ public class DetailAccount_Form extends javax.swing.JFrame {
                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_updateuser, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_deleteuser, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -508,6 +518,7 @@ public class DetailAccount_Form extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cb_jabatan;
     private com.toedter.calendar.JDateChooser dt_tgl;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

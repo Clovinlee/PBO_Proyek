@@ -199,7 +199,7 @@
                       <Renderer/>
                     </Column>
                     <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title/>
+                      <Title value="Stok Barang"/>
                       <Editor/>
                       <Renderer/>
                     </Column>

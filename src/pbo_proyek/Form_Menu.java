@@ -68,13 +68,19 @@ public class Form_Menu extends javax.swing.JFrame {
         initSubForm();
         prev_btn = btn_transaction;
         pl_menu.setLayout(new BorderLayout());
-        buttonPress(btn_stock);
         User user_login = User.getUser_login();
         lbl_nama.setText("Welcome, "+user_login.getNama());
         lbl_jabatan.setText(usr.getNama_jabatan());
         
         btn_laporan.setVisible(usr.getNama_jabatan().equalsIgnoreCase("Manager"));
         btn_account.setVisible(usr.getNama_jabatan().equalsIgnoreCase("Manager"));
+        btn_transaction.setVisible(!usr.getNama_jabatan().equalsIgnoreCase("Manager"));
+        btn_stock.setVisible(usr.getNama_jabatan().equalsIgnoreCase("Manager"));
+        if(usr.getNama_jabatan().equalsIgnoreCase("Manager")){
+            buttonPress(btn_stock);
+        }else{
+            buttonPress(btn_transaction);
+        }
         
         if(!usr.getNama_jabatan().equalsIgnoreCase("Manager")){
             interruptor.setSize(interruptor.getWidth(),interruptor.getHeight()+50);
@@ -89,7 +95,7 @@ public class Form_Menu extends javax.swing.JFrame {
     public Form_Login getFrm_login() {
         return frm_login;
     }
-
+    
     public void setFrm_login(Form_Login frm_login) {
         this.frm_login = frm_login;
     }
@@ -101,7 +107,6 @@ public class Form_Menu extends javax.swing.JFrame {
         Form_Stock frm_stock = new Form_Stock();
         Form_Transaction frm_trans = new Form_Transaction();
         listPanel.clear();
-        frm_stock.initJabatan();
         listPanel.add(frm_stock.getPl());
         listPanel.add(frm_trans.getPl());
         listPanel.add(frm_his.getPl());

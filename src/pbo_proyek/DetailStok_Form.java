@@ -94,6 +94,7 @@ public class DetailStok_Form extends javax.swing.JFrame {
         btn_deletestok = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tb_nama = new javax.swing.JTextArea();
+        jLabel2 = new javax.swing.JLabel();
         pl_titlebar = new javax.swing.JPanel();
         lbl_close = new javax.swing.JLabel();
         lbl_minimize = new javax.swing.JLabel();
@@ -181,6 +182,10 @@ public class DetailStok_Form extends javax.swing.JFrame {
         tb_nama.setCaretColor(new java.awt.Color(58, 58, 58));
         jScrollPane1.setViewportView(tb_nama);
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(222, 222, 222));
+        jLabel2.setText("DETAIL STOK");
+
         javax.swing.GroupLayout plLayout = new javax.swing.GroupLayout(pl);
         pl.setLayout(plLayout);
         plLayout.setHorizontalGroup(
@@ -191,7 +196,10 @@ public class DetailStok_Form extends javax.swing.JFrame {
                         .addGap(17, 17, 17)
                         .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbl_kode)
-                            .addComponent(jLabel1)))
+                            .addGroup(plLayout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 266, Short.MAX_VALUE)
+                                .addComponent(jLabel2))))
                     .addGroup(plLayout.createSequentialGroup()
                         .addGap(42, 42, 42)
                         .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -211,13 +219,15 @@ public class DetailStok_Form extends javax.swing.JFrame {
                                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel9)
                                     .addComponent(cb_jenis, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap())
         );
         plLayout.setVerticalGroup(
             plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(plLayout.createSequentialGroup()
-                .addGap(7, 7, 7)
-                .addComponent(jLabel1)
+                .addGap(3, 3, 3)
+                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbl_kode)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -240,7 +250,7 @@ public class DetailStok_Form extends javax.swing.JFrame {
                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_updatestok, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_deletestok, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         pl_titlebar.setBackground(new java.awt.Color(58, 58, 58));
@@ -412,6 +422,7 @@ public class DetailStok_Form extends javax.swing.JFrame {
     private javax.swing.JButton btn_updatestok;
     private javax.swing.JComboBox<String> cb_jenis;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;

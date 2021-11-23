@@ -36,21 +36,14 @@ public class Form_Stock extends javax.swing.JFrame {
         } catch (Exception e) {
         }
         initComponents();
-        styleDgv();
         loadDgv();
+        styleDgv();
     }
     
     public JPanel getPl() {
         pl.validate();
         pl.revalidate();
         return pl;
-    }
-    
-    public void initJabatan(){
-        btn_addbarang.setVisible(User.getUser_login().getFk_jabatan().equals("1"));
-        btn_detail.setVisible(User.getUser_login().getFk_jabatan().equals("1"));
-        pl.revalidate();
-        pl.validate();
     }
     
     public void styleDgv(){
@@ -63,6 +56,7 @@ public class Form_Stock extends javax.swing.JFrame {
         jScrollPane1.setBorder(BorderFactory.createEmptyBorder());
         dgv_barang.getTableHeader().setBackground(Palette.getDark1());
         dgv_barang.getTableHeader().setForeground(Palette.getSilver1());
+        
         
     }
     DefaultTableModel tbl;
@@ -218,6 +212,7 @@ public class Form_Stock extends javax.swing.JFrame {
         if (dgv_barang.getColumnModel().getColumnCount() > 0) {
             dgv_barang.getColumnModel().getColumn(0).setResizable(false);
             dgv_barang.getColumnModel().getColumn(0).setPreferredWidth(40);
+            dgv_barang.getColumnModel().getColumn(3).setHeaderValue("Stok Barang");
         }
 
         btn_detail.setBackground(new java.awt.Color(58, 58, 58));
