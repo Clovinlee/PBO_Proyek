@@ -5,17 +5,29 @@
  */
 package pbo_proyek;
 
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Kevin
  */
 public class InsertBarang_Form extends javax.swing.JFrame {
 
+    int state_mode = -1; //-1 not full, 1 full screen
+    private int x,y;
+    ArrayList<String[]> listJenis;
     /**
      * Creates new form InsertBarang_Form
      */
     public InsertBarang_Form() {
         initComponents();
+        listJenis = DB.query("SELECT * FROM JENIS_BARANG");
+        
+        for (String[] s :listJenis) {
+            cb_jenis.addItem(s[1]);
+        }
+        
     }
     private Form_Stock frm_acc;
     
@@ -25,6 +37,33 @@ public class InsertBarang_Form extends javax.swing.JFrame {
     
     public void setFrm_acc(Form_Stock frm_acc) {
         this.frm_acc = frm_acc;
+    }
+    public boolean checkNama(String nama){
+        String[] temp = nama.split(" ");
+        if(temp.length >= 2){
+            if(temp[0].length() < 2 || temp[1].length() < 2){
+                return false;
+            }
+        }else{
+            if(nama.length() < 4){
+                return false;
+            }
+        }
+        return true;
+    }
+    public String generateKode(String nama){
+        String[] temp = nama.split(" ");
+        String kode_final = "";
+        if(temp.length >= 2){
+            kode_final += temp[0].substring(0, 2);
+            kode_final += temp[1].substring(0, 2);
+        }else{
+            kode_final += nama.substring(0, 4);
+        }
+        kode_final = kode_final.toUpperCase();
+        ArrayList<String[]> res = DB.query("select LPAD(count(*)+1,4,'0') from barang where kode like '%"+kode_final+"%'");
+        kode_final += res.get(0)[0];
+        return kode_final;
     }
 
     /**
@@ -43,12 +82,12 @@ public class InsertBarang_Form extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         tb_nama = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        cb_jabatan = new javax.swing.JComboBox<>();
-        tb_password = new javax.swing.JPasswordField();
+        cb_jenis = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
-        tb_username = new javax.swing.JTextField();
+        tb_harga = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         btn_tambah = new javax.swing.JButton();
+        tb_stok = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -95,24 +134,20 @@ public class InsertBarang_Form extends javax.swing.JFrame {
         jLabel9.setForeground(new java.awt.Color(222, 222, 222));
         jLabel9.setText("Jenis Barang:");
 
-        cb_jabatan.setBackground(new java.awt.Color(244, 244, 244));
-        cb_jabatan.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        cb_jabatan.setForeground(new java.awt.Color(58, 58, 58));
-        cb_jabatan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Manager", "Kasir", "Marketing" }));
-        cb_jabatan.setBorder(null);
-        cb_jabatan.setOpaque(false);
-
-        tb_password.setBackground(new java.awt.Color(244, 244, 244));
-        tb_password.setForeground(new java.awt.Color(58, 58, 58));
+        cb_jenis.setBackground(new java.awt.Color(244, 244, 244));
+        cb_jenis.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        cb_jenis.setForeground(new java.awt.Color(58, 58, 58));
+        cb_jenis.setBorder(null);
+        cb_jenis.setOpaque(false);
 
         jLabel10.setForeground(new java.awt.Color(222, 222, 222));
         jLabel10.setText("Stok Barang:");
 
-        tb_username.setBackground(new java.awt.Color(244, 244, 244));
-        tb_username.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        tb_username.setForeground(new java.awt.Color(58, 58, 58));
-        tb_username.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-        tb_username.setCaretColor(new java.awt.Color(58, 58, 58));
+        tb_harga.setBackground(new java.awt.Color(244, 244, 244));
+        tb_harga.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        tb_harga.setForeground(new java.awt.Color(58, 58, 58));
+        tb_harga.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        tb_harga.setCaretColor(new java.awt.Color(58, 58, 58));
 
         jLabel7.setForeground(new java.awt.Color(222, 222, 222));
         jLabel7.setText("Harga Barang:");
@@ -132,6 +167,12 @@ public class InsertBarang_Form extends javax.swing.JFrame {
             }
         });
 
+        tb_stok.setBackground(new java.awt.Color(244, 244, 244));
+        tb_stok.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        tb_stok.setForeground(new java.awt.Color(58, 58, 58));
+        tb_stok.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        tb_stok.setCaretColor(new java.awt.Color(58, 58, 58));
+
         javax.swing.GroupLayout plLayout = new javax.swing.GroupLayout(pl);
         pl.setLayout(plLayout);
         plLayout.setHorizontalGroup(
@@ -145,14 +186,14 @@ public class InsertBarang_Form extends javax.swing.JFrame {
                             .addComponent(jLabel4)
                             .addComponent(jLabel7)
                             .addComponent(tb_nama)
-                            .addComponent(tb_username, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tb_harga, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel10)
-                            .addComponent(cb_jabatan, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cb_jenis, 0, 170, Short.MAX_VALUE)
                             .addComponent(jLabel9)
-                            .addComponent(tb_password, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(tb_stok))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         plLayout.setVerticalGroup(
             plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -163,17 +204,16 @@ public class InsertBarang_Form extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tb_nama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cb_jabatan, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cb_jenis, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(plLayout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tb_password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel10)
                     .addGroup(plLayout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tb_username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(tb_harga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tb_stok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(30, 30, 30)
                 .addComponent(btn_tambah, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 18, Short.MAX_VALUE))
@@ -222,38 +262,56 @@ public class InsertBarang_Form extends javax.swing.JFrame {
 
     private void btn_tambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambahActionPerformed
         // TODO add your handling code here:
-
         if(!checkNama(tb_nama.getText())){
             JOptionPane.showMessageDialog(null, "Panjang minimal nama invalid!","Error",JOptionPane.ERROR_MESSAGE);
         }else{
-            String pw = String.valueOf(tb_password.getPassword());
-            if(pw.equalsIgnoreCase("") || tb_username.getText().equals("")){
-                JOptionPane.showMessageDialog(null, "Username dan password tidak boleh kosong!","Error",JOptionPane.ERROR_MESSAGE);
-            }else{
-                String gndr = "";
-                if(rb_laki.isSelected()){
-                    gndr = "L";
-                }else if(rb_perempuan.isSelected()){
-                    gndr = "P";
-                }
-                if(gndr.equalsIgnoreCase("")){
-                    JOptionPane.showMessageDialog(null, "Gender belum dipilih!","Error",JOptionPane.ERROR_MESSAGE);
-                }else{
-                    String kode = generateKode(tb_nama.getText());
-                    System.out.println(kode);
-                    boolean valid = DB.insert("INSERT INTO karyawan(kode,username,password,nama,gender,tanggal_lahir,alamat,status,fk_jabatan) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)", new Object[] {kode,tb_username.getText(),pw,tb_nama.getText(),gndr,dt_tgl.getDate(),tb_alamat.getText(),1,cb_jabatan.getSelectedIndex()+1});
-                    if(valid){
-                        JOptionPane.showMessageDialog(null, "Insert Sukses!","Sukses",JOptionPane.INFORMATION_MESSAGE);
-                        frm_acc.loadDgv();
-                        frm_acc.search();
-                        frm_acc.setIdx(-1);
-                        this.dispose();
-                    }else{
-                        JOptionPane.showMessageDialog(null, "Insert gagal!","Error",JOptionPane.ERROR_MESSAGE);
-                    }
-                }
+            if (tb_stok.getText().equals("")){
+                JOptionPane.showMessageDialog(null, "Stok Barang tidak boleh kosong!","Error",JOptionPane.ERROR_MESSAGE);
             }
+            else{
+              int stck = Integer.parseInt(tb_stok.getText());
+              if (stck < 0){
+                  JOptionPane.showMessageDialog(null, "Stok Barang tidak boleh kurang dari 0!","Error",JOptionPane.ERROR_MESSAGE);
+              }
+              else{
+                  if(tb_nama.getText().equals("")){
+                      JOptionPane.showMessageDialog(null, "Nama Barang tidak boleh kosong!","Error",JOptionPane.ERROR_MESSAGE);
+                  }
+                  else{
+                      if(tb_harga.getText().equals("")){
+                          JOptionPane.showMessageDialog(null, "harga Barang tidak boleh kosong!","Error",JOptionPane.ERROR_MESSAGE);
+                      }
+                      else{
+                          int hrg = Integer.parseInt(tb_harga.getText());
+                          if (hrg < 1){
+                              JOptionPane.showMessageDialog(null, "Harga Barang tidak boleh kurang dari 1!","Error",JOptionPane.ERROR_MESSAGE);
+                          }
+                          else{
+                              if(cb_jenis.getSelectedItem().toString().equals("")){
+                                  JOptionPane.showMessageDialog(null, "Jenis Barang tidak boleh kosong!","Error",JOptionPane.ERROR_MESSAGE);
+                              }
+                              else{
+                                  String kode = generateKode(tb_nama.getText());
+                                  System.out.println(kode);
+                                  boolean valid = DB.insert("INSERT INTO barang(kode,nama,stok,harga,status,fk_jenis_barang) VALUES(?, ?, ?, ?, ?, ?)", new Object[] {kode,tb_nama.getText(),stck,hrg,1,cb_jenis.getSelectedIndex()+1});
+                                    if(valid){
+                                        JOptionPane.showMessageDialog(null, "Insert Sukses!","Sukses",JOptionPane.INFORMATION_MESSAGE);
+                                        frm_acc.loadDgv();
+                                        frm_acc.search();
+                                        frm_acc.setIdx(-1);
+                                        this.dispose();
+                                    }else{
+                                        JOptionPane.showMessageDialog(null, "Insert gagal!","Error",JOptionPane.ERROR_MESSAGE);
+                                    }
+                              }
+                          }
+                      }
+                  }
+              }
+            }
+            
         }
+        
     }//GEN-LAST:event_btn_tambahActionPerformed
 
     private void lbl_closeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_closeMouseClicked
@@ -320,7 +378,7 @@ public class InsertBarang_Form extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_tambah;
-    private javax.swing.JComboBox<String> cb_jabatan;
+    private javax.swing.JComboBox<String> cb_jenis;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
@@ -329,8 +387,8 @@ public class InsertBarang_Form extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_minimize;
     private javax.swing.JPanel pl;
     private javax.swing.JPanel pl_titlebar;
+    private javax.swing.JTextField tb_harga;
     private javax.swing.JTextField tb_nama;
-    private javax.swing.JPasswordField tb_password;
-    private javax.swing.JTextField tb_username;
+    private javax.swing.JTextField tb_stok;
     // End of variables declaration//GEN-END:variables
 }
