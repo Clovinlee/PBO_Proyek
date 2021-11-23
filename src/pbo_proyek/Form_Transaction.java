@@ -71,6 +71,8 @@ public class Form_Transaction extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        btn_checkout = new javax.swing.JButton();
+        btn_clear = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -196,11 +198,47 @@ public class Form_Transaction extends javax.swing.JFrame {
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel6.setText("Pembayaran : Rp40.000");
 
+        btn_checkout.setBackground(new java.awt.Color(58, 58, 58));
+        btn_checkout.setFont(new java.awt.Font("Yu Gothic UI", 1, 16)); // NOI18N
+        btn_checkout.setForeground(new java.awt.Color(222, 222, 222));
+        btn_checkout.setText("Checkout");
+        btn_checkout.setBorder(null);
+        btn_checkout.setContentAreaFilled(false);
+        btn_checkout.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_checkout.setFocusPainted(false);
+        btn_checkout.setOpaque(true);
+        btn_checkout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_checkoutMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btn_checkoutMouseExited(evt);
+            }
+        });
+
+        btn_clear.setBackground(new java.awt.Color(58, 58, 58));
+        btn_clear.setFont(new java.awt.Font("Yu Gothic UI", 1, 16)); // NOI18N
+        btn_clear.setForeground(new java.awt.Color(222, 222, 222));
+        btn_clear.setText("Clear");
+        btn_clear.setBorder(null);
+        btn_clear.setContentAreaFilled(false);
+        btn_clear.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_clear.setFocusPainted(false);
+        btn_clear.setOpaque(true);
+        btn_clear.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_clearMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btn_clearMouseExited(evt);
+            }
+        });
+
         javax.swing.GroupLayout plLayout = new javax.swing.GroupLayout(pl);
         pl.setLayout(plLayout);
         plLayout.setHorizontalGroup(
             plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(plLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, plLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
@@ -216,8 +254,12 @@ public class Form_Transaction extends javax.swing.JFrame {
                         .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(cb_jenisbarang, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(plLayout.createSequentialGroup()
+                        .addComponent(btn_clear, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40)
+                        .addComponent(btn_checkout, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(plLayout.createSequentialGroup()
                         .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(plLayout.createSequentialGroup()
@@ -246,14 +288,18 @@ public class Form_Transaction extends javax.swing.JFrame {
                             .addComponent(tb_kode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, 0)
                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jLabel6))
                 .addGap(0, 0, 0)
                 .addComponent(jLabel5)
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_checkout, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_clear, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -283,6 +329,27 @@ public class Form_Transaction extends javax.swing.JFrame {
     private void dgv_cartMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dgv_cartMousePressed
         // TODO add your handling code here:
     }//GEN-LAST:event_dgv_cartMousePressed
+
+    private void btn_checkoutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_checkoutMouseEntered
+        // TODO add your handling code here:
+        btn_checkout.setBackground(Palette.getButtonSelectedColor());
+
+    }//GEN-LAST:event_btn_checkoutMouseEntered
+
+    private void btn_clearMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_clearMouseEntered
+        // TODO add your handling code here:
+        btn_clear.setBackground(Palette.getButtonSelectedColor());
+    }//GEN-LAST:event_btn_clearMouseEntered
+
+    private void btn_checkoutMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_checkoutMouseExited
+        // TODO add your handling code here:
+        btn_checkout.setBackground(Palette.getTableDark1());
+    }//GEN-LAST:event_btn_checkoutMouseExited
+
+    private void btn_clearMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_clearMouseExited
+        // TODO add your handling code here:
+        btn_clear.setBackground(Palette.getTableDark1());
+    }//GEN-LAST:event_btn_clearMouseExited
     
     /**
      * @param args the command line arguments
@@ -320,6 +387,8 @@ public class Form_Transaction extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_checkout;
+    private javax.swing.JButton btn_clear;
     private javax.swing.JComboBox<String> cb_jenisbarang;
     private javax.swing.JTable dgv_barangtrans;
     private javax.swing.JTable dgv_cart;

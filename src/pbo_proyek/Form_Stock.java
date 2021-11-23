@@ -116,6 +116,10 @@ public class Form_Stock extends javax.swing.JFrame {
             }else if(s[6].equals("7")){
                 jns = "Printer";
             }*/
+            try {
+                
+            } catch (Exception e) {
+            }
             if(validSearch(tb_kode.getText(),tb_namabarang.getText(),tb_harga1.getText(),tb_harga2.getText(),cb_jenisbarang.getSelectedItem().toString(),jns,s)){
                 tbl.addRow(new Object[] {ctr,s[1],s[2],s[3],s[4],jns});
                 ctr++;
@@ -183,6 +187,7 @@ public class Form_Stock extends javax.swing.JFrame {
 
         dgv_barang.setBackground(new java.awt.Color(58, 58, 58));
         dgv_barang.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        dgv_barang.setForeground(new java.awt.Color(222, 222, 222));
         dgv_barang.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"1", "CABE0001", "Caca Bernerd", "cacab", "Perempuan", null},
@@ -223,6 +228,7 @@ public class Form_Stock extends javax.swing.JFrame {
 
         btn_detail.setBackground(new java.awt.Color(58, 58, 58));
         btn_detail.setFont(new java.awt.Font("Yu Gothic UI", 1, 16)); // NOI18N
+        btn_detail.setForeground(new java.awt.Color(222, 222, 222));
         btn_detail.setText("Details");
         btn_detail.setBorder(null);
         btn_detail.setContentAreaFilled(false);
@@ -244,11 +250,14 @@ public class Form_Stock extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(222, 222, 222));
         jLabel1.setText("Jenis Barang");
 
         tb_kode.setBackground(new java.awt.Color(58, 58, 58));
         tb_kode.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        tb_kode.setForeground(new java.awt.Color(222, 222, 222));
         tb_kode.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        tb_kode.setCaretColor(new java.awt.Color(222, 222, 222));
         tb_kode.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 tb_kodeKeyReleased(evt);
@@ -256,14 +265,18 @@ public class Form_Stock extends javax.swing.JFrame {
         });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(222, 222, 222));
         jLabel2.setText("Kode");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(222, 222, 222));
         jLabel3.setText("Range Harga");
 
         tb_namabarang.setBackground(new java.awt.Color(58, 58, 58));
         tb_namabarang.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        tb_namabarang.setForeground(new java.awt.Color(222, 222, 222));
         tb_namabarang.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        tb_namabarang.setCaretColor(new java.awt.Color(222, 222, 222));
         tb_namabarang.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 tb_namabarangKeyReleased(evt);
@@ -271,6 +284,7 @@ public class Form_Stock extends javax.swing.JFrame {
         });
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(222, 222, 222));
         jLabel4.setText("Nama Barang");
 
         cb_jenisbarang.setBackground(new java.awt.Color(222, 222, 222));
@@ -311,6 +325,7 @@ public class Form_Stock extends javax.swing.JFrame {
 
         btn_addbarang.setBackground(new java.awt.Color(58, 58, 58));
         btn_addbarang.setFont(new java.awt.Font("Yu Gothic UI", 1, 16)); // NOI18N
+        btn_addbarang.setForeground(new java.awt.Color(222, 222, 222));
         btn_addbarang.setText("Add Barang");
         btn_addbarang.setBorder(null);
         btn_addbarang.setContentAreaFilled(false);
@@ -332,10 +347,12 @@ public class Form_Stock extends javax.swing.JFrame {
         });
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(222, 222, 222));
         jLabel5.setText("-");
 
         btn_morejenis.setBackground(new java.awt.Color(58, 58, 58));
         btn_morejenis.setFont(new java.awt.Font("Yu Gothic UI", 1, 16)); // NOI18N
+        btn_morejenis.setForeground(new java.awt.Color(222, 222, 222));
         btn_morejenis.setText("...");
         btn_morejenis.setBorder(null);
         btn_morejenis.setContentAreaFilled(false);
@@ -358,7 +375,9 @@ public class Form_Stock extends javax.swing.JFrame {
 
         tb_harga2.setBackground(new java.awt.Color(58, 58, 58));
         tb_harga2.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        tb_harga2.setForeground(new java.awt.Color(222, 222, 222));
         tb_harga2.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        tb_harga2.setCaretColor(new java.awt.Color(222, 222, 222));
         tb_harga2.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 tb_harga2KeyReleased(evt);
@@ -367,7 +386,9 @@ public class Form_Stock extends javax.swing.JFrame {
 
         tb_harga1.setBackground(new java.awt.Color(58, 58, 58));
         tb_harga1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        tb_harga1.setForeground(new java.awt.Color(222, 222, 222));
         tb_harga1.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        tb_harga1.setCaretColor(new java.awt.Color(222, 222, 222));
         tb_harga1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 tb_harga1KeyReleased(evt);
@@ -384,41 +405,35 @@ public class Form_Stock extends javax.swing.JFrame {
                     .addGroup(plLayout.createSequentialGroup()
                         .addComponent(btn_detail, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btn_addbarang, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, plLayout.createSequentialGroup()
-                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(plLayout.createSequentialGroup()
-                                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(tb_kode, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(tb_namabarang, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(plLayout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addGap(18, 18, 18))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, plLayout.createSequentialGroup()
-                                        .addComponent(tb_harga1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(tb_harga2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(19, 19, 19)
-                                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addGroup(plLayout.createSequentialGroup()
-                                        .addComponent(cb_jenisbarang, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(btn_morejenis, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(23, 23, 23)
-                                        .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jScrollPane1))
-                        .addGap(19, 19, 19))))
+                        .addComponent(btn_addbarang, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(plLayout.createSequentialGroup()
+                            .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel2)
+                                .addComponent(tb_kode, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel4)
+                                .addComponent(tb_namabarang, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(24, 24, 24)
+                            .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(tb_harga1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel3))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jLabel5)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(tb_harga2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(19, 19, 19)
+                            .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel1)
+                                .addGroup(plLayout.createSequentialGroup()
+                                    .addComponent(cb_jenisbarang, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btn_morejenis, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
         plLayout.setVerticalGroup(
             plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -463,6 +478,33 @@ public class Form_Stock extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tb_harga1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb_harga1KeyReleased
+        // TODO add your handling code here:
+        search();
+    }//GEN-LAST:event_tb_harga1KeyReleased
+
+    private void tb_harga2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb_harga2KeyReleased
+        // TODO add your handling code here:
+        search();
+    }//GEN-LAST:event_tb_harga2KeyReleased
+
+    private void btn_morejenisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_morejenisActionPerformed
+        // TODO add your handling code here:
+        DetailJenisBarang_Form frm_jenisbarang = new DetailJenisBarang_Form();
+        frm_jenisbarang.setVisible(true);
+        frm_jenisbarang.setFrm_stock(this);
+    }//GEN-LAST:event_btn_morejenisActionPerformed
+
+    private void btn_morejenisMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_morejenisMouseExited
+        // TODO add your handling code here:
+        btn_morejenis.setBackground(Palette.getTableDark1());
+    }//GEN-LAST:event_btn_morejenisMouseExited
+
+    private void btn_morejenisMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_morejenisMouseEntered
+        // TODO add your handling code here:
+        btn_morejenis.setBackground(Palette.getButtonSelectedColor());
+    }//GEN-LAST:event_btn_morejenisMouseEntered
 
     private void btn_addbarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addbarangActionPerformed
         // TODO add your handling code here:
@@ -544,33 +586,6 @@ public class Form_Stock extends javax.swing.JFrame {
         // TODO add your handling code here:
         idx = dgv_barang.getSelectedRow();
     }//GEN-LAST:event_dgv_barangMousePressed
-
-    private void btn_morejenisMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_morejenisMouseEntered
-        // TODO add your handling code here:
-        btn_morejenis.setBackground(Palette.getButtonSelectedColor());
-    }//GEN-LAST:event_btn_morejenisMouseEntered
-
-    private void btn_morejenisMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_morejenisMouseExited
-        // TODO add your handling code here:
-        btn_morejenis.setBackground(Palette.getTableDark1());
-    }//GEN-LAST:event_btn_morejenisMouseExited
-
-    private void btn_morejenisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_morejenisActionPerformed
-        // TODO add your handling code here:
-        DetailJenisBarang_Form frm_jenisbarang = new DetailJenisBarang_Form();
-        frm_jenisbarang.setVisible(true);
-        frm_jenisbarang.setFrm_stock(this);
-    }//GEN-LAST:event_btn_morejenisActionPerformed
-
-    private void tb_harga2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb_harga2KeyReleased
-        // TODO add your handling code here:
-        search();
-    }//GEN-LAST:event_tb_harga2KeyReleased
-
-    private void tb_harga1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb_harga1KeyReleased
-        // TODO add your handling code here:
-        search();
-    }//GEN-LAST:event_tb_harga1KeyReleased
     
     
     int idx = -1;
