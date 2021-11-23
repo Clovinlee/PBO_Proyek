@@ -339,6 +339,11 @@ public class Form_Stock extends javax.swing.JFrame {
                 btn_addbarangMouseExited(evt);
             }
         });
+        btn_addbarang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_addbarangActionPerformed(evt);
+            }
+        });
 
         tb_harga2.setBackground(new java.awt.Color(58, 58, 58));
         tb_harga2.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
@@ -544,6 +549,13 @@ public class Form_Stock extends javax.swing.JFrame {
             idx = -1;
         }
     }//GEN-LAST:event_btn_detailActionPerformed
+
+    private void btn_addbarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addbarangActionPerformed
+        // TODO add your handling code here:
+        InsertBarang_Form add_form = new InsertBarang_Form();
+        add_form.setFrm_acc(this);
+        add_form.setVisible(true);
+    }//GEN-LAST:event_btn_addbarangActionPerformed
     
     /**
      * @param args the command line arguments
