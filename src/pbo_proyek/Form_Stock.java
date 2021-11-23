@@ -30,6 +30,7 @@ public class Form_Stock extends javax.swing.JFrame {
     
     /** Creates new form Form_Stock */
     public Form_Stock() {
+       
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             UIManager.put("ComboBox.selectionBackground",new ColorUIResource(Palette.getTableDark1()));
@@ -95,6 +96,11 @@ public class Form_Stock extends javax.swing.JFrame {
         int ctr = 1;
         for(String [] s: listStok){
             jns ="Semua";
+            for(String[] j:listJenis){
+                if(s[6].equals(j[0])){
+                    jns=j[1];
+                }
+            }/*
             if(s[6].equals("1")){
                 jns = "Monitor";
             }else if(s[6].equals("2")){
@@ -109,7 +115,7 @@ public class Form_Stock extends javax.swing.JFrame {
                 jns = "Hardisk";
             }else if(s[6].equals("7")){
                 jns = "Printer";
-            }
+            }*/
             if(validSearch(tb_kode.getText(),tb_namabarang.getText(),tb_harga1.getText(),tb_harga2.getText(),cb_jenisbarang.getSelectedItem().toString(),jns,s)){
                 tbl.addRow(new Object[] {ctr,s[1],s[2],s[3],s[4],jns});
                 ctr++;
@@ -160,15 +166,15 @@ public class Form_Stock extends javax.swing.JFrame {
         tb_kode = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        tb_harga1 = new javax.swing.JTextField();
         tb_namabarang = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         cb_jenisbarang = new javax.swing.JComboBox<>();
         btn_refresh = new javax.swing.JButton();
         btn_addbarang = new javax.swing.JButton();
-        tb_harga2 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         btn_morejenis = new javax.swing.JButton();
+        tb_harga2 = new javax.swing.JTextField();
+        tb_harga1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(772, 496));
@@ -177,7 +183,6 @@ public class Form_Stock extends javax.swing.JFrame {
 
         dgv_barang.setBackground(new java.awt.Color(58, 58, 58));
         dgv_barang.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        dgv_barang.setForeground(new java.awt.Color(222, 222, 222));
         dgv_barang.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"1", "CABE0001", "Caca Bernerd", "cacab", "Perempuan", null},
@@ -218,7 +223,6 @@ public class Form_Stock extends javax.swing.JFrame {
 
         btn_detail.setBackground(new java.awt.Color(58, 58, 58));
         btn_detail.setFont(new java.awt.Font("Yu Gothic UI", 1, 16)); // NOI18N
-        btn_detail.setForeground(new java.awt.Color(222, 222, 222));
         btn_detail.setText("Details");
         btn_detail.setBorder(null);
         btn_detail.setContentAreaFilled(false);
@@ -240,14 +244,11 @@ public class Form_Stock extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(222, 222, 222));
         jLabel1.setText("Jenis Barang");
 
         tb_kode.setBackground(new java.awt.Color(58, 58, 58));
         tb_kode.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        tb_kode.setForeground(new java.awt.Color(222, 222, 222));
         tb_kode.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-        tb_kode.setCaretColor(new java.awt.Color(222, 222, 222));
         tb_kode.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 tb_kodeKeyReleased(evt);
@@ -255,29 +256,14 @@ public class Form_Stock extends javax.swing.JFrame {
         });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(222, 222, 222));
         jLabel2.setText("Kode");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(222, 222, 222));
         jLabel3.setText("Range Harga");
-
-        tb_harga1.setBackground(new java.awt.Color(58, 58, 58));
-        tb_harga1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        tb_harga1.setForeground(new java.awt.Color(222, 222, 222));
-        tb_harga1.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-        tb_harga1.setCaretColor(new java.awt.Color(222, 222, 222));
-        tb_harga1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                tb_harga1KeyReleased(evt);
-            }
-        });
 
         tb_namabarang.setBackground(new java.awt.Color(58, 58, 58));
         tb_namabarang.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        tb_namabarang.setForeground(new java.awt.Color(222, 222, 222));
         tb_namabarang.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-        tb_namabarang.setCaretColor(new java.awt.Color(222, 222, 222));
         tb_namabarang.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 tb_namabarangKeyReleased(evt);
@@ -285,7 +271,6 @@ public class Form_Stock extends javax.swing.JFrame {
         });
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(222, 222, 222));
         jLabel4.setText("Nama Barang");
 
         cb_jenisbarang.setBackground(new java.awt.Color(222, 222, 222));
@@ -326,7 +311,6 @@ public class Form_Stock extends javax.swing.JFrame {
 
         btn_addbarang.setBackground(new java.awt.Color(58, 58, 58));
         btn_addbarang.setFont(new java.awt.Font("Yu Gothic UI", 1, 16)); // NOI18N
-        btn_addbarang.setForeground(new java.awt.Color(222, 222, 222));
         btn_addbarang.setText("Add Barang");
         btn_addbarang.setBorder(null);
         btn_addbarang.setContentAreaFilled(false);
@@ -347,24 +331,11 @@ public class Form_Stock extends javax.swing.JFrame {
             }
         });
 
-        tb_harga2.setBackground(new java.awt.Color(58, 58, 58));
-        tb_harga2.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        tb_harga2.setForeground(new java.awt.Color(222, 222, 222));
-        tb_harga2.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-        tb_harga2.setCaretColor(new java.awt.Color(222, 222, 222));
-        tb_harga2.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                tb_harga2KeyReleased(evt);
-            }
-        });
-
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(222, 222, 222));
         jLabel5.setText("-");
 
         btn_morejenis.setBackground(new java.awt.Color(58, 58, 58));
         btn_morejenis.setFont(new java.awt.Font("Yu Gothic UI", 1, 16)); // NOI18N
-        btn_morejenis.setForeground(new java.awt.Color(222, 222, 222));
         btn_morejenis.setText("...");
         btn_morejenis.setBorder(null);
         btn_morejenis.setContentAreaFilled(false);
@@ -382,6 +353,24 @@ public class Form_Stock extends javax.swing.JFrame {
         btn_morejenis.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_morejenisActionPerformed(evt);
+            }
+        });
+
+        tb_harga2.setBackground(new java.awt.Color(58, 58, 58));
+        tb_harga2.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        tb_harga2.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        tb_harga2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tb_harga2KeyReleased(evt);
+            }
+        });
+
+        tb_harga1.setBackground(new java.awt.Color(58, 58, 58));
+        tb_harga1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        tb_harga1.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        tb_harga1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tb_harga1KeyReleased(evt);
             }
         });
 
@@ -409,14 +398,16 @@ public class Form_Stock extends javax.swing.JFrame {
                                     .addComponent(tb_namabarang, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
                                     .addGroup(plLayout.createSequentialGroup()
-                                        .addComponent(tb_harga1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel5)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(tb_harga2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabel3)
+                                        .addGap(18, 18, 18))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, plLayout.createSequentialGroup()
+                                        .addComponent(tb_harga1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tb_harga2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(19, 19, 19)
                                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel1)
                                     .addGroup(plLayout.createSequentialGroup()
@@ -443,12 +434,12 @@ public class Form_Stock extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(tb_kode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tb_harga1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tb_namabarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cb_jenisbarang, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tb_harga2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5)
-                            .addComponent(btn_morejenis)))
+                            .addComponent(btn_morejenis)
+                            .addComponent(tb_harga2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tb_harga1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -472,11 +463,6 @@ public class Form_Stock extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void tb_harga2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb_harga2KeyReleased
-        // TODO add your handling code here:
-        search();
-    }//GEN-LAST:event_tb_harga2KeyReleased
 
     private void btn_addbarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addbarangActionPerformed
         // TODO add your handling code here:
@@ -524,11 +510,6 @@ public class Form_Stock extends javax.swing.JFrame {
         // TODO add your handling code here:
         search();
     }//GEN-LAST:event_tb_namabarangKeyReleased
-
-    private void tb_harga1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb_harga1KeyReleased
-        // TODO add your handling code here:
-        search();
-    }//GEN-LAST:event_tb_harga1KeyReleased
 
     private void tb_kodeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb_kodeKeyReleased
         // TODO add your handling code here:
@@ -580,6 +561,16 @@ public class Form_Stock extends javax.swing.JFrame {
         frm_jenisbarang.setVisible(true);
         frm_jenisbarang.setFrm_stock(this);
     }//GEN-LAST:event_btn_morejenisActionPerformed
+
+    private void tb_harga2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb_harga2KeyReleased
+        // TODO add your handling code here:
+        search();
+    }//GEN-LAST:event_tb_harga2KeyReleased
+
+    private void tb_harga1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb_harga1KeyReleased
+        // TODO add your handling code here:
+        search();
+    }//GEN-LAST:event_tb_harga1KeyReleased
     
     
     int idx = -1;

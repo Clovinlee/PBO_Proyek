@@ -36,6 +36,7 @@ public class Form_Laporan extends javax.swing.JFrame {
         initComponents();
         styleDgv();
         loadDgv();
+        opened = 1;
     }
     public JPanel getPl() {
         return pl;
@@ -288,6 +289,7 @@ public class Form_Laporan extends javax.swing.JFrame {
         tb_Dtrans.setShowVerticalLines(false);
         jScrollPane2.setViewportView(tb_Dtrans);
 
+<<<<<<< HEAD
         dp_tanggal.addInputMethodListener(new java.awt.event.InputMethodListener() {
             public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
                 dp_tanggalInputMethodTextChanged(evt);
@@ -295,6 +297,8 @@ public class Form_Laporan extends javax.swing.JFrame {
             public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
             }
         });
+=======
+>>>>>>> 8d616116c7b98fbd4cf9464272b2c48877d9ebd2
         dp_tanggal.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 dp_tanggalPropertyChange(evt);
@@ -547,6 +551,7 @@ public class Form_Laporan extends javax.swing.JFrame {
         tb_Dtrans.removeAll();
     }//GEN-LAST:event_btn_refreshActionPerformed
 
+<<<<<<< HEAD
     private void tb_notaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb_notaKeyReleased
         // TODO add your handling code here:
         search();
@@ -593,6 +598,16 @@ public class Form_Laporan extends javax.swing.JFrame {
         // TODO add your handling code here:
         
     }//GEN-LAST:event_dp_tanggal1PropertyChange
+=======
+    private int opened = 0;
+    
+    private void dp_tanggalPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dp_tanggalPropertyChange
+        // TODO add your handling code here:
+        if(opened == 1){
+            System.out.println(dp_tanggal.getDate());
+        }
+    }//GEN-LAST:event_dp_tanggalPropertyChange
+>>>>>>> 8d616116c7b98fbd4cf9464272b2c48877d9ebd2
     
     /**
      * @param args the command line arguments
