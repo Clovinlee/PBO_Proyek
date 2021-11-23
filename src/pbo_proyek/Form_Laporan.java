@@ -36,7 +36,6 @@ public class Form_Laporan extends javax.swing.JFrame {
         initComponents();
         styleDgv();
         loadDgv();
-        opened = 1;
     }
     public JPanel getPl() {
         return pl;
@@ -194,6 +193,7 @@ public class Form_Laporan extends javax.swing.JFrame {
         cb_diskon = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         btn_export1 = new javax.swing.JButton();
+        btn_find = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -289,22 +289,6 @@ public class Form_Laporan extends javax.swing.JFrame {
         tb_Dtrans.setShowVerticalLines(false);
         jScrollPane2.setViewportView(tb_Dtrans);
 
-<<<<<<< HEAD
-        dp_tanggal.addInputMethodListener(new java.awt.event.InputMethodListener() {
-            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
-                dp_tanggalInputMethodTextChanged(evt);
-            }
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
-            }
-        });
-=======
->>>>>>> 8d616116c7b98fbd4cf9464272b2c48877d9ebd2
-        dp_tanggal.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                dp_tanggalPropertyChange(evt);
-            }
-        });
-
         btn_export.setBackground(new java.awt.Color(58, 58, 58));
         btn_export.setFont(new java.awt.Font("Yu Gothic UI", 1, 16)); // NOI18N
         btn_export.setForeground(new java.awt.Color(222, 222, 222));
@@ -328,10 +312,11 @@ public class Form_Laporan extends javax.swing.JFrame {
             }
         });
 
-        btn_refresh.setBackground(new java.awt.Color(84, 84, 96));
+        btn_refresh.setBackground(new java.awt.Color(58, 58, 58));
         btn_refresh.setFont(new java.awt.Font("Yu Gothic UI", 1, 16)); // NOI18N
         btn_refresh.setForeground(new java.awt.Color(222, 222, 222));
         btn_refresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pbo_proyek/Images/redo-alt-solid.png"))); // NOI18N
+        btn_refresh.setText("Refresh");
         btn_refresh.setBorder(null);
         btn_refresh.setContentAreaFilled(false);
         btn_refresh.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -351,19 +336,6 @@ public class Form_Laporan extends javax.swing.JFrame {
         btn_refresh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_refreshActionPerformed(evt);
-            }
-        });
-
-        dp_tanggal1.addInputMethodListener(new java.awt.event.InputMethodListener() {
-            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
-                dp_tanggal1InputMethodTextChanged(evt);
-            }
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
-            }
-        });
-        dp_tanggal1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                dp_tanggal1PropertyChange(evt);
             }
         });
 
@@ -409,6 +381,32 @@ public class Form_Laporan extends javax.swing.JFrame {
             }
         });
 
+        btn_find.setBackground(new java.awt.Color(84, 84, 96));
+        btn_find.setFont(new java.awt.Font("Yu Gothic UI", 1, 16)); // NOI18N
+        btn_find.setForeground(new java.awt.Color(222, 222, 222));
+        btn_find.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pbo_proyek/Images/search-solid.png"))); // NOI18N
+        btn_find.setBorder(null);
+        btn_find.setContentAreaFilled(false);
+        btn_find.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_find.setFocusPainted(false);
+        btn_find.setMaximumSize(new java.awt.Dimension(30, 30));
+        btn_find.setMinimumSize(new java.awt.Dimension(30, 30));
+        btn_find.setOpaque(true);
+        btn_find.setPreferredSize(new java.awt.Dimension(30, 30));
+        btn_find.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_findMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btn_findMouseExited(evt);
+            }
+        });
+        btn_find.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_findActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout plLayout = new javax.swing.GroupLayout(pl);
         pl.setLayout(plLayout);
         plLayout.setHorizontalGroup(
@@ -423,68 +421,67 @@ public class Form_Laporan extends javax.swing.JFrame {
                         .addGap(75, 75, 75))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, plLayout.createSequentialGroup()
                         .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(plLayout.createSequentialGroup()
-                                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(tb_nota, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel2))
-                                .addGap(12, 12, 12)
-                                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(tb_karyawan, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel6))
-                                .addGap(18, 18, 18)
-                                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(plLayout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(cb_diskon, 0, 118, Short.MAX_VALUE))
-                                .addGap(18, 18, 18)
-                                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(plLayout.createSequentialGroup()
-                                        .addComponent(dp_tanggal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel4)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(dp_tanggal1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jLabel3))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 742, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, plLayout.createSequentialGroup()
                                 .addComponent(btn_export, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(27, 27, 27)
                                 .addComponent(btn_export1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addGap(16, 16, 16))))
+                        .addGap(16, 16, 16))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, plLayout.createSequentialGroup()
+                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tb_nota, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
+                        .addGap(12, 12, 12)
+                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tb_karyawan, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(cb_diskon, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(dp_tanggal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(dp_tanggal1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_find, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         plLayout.setVerticalGroup(
             plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(plLayout.createSequentialGroup()
-                .addGap(17, 17, 17)
+                .addGap(14, 14, 14)
                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(plLayout.createSequentialGroup()
                         .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel2))
-                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(plLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(tb_karyawan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(tb_nota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cb_diskon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(plLayout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(dp_tanggal, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(tb_karyawan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tb_nota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(plLayout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cb_diskon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(plLayout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addGap(6, 6, 6))
-                    .addComponent(dp_tanggal1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dp_tanggal1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(plLayout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(6, 6, 6)
+                        .addComponent(dp_tanggal, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_find, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
@@ -494,8 +491,9 @@ public class Form_Laporan extends javax.swing.JFrame {
                 .addGap(9, 9, 9)
                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_export, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_export1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33))
+                    .addComponent(btn_export1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(35, 35, 35))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -533,12 +531,12 @@ public class Form_Laporan extends javax.swing.JFrame {
 
     private void btn_refreshMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_refreshMouseEntered
         // TODO add your handling code here:
-        btn_refresh.setBackground(new Color(106,106,115));
+        btn_refresh.setBackground(Palette.getButtonSelectedColor());
     }//GEN-LAST:event_btn_refreshMouseEntered
 
     private void btn_refreshMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_refreshMouseExited
         // TODO add your handling code here:
-        btn_refresh.setBackground(Palette.getDark3());
+        btn_refresh.setBackground(Palette.getTableDark1());
     }//GEN-LAST:event_btn_refreshMouseExited
 
     private void btn_refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_refreshActionPerformed
@@ -551,31 +549,17 @@ public class Form_Laporan extends javax.swing.JFrame {
         tb_Dtrans.removeAll();
     }//GEN-LAST:event_btn_refreshActionPerformed
 
-<<<<<<< HEAD
     private void tb_notaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb_notaKeyReleased
         // TODO add your handling code here:
-        search();
     }//GEN-LAST:event_tb_notaKeyReleased
 
     private void tb_karyawanKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb_karyawanKeyReleased
         // TODO add your handling code here:
-        search();
     }//GEN-LAST:event_tb_karyawanKeyReleased
 
     private void cb_diskonItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_diskonItemStateChanged
         // TODO add your handling code here:
-        search();
     }//GEN-LAST:event_cb_diskonItemStateChanged
-
-    private void dp_tanggalInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_dp_tanggalInputMethodTextChanged
-        // TODO add your handling code here:
-        search();
-    }//GEN-LAST:event_dp_tanggalInputMethodTextChanged
-
-    private void dp_tanggal1InputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_dp_tanggal1InputMethodTextChanged
-        // TODO add your handling code here:
-        search();
-    }//GEN-LAST:event_dp_tanggal1InputMethodTextChanged
 
     private void btn_export1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_export1MouseEntered
         // TODO add your handling code here:
@@ -589,26 +573,26 @@ public class Form_Laporan extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_export1ActionPerformed
 
-    private void dp_tanggalPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dp_tanggalPropertyChange
+    private void btn_findMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_findMouseEntered
         // TODO add your handling code here:
-        
-    }//GEN-LAST:event_dp_tanggalPropertyChange
+        btn_find.setBackground(new Color(106,106,115));
+    }//GEN-LAST:event_btn_findMouseEntered
 
-    private void dp_tanggal1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dp_tanggal1PropertyChange
+    private void btn_findMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_findMouseExited
+        // TODO add your handling code here:
+        btn_find.setBackground(Palette.getDark3());
+    }//GEN-LAST:event_btn_findMouseExited
+
+    private void btn_findActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_findActionPerformed
+        // TODO add your handling code here:
+        search();
+        // CALL SEARCH EVERY THIS BUTTON PRESSED
+    }//GEN-LAST:event_btn_findActionPerformed
+
+    private void dp_tanggalPropertyChange(java.beans.PropertyChangeEvent evt) {                                          
         // TODO add your handling code here:
         
-    }//GEN-LAST:event_dp_tanggal1PropertyChange
-=======
-    private int opened = 0;
-    
-    private void dp_tanggalPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dp_tanggalPropertyChange
-        // TODO add your handling code here:
-        if(opened == 1){
-            System.out.println(dp_tanggal.getDate());
-        }
-    }//GEN-LAST:event_dp_tanggalPropertyChange
->>>>>>> 8d616116c7b98fbd4cf9464272b2c48877d9ebd2
-    
+    }                                         
     /**
      * @param args the command line arguments
      */
@@ -648,6 +632,7 @@ public class Form_Laporan extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_export;
     private javax.swing.JButton btn_export1;
+    private javax.swing.JButton btn_find;
     private javax.swing.JButton btn_refresh;
     private javax.swing.JComboBox<String> cb_diskon;
     private com.toedter.calendar.JDateChooser dp_tanggal;
