@@ -6,6 +6,7 @@
 package pbo_proyek;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,6 +14,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -112,14 +114,18 @@ public class DetailAccount_Form extends javax.swing.JFrame {
         dt_tgl = new com.toedter.calendar.JDateChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
         tb_alamat = new javax.swing.JTextArea();
-        btn_ubahpass = new javax.swing.JButton();
         cb_jabatan = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
         btn_deleteuser = new javax.swing.JButton();
         btn_updateuser = new javax.swing.JButton();
+        pl_titlebar = new javax.swing.JPanel();
+        lbl_close = new javax.swing.JLabel();
+        lbl_minimize = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(400, 530));
         setMinimumSize(new java.awt.Dimension(400, 530));
+        setUndecorated(true);
         setPreferredSize(new java.awt.Dimension(400, 530));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -170,7 +176,6 @@ public class DetailAccount_Form extends javax.swing.JFrame {
         tb_password.setBackground(new java.awt.Color(244, 244, 244));
         tb_password.setForeground(new java.awt.Color(58, 58, 58));
         tb_password.setText("Password");
-        tb_password.setEnabled(false);
 
         rb_laki.setBackground(new java.awt.Color(58, 58, 58));
         rb_laki.setForeground(new java.awt.Color(222, 222, 222));
@@ -190,24 +195,6 @@ public class DetailAccount_Form extends javax.swing.JFrame {
         tb_alamat.setRows(5);
         tb_alamat.setCaretColor(new java.awt.Color(58, 58, 58));
         jScrollPane1.setViewportView(tb_alamat);
-
-        btn_ubahpass.setBackground(new java.awt.Color(222, 222, 222));
-        btn_ubahpass.setFont(new java.awt.Font("Yu Gothic UI", 1, 12)); // NOI18N
-        btn_ubahpass.setForeground(new java.awt.Color(58, 58, 58));
-        btn_ubahpass.setText("Ubah Password");
-        btn_ubahpass.setBorder(null);
-        btn_ubahpass.setContentAreaFilled(false);
-        btn_ubahpass.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btn_ubahpass.setFocusPainted(false);
-        btn_ubahpass.setOpaque(true);
-        btn_ubahpass.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btn_ubahpassMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btn_ubahpassMouseExited(evt);
-            }
-        });
 
         cb_jabatan.setBackground(new java.awt.Color(244, 244, 244));
         cb_jabatan.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
@@ -249,10 +236,62 @@ public class DetailAccount_Form extends javax.swing.JFrame {
             }
         });
 
+        pl_titlebar.setBackground(new java.awt.Color(58, 58, 58));
+        pl_titlebar.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                pl_titlebarMouseDragged(evt);
+            }
+        });
+        pl_titlebar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pl_titlebarMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                pl_titlebarMousePressed(evt);
+            }
+        });
+
+        lbl_close.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pbo_proyek/Images/times-solid.png"))); // NOI18N
+        lbl_close.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbl_closeMouseClicked(evt);
+            }
+        });
+
+        lbl_minimize.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pbo_proyek/Images/window-minimize-solid.png"))); // NOI18N
+        lbl_minimize.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbl_minimizeMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pl_titlebarLayout = new javax.swing.GroupLayout(pl_titlebar);
+        pl_titlebar.setLayout(pl_titlebarLayout);
+        pl_titlebarLayout.setHorizontalGroup(
+            pl_titlebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pl_titlebarLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbl_minimize)
+                .addGap(18, 18, 18)
+                .addComponent(lbl_close)
+                .addContainerGap())
+        );
+        pl_titlebarLayout.setVerticalGroup(
+            pl_titlebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pl_titlebarLayout.createSequentialGroup()
+                .addGroup(pl_titlebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pl_titlebarLayout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(lbl_close))
+                    .addComponent(lbl_minimize))
+                .addGap(0, 5, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout plLayout = new javax.swing.GroupLayout(pl);
         pl.setLayout(plLayout);
         plLayout.setHorizontalGroup(
             plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pl_titlebar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(plLayout.createSequentialGroup()
                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(plLayout.createSequentialGroup()
@@ -272,33 +311,33 @@ public class DetailAccount_Form extends javax.swing.JFrame {
                                     .addGap(123, 123, 123))
                                 .addComponent(dt_tgl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel6)
-                                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, plLayout.createSequentialGroup()
-                                        .addComponent(btn_updateuser, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btn_deleteuser, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(plLayout.createSequentialGroup()
-                                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(plLayout.createSequentialGroup()
+                                    .addComponent(btn_updateuser, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(btn_deleteuser, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, plLayout.createSequentialGroup()
+                                    .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jLabel4)
+                                            .addComponent(jLabel7)
+                                            .addComponent(tb_nama)
+                                            .addComponent(tb_username, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(jLabel3))
+                                    .addGap(18, 18, 18)
                                     .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jLabel4)
-                                        .addComponent(jLabel7)
-                                        .addComponent(tb_nama)
-                                        .addComponent(tb_username, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jLabel3))
-                                .addGap(18, 18, 18)
-                                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(tb_password, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel8)
-                                    .addComponent(btn_ubahpass, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cb_jabatan, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel9))))))
+                                        .addComponent(jLabel8)
+                                        .addComponent(cb_jabatan, 0, 170, Short.MAX_VALUE)
+                                        .addComponent(jLabel9)
+                                        .addComponent(tb_password)))))))
                 .addContainerGap(25, Short.MAX_VALUE))
         );
         plLayout.setVerticalGroup(
             plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(plLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addComponent(pl_titlebar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbl_kode)
@@ -315,9 +354,7 @@ public class DetailAccount_Form extends javax.swing.JFrame {
                     .addGroup(plLayout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tb_password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(8, 8, 8)
-                        .addComponent(btn_ubahpass, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(tb_password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(plLayout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -340,7 +377,7 @@ public class DetailAccount_Form extends javax.swing.JFrame {
                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_updateuser, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_deleteuser, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -358,16 +395,6 @@ public class DetailAccount_Form extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_ubahpassMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_ubahpassMouseEntered
-        // TODO add your handling code here:
-        btn_ubahpass.setBackground(new Color(242,242,242));
-    }//GEN-LAST:event_btn_ubahpassMouseEntered
-
-    private void btn_ubahpassMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_ubahpassMouseExited
-        // TODO add your handling code here:
-        btn_ubahpass.setBackground(new Color(222,222,222));
-    }//GEN-LAST:event_btn_ubahpassMouseExited
-
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosing
@@ -384,6 +411,7 @@ public class DetailAccount_Form extends javax.swing.JFrame {
         if(output != 0){
             frm_acc.loadDgv();
             frm_acc.search();
+            frm_acc.setIdx(-1);
             JOptionPane.showMessageDialog(null, "Sukses ubah data","Sukses",JOptionPane.INFORMATION_MESSAGE);
         }
         
@@ -401,12 +429,42 @@ public class DetailAccount_Form extends javax.swing.JFrame {
                 }else{
                     frm_acc.loadDgv();
                     frm_acc.search();
+                    frm_acc.setIdx(-1);
                     JOptionPane.showMessageDialog(null, "Sukses delete user","Sukses",JOptionPane.INFORMATION_MESSAGE);
                     this.dispose();
                 }
             }
         }
     }//GEN-LAST:event_btn_deleteuserActionPerformed
+
+    private void lbl_closeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_closeMouseClicked
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_lbl_closeMouseClicked
+    
+    int state_mode = -1; //-1 not full, 1 full screen
+    private int x,y;
+    
+    private void lbl_minimizeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_minimizeMouseClicked
+        // TODO add your handling code here:
+        setState(this.ICONIFIED);
+    }//GEN-LAST:event_lbl_minimizeMouseClicked
+    private void pl_titlebarMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pl_titlebarMouseDragged
+        // TODO add your handling code here:
+        int xx = evt.getXOnScreen();
+        int yy = evt.getYOnScreen();
+        this.setLocation(xx-x, yy-y);
+
+    }//GEN-LAST:event_pl_titlebarMouseDragged
+
+    private void pl_titlebarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pl_titlebarMouseClicked
+    }//GEN-LAST:event_pl_titlebarMouseClicked
+
+    private void pl_titlebarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pl_titlebarMousePressed
+        // TODO add your handling code here:
+        x = evt.getX();
+        y = evt.getY();
+    }//GEN-LAST:event_pl_titlebarMousePressed
     
     /**
      * @param args the command line arguments
@@ -445,7 +503,6 @@ public class DetailAccount_Form extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_deleteuser;
-    private javax.swing.JButton btn_ubahpass;
     private javax.swing.JButton btn_updateuser;
     private javax.swing.JComboBox<String> cb_jabatan;
     private com.toedter.calendar.JDateChooser dt_tgl;
@@ -458,8 +515,11 @@ public class DetailAccount_Form extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbl_close;
     private javax.swing.JLabel lbl_kode;
+    private javax.swing.JLabel lbl_minimize;
     private javax.swing.JPanel pl;
+    private javax.swing.JPanel pl_titlebar;
     private javax.swing.JRadioButton rb_laki;
     private javax.swing.JRadioButton rb_perempuan;
     private javax.swing.JTextArea tb_alamat;

@@ -405,7 +405,7 @@ public class Form_Login extends javax.swing.JFrame {
         User u = null;
         
         ArrayList<String[]> s = new ArrayList<>();
-        s = DB.query("select * from karyawan where username = ? AND password = ?", new Object[] {tb_username.getText(),String.valueOf(tb_password.getPassword())});
+        s = DB.query("select * from karyawan where username = ? AND password = ? AND status = 1", new Object[] {tb_username.getText(),String.valueOf(tb_password.getPassword())});
         if(!s.isEmpty()){
             // User(String id, String kode, String nama, String gender, String alamat, Date tanggal_lahir, String status)
             

@@ -85,27 +85,24 @@ public class DB {
                 }
                 
             } catch (Exception ex) {
-                
+                System.out.println(ex.getMessage());
             }
         }
         return resultData;
     }
     
     public static boolean insert(String sql, Object[] data){
-        boolean check = false;
-        
         try{
             PreparedStatement s = DB.c.prepareStatement(sql);
             for(int i = 0; i < data.length; i++){
                 s.setObject(i+1, data[i]);
             }
-            check = s.execute();
+            s.execute();
         }catch(Exception ex){
-            
+            System.out.println(ex.getMessage());
+            return false;
         }
-        check = true;
-        
-        return check;
+        return true;
     }
     
     public static int update(String sql, Object[] data) {

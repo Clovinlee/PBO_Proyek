@@ -47,6 +47,7 @@ public class DetailStok_Form extends javax.swing.JFrame {
     }
     private Form_Stock frm_stc;
     private String[] data_stok;
+    
     public void loadcmb(){
         listjenis = DB.query("SELECT * FROM JENIS_BARANG");
         
@@ -54,6 +55,7 @@ public class DetailStok_Form extends javax.swing.JFrame {
             cb_jenis.addItem(s[1]);
         }
     }
+    
     public void setFrm_stc(Form_Stock frm_stc) {
         this.frm_stc = frm_stc;
     }
@@ -90,21 +92,30 @@ public class DetailStok_Form extends javax.swing.JFrame {
         tb_stok = new javax.swing.JTextField();
         btn_updatestok = new javax.swing.JButton();
         btn_deletestok = new javax.swing.JButton();
+        pl_titlebar = new javax.swing.JPanel();
+        lbl_close = new javax.swing.JLabel();
+        lbl_minimize = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setUndecorated(true);
 
         pl.setBackground(new java.awt.Color(58, 58, 58));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(222, 222, 222));
         jLabel1.setText("Kode :");
 
         lbl_kode.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbl_kode.setForeground(new java.awt.Color(222, 222, 222));
         lbl_kode.setText("D<XXXX0001>");
 
-        jLabel4.setText("Nama :");
+        jLabel4.setForeground(new java.awt.Color(222, 222, 222));
+        jLabel4.setText("Nama Barang :");
 
+        jLabel7.setForeground(new java.awt.Color(222, 222, 222));
         jLabel7.setText("Stok :");
 
+        jLabel8.setForeground(new java.awt.Color(222, 222, 222));
         jLabel8.setText("Harga :");
 
         tb_nama.setBackground(new java.awt.Color(244, 244, 244));
@@ -124,6 +135,7 @@ public class DetailStok_Form extends javax.swing.JFrame {
         cb_jenis.setForeground(new java.awt.Color(58, 58, 58));
         cb_jenis.setOpaque(false);
 
+        jLabel9.setForeground(new java.awt.Color(222, 222, 222));
         jLabel9.setText("Jenis :");
 
         tb_stok.setBackground(new java.awt.Color(244, 244, 244));
@@ -162,6 +174,57 @@ public class DetailStok_Form extends javax.swing.JFrame {
             }
         });
 
+        pl_titlebar.setBackground(new java.awt.Color(58, 58, 58));
+        pl_titlebar.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                pl_titlebarMouseDragged(evt);
+            }
+        });
+        pl_titlebar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pl_titlebarMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                pl_titlebarMousePressed(evt);
+            }
+        });
+
+        lbl_close.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pbo_proyek/Images/times-solid.png"))); // NOI18N
+        lbl_close.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbl_closeMouseClicked(evt);
+            }
+        });
+
+        lbl_minimize.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pbo_proyek/Images/window-minimize-solid.png"))); // NOI18N
+        lbl_minimize.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbl_minimizeMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pl_titlebarLayout = new javax.swing.GroupLayout(pl_titlebar);
+        pl_titlebar.setLayout(pl_titlebarLayout);
+        pl_titlebarLayout.setHorizontalGroup(
+            pl_titlebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pl_titlebarLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbl_minimize)
+                .addGap(18, 18, 18)
+                .addComponent(lbl_close)
+                .addContainerGap())
+        );
+        pl_titlebarLayout.setVerticalGroup(
+            pl_titlebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pl_titlebarLayout.createSequentialGroup()
+                .addGroup(pl_titlebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pl_titlebarLayout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(lbl_close))
+                    .addComponent(lbl_minimize))
+                .addGap(0, 5, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout plLayout = new javax.swing.GroupLayout(pl);
         pl.setLayout(plLayout);
         plLayout.setHorizontalGroup(
@@ -169,67 +232,75 @@ public class DetailStok_Form extends javax.swing.JFrame {
             .addGroup(plLayout.createSequentialGroup()
                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(plLayout.createSequentialGroup()
-                        .addGap(17, 17, 17)
                         .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbl_kode)
-                            .addComponent(jLabel1)))
-                    .addGroup(plLayout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, plLayout.createSequentialGroup()
-                                .addGap(53, 53, 53)
-                                .addComponent(btn_updatestok, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
-                                .addComponent(btn_deletestok, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(45, 45, 45))
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel8)
-                            .addComponent(tb_nama)
-                            .addComponent(cb_jenis, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(tb_harga)
-                            .addComponent(tb_stok))))
-                .addContainerGap(35, Short.MAX_VALUE))
+                            .addGroup(plLayout.createSequentialGroup()
+                                .addGap(17, 17, 17)
+                                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbl_kode)
+                                    .addComponent(jLabel1)))
+                            .addGroup(plLayout.createSequentialGroup()
+                                .addGap(42, 42, 42)
+                                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel8)
+                                    .addGroup(plLayout.createSequentialGroup()
+                                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(tb_harga, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
+                                            .addComponent(tb_stok, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(tb_nama, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel9)
+                                            .addComponent(cb_jenis, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(plLayout.createSequentialGroup()
+                                        .addComponent(btn_updatestok, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btn_deletestok, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(0, 29, Short.MAX_VALUE))
+                    .addComponent(pl_titlebar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, 0))
         );
         plLayout.setVerticalGroup(
             plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(plLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addComponent(pl_titlebar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbl_kode)
-                .addGap(14, 14, 14)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tb_nama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cb_jenis, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(tb_stok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel8)
-                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(plLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(tb_harga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(plLayout.createSequentialGroup()
-                        .addGap(93, 93, 93)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btn_deletestok, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_updatestok, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(136, Short.MAX_VALUE))
+                            .addComponent(tb_nama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cb_jenis, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(plLayout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addGap(32, 32, 32)))
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tb_stok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tb_harga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_updatestok, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_deletestok, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(pl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -237,6 +308,7 @@ public class DetailStok_Form extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_updatestokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updatestokActionPerformed
@@ -249,6 +321,7 @@ public class DetailStok_Form extends javax.swing.JFrame {
         if(output != 0){
             frm_stc.loadDgv();
             frm_stc.search();
+            frm_stc.setIdx(-1);
             JOptionPane.showMessageDialog(null, "Sukses ubah data","Sukses",JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btn_updatestokActionPerformed
@@ -263,11 +336,42 @@ public class DetailStok_Form extends javax.swing.JFrame {
             }else{
                 frm_stc.loadDgv();
                 frm_stc.search();
+                frm_stc.setIdx(-1);
                 JOptionPane.showMessageDialog(null, "Sukses delete Stok","Sukses",JOptionPane.INFORMATION_MESSAGE);
                 this.dispose();
             }
         }
     }//GEN-LAST:event_btn_deletestokActionPerformed
+
+    private void lbl_closeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_closeMouseClicked
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_lbl_closeMouseClicked
+
+    private void lbl_minimizeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_minimizeMouseClicked
+        // TODO add your handling code here:
+        setState(this.ICONIFIED);
+    }//GEN-LAST:event_lbl_minimizeMouseClicked
+
+    int state_mode = -1; //-1 not full, 1 full screen
+    private int x,y;
+    
+    private void pl_titlebarMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pl_titlebarMouseDragged
+        // TODO add your handling code here:
+        int xx = evt.getXOnScreen();
+        int yy = evt.getYOnScreen();
+        this.setLocation(xx-x, yy-y);
+    }//GEN-LAST:event_pl_titlebarMouseDragged
+
+    private void pl_titlebarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pl_titlebarMouseClicked
+
+    }//GEN-LAST:event_pl_titlebarMouseClicked
+
+    private void pl_titlebarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pl_titlebarMousePressed
+        // TODO add your handling code here:
+        x = evt.getX();
+        y = evt.getY();
+    }//GEN-LAST:event_pl_titlebarMousePressed
 
     /**
      * @param args the command line arguments
@@ -313,8 +417,11 @@ public class DetailStok_Form extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel lbl_close;
     private javax.swing.JLabel lbl_kode;
+    private javax.swing.JLabel lbl_minimize;
     private javax.swing.JPanel pl;
+    private javax.swing.JPanel pl_titlebar;
     private javax.swing.JTextField tb_harga;
     private javax.swing.JTextField tb_nama;
     private javax.swing.JTextField tb_stok;

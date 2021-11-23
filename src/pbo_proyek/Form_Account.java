@@ -83,13 +83,6 @@ public class Form_Account extends javax.swing.JFrame {
         dgv_account.getTableHeader().setBackground(Palette.getDark1());
         dgv_account.getTableHeader().setForeground(Palette.getSilver1());
         
-        dgv_account.getColumnModel().getColumn(0).setPreferredWidth(40);
-        dgv_account.getColumnModel().getColumn(0).setMinWidth(40);
-        dgv_account.getColumnModel().getColumn(0).setMaxWidth(40);
-        
-        DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer();
-        cellRenderer.setHorizontalAlignment(JLabel.CENTER);
-        dgv_account.getColumnModel().getColumn(0).setCellRenderer(cellRenderer);
     }
     
     /**
@@ -383,9 +376,12 @@ public class Form_Account extends javax.swing.JFrame {
             DetailAccount_Form da_frm = new DetailAccount_Form(data);
             da_frm.setFrm_acc(this);
             da_frm.setVisible(true);
-            idx = -1;
         }
     }//GEN-LAST:event_btn_detailActionPerformed
+    
+    public void setIdx(int idx){
+        this.idx = idx;
+    }
     
     public int getIdx(int selected_idx){
         int temp_idx = -1;
@@ -470,6 +466,9 @@ public class Form_Account extends javax.swing.JFrame {
 
     private void btn_adduserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_adduserActionPerformed
         // TODO add your handling code here:
+        InsertAccount_Form add_form = new InsertAccount_Form();
+        add_form.setFrm_acc(this);
+        add_form.setVisible(true);
     }//GEN-LAST:event_btn_adduserActionPerformed
     
     int idx = -1;
