@@ -9,12 +9,15 @@ import javax.swing.JPanel;
 import ExternalCode.JTableEdit;
 import java.awt.Color;
 import java.awt.Font;
+import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.plaf.ColorUIResource;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-
+import java.text.SimpleDateFormat;  
 /**
  *
  * @author chris
@@ -32,6 +35,7 @@ public class Form_Laporan extends javax.swing.JFrame {
         }
         initComponents();
         styleDgv();
+        loadDgv();
     }
     public JPanel getPl() {
         return pl;
@@ -60,6 +64,80 @@ public class Form_Laporan extends javax.swing.JFrame {
         jScrollPane2.setBorder(BorderFactory.createEmptyBorder());
         tb_Dtrans.getTableHeader().setBackground(Palette.getDark1());
         tb_Dtrans.getTableHeader().setForeground(Palette.getSilver1());
+    }
+    
+    DefaultTableModel tbl;
+    ArrayList<String[]> listHtrans;
+    ArrayList<String[]> listdiskon;
+    ArrayList<String[]> listkaryawan;
+    ArrayList<String[]> listDtrans;
+    
+    public void loadDgv(){
+        
+        listHtrans = DB.query("SELECT * FROM h_trans");
+        tbl = new DefaultTableModel(new Object[] {"Nomor Nota","Tanggal Transaksi","Diskon","Kode Karyawan","Grand Total"}, 0);
+        tb_Htrans.setDefaultEditor(Object.class, null);
+        listdiskon = DB.query("SELECT * FROM diskon");
+        listkaryawan = DB.query("SELECT * FROM karyawan");
+        
+        
+        int ctr = 1;
+        String diskon="";
+        String karyawan="";
+        for (String[] s : listHtrans) {
+            for(String[] j:listdiskon){
+                if(s[3].equals(j[0])){
+                    diskon = j[1];
+                }
+            }
+            for(String[] k:listkaryawan){
+                if(s[4].equals(k[0])){
+                    karyawan = k[1];
+                }
+            }
+            tbl.addRow(new Object[] {s[0],s[1],diskon,karyawan,s[2]});
+            ctr++;
+        }
+        tb_Htrans.setModel(tbl);
+        
+    }
+    
+    public void search(){
+        tbl = new DefaultTableModel(new Object[] {"Nomor Nota","Tanggal Transaksi","Diskon","Kode Karyawan","Grand Total"}, 0);
+        tb_Htrans.setDefaultEditor(Object.class, null);
+        String diskon="";
+        String karyawan="";
+        for (String[] s : listHtrans) {
+            for(String[] j:listdiskon){
+                if(s[3].equals(j[0])){
+                    diskon = j[1];
+                }
+            }
+            for(String[] k:listkaryawan){
+                if(s[4].equals(k[0])){
+                    karyawan = k[1];
+                }
+            }
+            if(validSearch(tb_nota.getText(),tb_karyawan.getText(),dp_tanggal.getDate(),dp_tanggal1.getDate(),karyawan,s)){
+                tbl.addRow(new Object[] {s[0],s[1],diskon,karyawan,s[2]});
+                
+            }
+        }
+    }
+    public boolean validSearch(String nota, String kodekaryawan, Date tanggalawal, Date tanggalakhir, String karyawan, String[] data){
+        if(data[0].toLowerCase().contains(nota.toLowerCase())){
+            if(karyawan.toLowerCase().contains(kodekaryawan)){
+                Date tgltrans;
+                try {
+                tgltrans = new SimpleDateFormat("yyyy-MM-dd").parse(data[1]);
+                }
+                catch(Exception e){
+                    
+                }
+                
+            }
+        }
+        return false;
     }
     /**
      * This method is called from within the constructor to initialize the form.
