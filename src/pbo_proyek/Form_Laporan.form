@@ -371,6 +371,9 @@
           </SubComponents>
         </Container>
         <Component class="com.toedter.calendar.JDateChooser" name="dp_tanggal">
+          <Events>
+            <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="dp_tanggalPropertyChange"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btn_export">
           <Properties>

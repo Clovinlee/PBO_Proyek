@@ -6,7 +6,10 @@
 
 package pbo_proyek;
 
+import java.awt.Font;
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+import javax.swing.table.JTableHeader;
 
 /**
  *
@@ -17,10 +20,34 @@ public class Form_Transaction extends javax.swing.JFrame {
     /** Creates new form Form_Transaction */
     public Form_Transaction() {
         initComponents();
+        styleDgv();
     }
     public JPanel getPl() {
         return pl;
     }
+    
+    public void styleDgv(){
+        JTableHeader header = dgv_barangtrans.getTableHeader();
+        jScrollPane1.getViewport().setBackground(Palette.getDark4());
+        
+        header.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        header.setOpaque(false);
+        
+        jScrollPane1.setBorder(BorderFactory.createEmptyBorder());
+        dgv_barangtrans.getTableHeader().setBackground(Palette.getDark1());
+        dgv_barangtrans.getTableHeader().setForeground(Palette.getSilver1());
+        
+        JTableHeader header2 = dgv_cart.getTableHeader();
+        jScrollPane2.getViewport().setBackground(Palette.getDark4());
+        
+        header2.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        header2.setOpaque(false);
+        
+        jScrollPane2.setBorder(BorderFactory.createEmptyBorder());
+        dgv_cart.getTableHeader().setBackground(Palette.getDark1());
+        dgv_cart.getTableHeader().setForeground(Palette.getSilver1());
+    }
+    
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -31,20 +58,202 @@ public class Form_Transaction extends javax.swing.JFrame {
     private void initComponents() {
 
         pl = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        dgv_barangtrans = new javax.swing.JTable();
+        tb_kode = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        tb_kode1 = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        cb_jenisbarang = new javax.swing.JComboBox<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        dgv_cart = new javax.swing.JTable();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         pl.setBackground(new java.awt.Color(84, 84, 96));
+        pl.setMinimumSize(new java.awt.Dimension(772, 496));
+
+        dgv_barangtrans.setBackground(new java.awt.Color(58, 58, 58));
+        dgv_barangtrans.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        dgv_barangtrans.setForeground(new java.awt.Color(222, 222, 222));
+        dgv_barangtrans.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {"CABE0001", "Cabel Belut", "120000", "CPU"},
+                {"BEBE0002", "Belle Best", "1500000", "Printer"},
+                {"KAKA0001", "Kacer Kacur", "50000", "Harddisk"}
+            },
+            new String [] {
+                "Kode", "Nama", "Harga", "Jenis Barang"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        dgv_barangtrans.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
+        dgv_barangtrans.setGridColor(new java.awt.Color(255, 255, 255));
+        dgv_barangtrans.setOpaque(false);
+        dgv_barangtrans.setRowHeight(25);
+        dgv_barangtrans.setSelectionBackground(new java.awt.Color(90, 90, 90));
+        dgv_barangtrans.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        dgv_barangtrans.setShowVerticalLines(false);
+        dgv_barangtrans.getTableHeader().setReorderingAllowed(false);
+        dgv_barangtrans.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                dgv_barangtransMousePressed(evt);
+            }
+        });
+        jScrollPane1.setViewportView(dgv_barangtrans);
+
+        tb_kode.setBackground(new java.awt.Color(58, 58, 58));
+        tb_kode.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        tb_kode.setForeground(new java.awt.Color(222, 222, 222));
+        tb_kode.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        tb_kode.setCaretColor(new java.awt.Color(222, 222, 222));
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(222, 222, 222));
+        jLabel2.setText("Kode");
+
+        tb_kode1.setBackground(new java.awt.Color(58, 58, 58));
+        tb_kode1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        tb_kode1.setForeground(new java.awt.Color(222, 222, 222));
+        tb_kode1.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        tb_kode1.setCaretColor(new java.awt.Color(222, 222, 222));
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(222, 222, 222));
+        jLabel3.setText("Nama");
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(222, 222, 222));
+        jLabel1.setText("Jenis Barang");
+
+        cb_jenisbarang.setBackground(new java.awt.Color(222, 222, 222));
+        cb_jenisbarang.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        cb_jenisbarang.setForeground(new java.awt.Color(58, 58, 58));
+        cb_jenisbarang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Semua" }));
+        cb_jenisbarang.setOpaque(false);
+        cb_jenisbarang.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_jenisbarangItemStateChanged(evt);
+            }
+        });
+
+        dgv_cart.setBackground(new java.awt.Color(58, 58, 58));
+        dgv_cart.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        dgv_cart.setForeground(new java.awt.Color(222, 222, 222));
+        dgv_cart.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {"CABE0001", "Cabel Belut", "120000", "2", "240000"},
+                {"KAKA0001", "Kacer Kacur", "50000", "4", "200000"}
+            },
+            new String [] {
+                "Kode", "Nama", "Harga", "Qty", "Subtotal"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        dgv_cart.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
+        dgv_cart.setGridColor(new java.awt.Color(255, 255, 255));
+        dgv_cart.setOpaque(false);
+        dgv_cart.setRowHeight(25);
+        dgv_cart.setSelectionBackground(new java.awt.Color(90, 90, 90));
+        dgv_cart.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        dgv_cart.setShowVerticalLines(false);
+        dgv_cart.getTableHeader().setReorderingAllowed(false);
+        dgv_cart.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                dgv_cartMousePressed(evt);
+            }
+        });
+        jScrollPane2.setViewportView(dgv_cart);
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(222, 222, 222));
+        jLabel4.setText("Grand Total : Rp440.000");
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(222, 222, 222));
+        jLabel5.setText("Diskon : Rp40.000");
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(222, 222, 222));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel6.setText("Pembayaran : Rp40.000");
 
         javax.swing.GroupLayout plLayout = new javax.swing.GroupLayout(pl);
         pl.setLayout(plLayout);
         plLayout.setHorizontalGroup(
             plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 630, Short.MAX_VALUE)
+            .addGroup(plLayout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(plLayout.createSequentialGroup()
+                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(tb_kode, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(tb_kode1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(cb_jenisbarang, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(plLayout.createSequentialGroup()
+                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(plLayout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(42, 42, 42))
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(42, 42, 42)
+                        .addComponent(jLabel6))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18))
         );
         plLayout.setVerticalGroup(
             plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 461, Short.MAX_VALUE)
+            .addGroup(plLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(plLayout.createSequentialGroup()
+                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(tb_kode1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cb_jenisbarang, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tb_kode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel6))
+                .addGap(0, 0, 0)
+                .addComponent(jLabel5)
+                .addContainerGap(51, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -60,6 +269,20 @@ public class Form_Transaction extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void dgv_barangtransMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dgv_barangtransMousePressed
+        // TODO add your handling code here:
+//        idx = dgv_barangtrans.getSelectedRow();
+    }//GEN-LAST:event_dgv_barangtransMousePressed
+
+    private void cb_jenisbarangItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_jenisbarangItemStateChanged
+        // TODO add your handling code here:
+//        search();
+    }//GEN-LAST:event_cb_jenisbarangItemStateChanged
+
+    private void dgv_cartMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dgv_cartMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dgv_cartMousePressed
     
     /**
      * @param args the command line arguments
@@ -97,7 +320,20 @@ public class Form_Transaction extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cb_jenisbarang;
+    private javax.swing.JTable dgv_barangtrans;
+    private javax.swing.JTable dgv_cart;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel pl;
+    private javax.swing.JTextField tb_kode;
+    private javax.swing.JTextField tb_kode1;
     // End of variables declaration//GEN-END:variables
     
 }

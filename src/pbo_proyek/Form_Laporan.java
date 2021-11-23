@@ -36,6 +36,7 @@ public class Form_Laporan extends javax.swing.JFrame {
         initComponents();
         styleDgv();
         loadDgv();
+        opened = 1;
     }
     public JPanel getPl() {
         return pl;
@@ -250,6 +251,12 @@ public class Form_Laporan extends javax.swing.JFrame {
         tb_Dtrans.setShowVerticalLines(false);
         jScrollPane2.setViewportView(tb_Dtrans);
 
+        dp_tanggal.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                dp_tanggalPropertyChange(evt);
+            }
+        });
+
         btn_export.setBackground(new java.awt.Color(58, 58, 58));
         btn_export.setFont(new java.awt.Font("Yu Gothic UI", 1, 16)); // NOI18N
         btn_export.setForeground(new java.awt.Color(222, 222, 222));
@@ -429,6 +436,15 @@ public class Form_Laporan extends javax.swing.JFrame {
         // TODO add your handling code here:
         
     }//GEN-LAST:event_btn_refreshActionPerformed
+
+    private int opened = 0;
+    
+    private void dp_tanggalPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dp_tanggalPropertyChange
+        // TODO add your handling code here:
+        if(opened == 1){
+            System.out.println(dp_tanggal.getDate());
+        }
+    }//GEN-LAST:event_dp_tanggalPropertyChange
     
     /**
      * @param args the command line arguments
