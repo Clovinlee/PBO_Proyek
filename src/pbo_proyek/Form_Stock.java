@@ -168,6 +168,7 @@ public class Form_Stock extends javax.swing.JFrame {
         btn_addbarang = new javax.swing.JButton();
         tb_harga2 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
+        btn_morejenis = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(772, 496));
@@ -361,6 +362,29 @@ public class Form_Stock extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(222, 222, 222));
         jLabel5.setText("-");
 
+        btn_morejenis.setBackground(new java.awt.Color(58, 58, 58));
+        btn_morejenis.setFont(new java.awt.Font("Yu Gothic UI", 1, 16)); // NOI18N
+        btn_morejenis.setForeground(new java.awt.Color(222, 222, 222));
+        btn_morejenis.setText("...");
+        btn_morejenis.setBorder(null);
+        btn_morejenis.setContentAreaFilled(false);
+        btn_morejenis.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_morejenis.setFocusPainted(false);
+        btn_morejenis.setOpaque(true);
+        btn_morejenis.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_morejenisMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btn_morejenisMouseExited(evt);
+            }
+        });
+        btn_morejenis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_morejenisActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout plLayout = new javax.swing.GroupLayout(pl);
         pl.setLayout(plLayout);
         plLayout.setHorizontalGroup(
@@ -369,38 +393,41 @@ public class Form_Stock extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(plLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
-                        .addGap(19, 19, 19))
-                    .addGroup(plLayout.createSequentialGroup()
-                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(tb_kode, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(tb_namabarang, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addGroup(plLayout.createSequentialGroup()
-                                .addComponent(tb_harga1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(tb_harga2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(plLayout.createSequentialGroup()
-                                .addComponent(cb_jenisbarang, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel1))
-                        .addGap(0, 64, Short.MAX_VALUE))
-                    .addGroup(plLayout.createSequentialGroup()
                         .addComponent(btn_detail, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btn_addbarang, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, plLayout.createSequentialGroup()
+                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(plLayout.createSequentialGroup()
+                                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(tb_kode, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(tb_namabarang, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addGroup(plLayout.createSequentialGroup()
+                                        .addComponent(tb_harga1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel5)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(tb_harga2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addGroup(plLayout.createSequentialGroup()
+                                        .addComponent(cb_jenisbarang, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btn_morejenis, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(23, 23, 23)
+                                        .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1))
+                        .addGap(19, 19, 19))))
         );
         plLayout.setVerticalGroup(
             plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -420,7 +447,8 @@ public class Form_Stock extends javax.swing.JFrame {
                             .addComponent(tb_namabarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cb_jenisbarang, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tb_harga2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5)))
+                            .addComponent(jLabel5)
+                            .addComponent(btn_morejenis)))
                     .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -535,6 +563,23 @@ public class Form_Stock extends javax.swing.JFrame {
         // TODO add your handling code here:
         idx = dgv_barang.getSelectedRow();
     }//GEN-LAST:event_dgv_barangMousePressed
+
+    private void btn_morejenisMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_morejenisMouseEntered
+        // TODO add your handling code here:
+        btn_morejenis.setBackground(Palette.getButtonSelectedColor());
+    }//GEN-LAST:event_btn_morejenisMouseEntered
+
+    private void btn_morejenisMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_morejenisMouseExited
+        // TODO add your handling code here:
+        btn_morejenis.setBackground(Palette.getTableDark1());
+    }//GEN-LAST:event_btn_morejenisMouseExited
+
+    private void btn_morejenisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_morejenisActionPerformed
+        // TODO add your handling code here:
+        DetailJenisBarang_Form frm_jenisbarang = new DetailJenisBarang_Form();
+        frm_jenisbarang.setVisible(true);
+        frm_jenisbarang.setFrm_stock(this);
+    }//GEN-LAST:event_btn_morejenisActionPerformed
     
     
     int idx = -1;
@@ -585,6 +630,7 @@ public class Form_Stock extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_addbarang;
     private javax.swing.JButton btn_detail;
+    private javax.swing.JButton btn_morejenis;
     private javax.swing.JButton btn_refresh;
     private javax.swing.JComboBox<String> cb_jenisbarang;
     private javax.swing.JTable dgv_barang;

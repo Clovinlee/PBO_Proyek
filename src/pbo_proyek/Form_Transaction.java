@@ -34,7 +34,7 @@ public class Form_Transaction extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        pl.setBackground(new java.awt.Color(51, 255, 51));
+        pl.setBackground(new java.awt.Color(84, 84, 96));
 
         javax.swing.GroupLayout plLayout = new javax.swing.GroupLayout(pl);
         pl.setLayout(plLayout);
