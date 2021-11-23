@@ -39,7 +39,7 @@ public class Form_Account extends javax.swing.JFrame {
         initComponents();
         loadDgv();
         styleDgv();
-        
+        loadCmb();
         
         
         tb_kode.setBackground(Palette.getTableDark1());
@@ -49,19 +49,30 @@ public class Form_Account extends javax.swing.JFrame {
     
     DefaultTableModel tbl;
     ArrayList<String[]> listUser;
+    ArrayList<String[]> listJabatan;
+    
+    public void loadCmb(){
+        listJabatan= DB.query("SELECT * FROM jabatan");
+        
+        for (String[] s : listJabatan) {
+            cb_jabatan.addItem(s[1]);
+        }
+    }
     
     public void loadDgv(){
         listUser = DB.query("SELECT * FROM karyawan where status = 1");
-        tbl = new DefaultTableModel(new Object[] {"No","Kode","Nama","Username","Gender"}, 0);
+        tbl = new DefaultTableModel(new Object[] {"No","Kode","Nama","Username","Jabatan"}, 0);
         dgv_account.setDefaultEditor(Object.class, null);
         
         int ctr = 1;
         for (String[] s : listUser) {
-            String gndr = "Laki - Laki";
-            if(s[5].equalsIgnoreCase("P")){
-                gndr = "Perempuan";
+            String jbtn = "Manager";
+            if(s[11].equalsIgnoreCase("2")){
+                jbtn = "Kasir";
+            }else if(s[11].equalsIgnoreCase("3")){
+                jbtn = "Marketing";
             }
-            tbl.addRow(new Object[] {ctr,s[1],s[4],s[2],gndr});
+            tbl.addRow(new Object[] {ctr,s[1],s[4],s[2],jbtn});
             ctr++;
         }
         dgv_account.setModel(tbl);
@@ -105,13 +116,12 @@ public class Form_Account extends javax.swing.JFrame {
         tb_nama = new javax.swing.JTextField();
         tb_username = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        cb_gender = new javax.swing.JComboBox<>();
+        cb_jabatan = new javax.swing.JComboBox<>();
         btn_refresh = new javax.swing.JButton();
         btn_adduser = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(790, 540));
-        setPreferredSize(new java.awt.Dimension(790, 540));
 
         pl.setBackground(new java.awt.Color(84, 84, 96));
 
@@ -125,7 +135,7 @@ public class Form_Account extends javax.swing.JFrame {
                 {"3", "KAKA0001", "Kalvin Kawasaki Nintendo Bugisoka", "kal", "Laki - Laki"}
             },
             new String [] {
-                "No", "Kode", "Nama", "Username", "Gender"
+                "No", "Kode", "Nama", "Username", "Jabatan"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -181,7 +191,7 @@ public class Form_Account extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(222, 222, 222));
-        jLabel1.setText("Gender");
+        jLabel1.setText("Jabatan");
 
         tb_kode.setBackground(new java.awt.Color(58, 58, 58));
         tb_kode.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
@@ -228,15 +238,15 @@ public class Form_Account extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(222, 222, 222));
         jLabel4.setText("Username");
 
-        cb_gender.setBackground(new java.awt.Color(222, 222, 222));
-        cb_gender.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        cb_gender.setForeground(new java.awt.Color(58, 58, 58));
-        cb_gender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Semua", "Laki - Laki", "Perempuan" }));
-        cb_gender.setBorder(null);
-        cb_gender.setOpaque(false);
-        cb_gender.addItemListener(new java.awt.event.ItemListener() {
+        cb_jabatan.setBackground(new java.awt.Color(222, 222, 222));
+        cb_jabatan.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        cb_jabatan.setForeground(new java.awt.Color(58, 58, 58));
+        cb_jabatan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Semua" }));
+        cb_jabatan.setBorder(null);
+        cb_jabatan.setOpaque(false);
+        cb_jabatan.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cb_genderItemStateChanged(evt);
+                cb_jabatanItemStateChanged(evt);
             }
         });
 
@@ -315,7 +325,7 @@ public class Form_Account extends javax.swing.JFrame {
                         .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addGroup(plLayout.createSequentialGroup()
-                                .addComponent(cb_gender, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cb_jabatan, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 22, Short.MAX_VALUE))
@@ -341,7 +351,7 @@ public class Form_Account extends javax.swing.JFrame {
                             .addComponent(tb_kode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tb_nama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tb_username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cb_gender, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(cb_jabatan, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -399,23 +409,20 @@ public class Form_Account extends javax.swing.JFrame {
         
         int ctr = 1;
         for (String[] s : listUser) {
-            String gndr = "Laki - Laki";
-            if(s[5].equalsIgnoreCase("P")){
-                gndr = "Perempuan";
-            }
-            if(validSearch(tb_kode.getText(), tb_nama.getText(), tb_username.getText(), cb_gender.getSelectedItem().toString(), gndr, s)){
-                tbl.addRow(new Object[] {ctr,s[1],s[4],s[2],gndr});
+            String jbtn  = DB.query("SELECT nama_jabatan FROM jabatan WHERE id = "+s[11]).get(0)[0];
+            if(validSearch(tb_kode.getText(), tb_nama.getText(), tb_username.getText(), cb_jabatan.getSelectedItem().toString(), jbtn, s)){
+                tbl.addRow(new Object[] {ctr,s[1],s[4],s[2],jbtn});
                 ctr++;
             }
         }
         dgv_account.setModel(tbl);
     }
     
-    public boolean validSearch(String kode, String nama, String username, String gender, String gndr, String[] data){
+    public boolean validSearch(String kode, String nama, String username, String jabatan, String jbtn, String[] data){
         if(data[1].toLowerCase().contains(kode.toLowerCase())){
             if(data[4].toLowerCase().contains(nama.toLowerCase())){
                 if(data[2].toLowerCase().contains(username.toLowerCase())){
-                    if(gender.equalsIgnoreCase(gndr) || gender.equalsIgnoreCase("Semua")){
+                    if(jabatan.equalsIgnoreCase(jbtn) || jabatan.equalsIgnoreCase("Semua")){
                         return true;
                     }
                 }
@@ -450,7 +457,7 @@ public class Form_Account extends javax.swing.JFrame {
         tb_kode.setText("");
         tb_nama.setText("");
         tb_username.setText("");
-        cb_gender.setSelectedIndex(0);
+        cb_jabatan.setSelectedIndex(0);
         search();
     }//GEN-LAST:event_btn_refreshActionPerformed
 
@@ -477,10 +484,10 @@ public class Form_Account extends javax.swing.JFrame {
         idx = dgv_account.getSelectedRow();
     }//GEN-LAST:event_dgv_accountMousePressed
 
-    private void cb_genderItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_genderItemStateChanged
+    private void cb_jabatanItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_jabatanItemStateChanged
         // TODO add your handling code here:
         search();
-    }//GEN-LAST:event_cb_genderItemStateChanged
+    }//GEN-LAST:event_cb_jabatanItemStateChanged
 
     private void tb_search(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb_search
         // TODO add your handling code here:
@@ -525,7 +532,7 @@ public class Form_Account extends javax.swing.JFrame {
     private javax.swing.JButton btn_adduser;
     private javax.swing.JButton btn_detail;
     private javax.swing.JButton btn_refresh;
-    private javax.swing.JComboBox<String> cb_gender;
+    private javax.swing.JComboBox<String> cb_jabatan;
     private javax.swing.JTable dgv_account;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

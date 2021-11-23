@@ -407,7 +407,7 @@ public class Form_Login extends javax.swing.JFrame {
         ArrayList<String[]> s = new ArrayList<>();
         s = DB.query("select * from karyawan where username = ? AND password = ? AND status = 1", new Object[] {tb_username.getText(),String.valueOf(tb_password.getPassword())});
         if(!s.isEmpty()){
-            // User(String id, String kode, String nama, String gender, String alamat, Date tanggal_lahir, String status)
+            // User(String id, String kode, String username, String password, String nama, String no_telp, String gender, Date tanggal_lahir, String kota, String alamat, String status, String fk_jabatan)
             
             Date dt = null;
             int x = 0;
@@ -416,7 +416,7 @@ public class Form_Login extends javax.swing.JFrame {
                 dt = new SimpleDateFormat("dd-MM-yyyy").parse(s.get(x)[6]);
             } catch (ParseException ex) {}
             
-            u = new User(s.get(x)[0], s.get(x)[1], s.get(x)[2], s.get(x)[3], s.get(x)[4], s.get(x)[5], dt, s.get(x)[7],s.get(x)[8],s.get(x)[9]);
+            u = new User(s.get(x)[0], s.get(x)[1], s.get(x)[2], s.get(x)[3], s.get(x)[4], s.get(x)[5], s.get(x)[7], dt, s.get(x)[8],s.get(x)[9],s.get(x)[10],s.get(x)[11]);
         }
         
         return u;
