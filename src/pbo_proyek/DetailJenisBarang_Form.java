@@ -74,6 +74,7 @@ public class DetailJenisBarang_Form extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(58, 58, 58));
         jPanel1.setPreferredSize(new java.awt.Dimension(772, 496));
 
+        jListjenis.setForeground(new java.awt.Color(222, 222, 222));
         jListjenis.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -123,9 +124,11 @@ public class DetailJenisBarang_Form extends javax.swing.JFrame {
         tb_nama.setCaretColor(new java.awt.Color(58, 58, 58));
         tb_nama.setMaximumSize(new java.awt.Dimension(6, 22));
 
+        jLabel4.setForeground(new java.awt.Color(222, 222, 222));
         jLabel4.setText("Nama Jenis :");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(222, 222, 222));
         jLabel2.setText("LIST JENIS BARANG");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);

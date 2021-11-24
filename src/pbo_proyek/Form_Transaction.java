@@ -8,11 +8,20 @@ package pbo_proyek;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -23,19 +32,72 @@ public class Form_Transaction extends javax.swing.JFrame {
     /** Creates new form Form_Transaction */
     public Form_Transaction() {
         initComponents();
+        tbl_cart = (DefaultTableModel)dgv_cart.getModel();
         loadDgv();
         styleDgv();
+        loadCmb();
+        loadPromo();
     }
+    
+    private Form_Menu frm_menu;
+
+    public Form_Menu getFrm_menu() {
+        return frm_menu;
+    }
+
+    public void setFrm_menu(Form_Menu frm_menu) {
+        this.frm_menu = frm_menu;
+    }
+    
     public JPanel getPl() {
         return pl;
     }
     
+    ArrayList<String[]> listPromo = new ArrayList<>();
+    public void loadPromo(){
+        listPromo = DB.query("SELECT * FROM diskon");
+        for (String[] s : listPromo) {
+            cb_promo.addItem(s[1]);
+        }
+    }
+    
+    public void loadCmb(){
+        listJenis = DB.query("SELECT * FROM jenis_barang");
+        for (String[] s : listJenis) {
+            cb_jenisbarang.addItem(s[1]);
+        }
+    }
+    
+    private int grand_total = 0;
+    private int potongan = 0;
+    
     public void loadDgv(){
-        listBarang = DB.query("SELECT * FROM BARANG");
+        listBarang = DB.query("select b.id, b.kode, b.nama, b.harga, j.nama_jenis from barang b, jenis_barang j where b.status = 1 AND j.id = b.fk_jenis_barang;");
+        tbl = new DefaultTableModel(new Object[] {"Kode","Nama","Harga","Jenis Barang"}, 0);
+        for (String[] s : listBarang) {
+            tbl.addRow(new Object[]{s[1],s[2],s[3],s[4]});
+        }
+        dgv_barangtrans.setModel(tbl);
+        dgv_barangtrans.setDefaultEditor(Object.class, null);
+        clearCart();
+    }
+    
+    public void clearCart(){
+        // tbl_cart = new DefaultTableModel(new Object[] {"Kode","Nama","Harga","Qty","Subtotal"},0);
+        // dgv_cart.setModel(tbl_cart);
+        while(tbl_cart.getRowCount() > 0){
+            tbl_cart.removeRow(0);
+        }
+        grand_total = 0;
+        potongan = 0;
+        lbl_diskon.setText("Diskon : Rp"+String.format("%,d", potongan));
+        cb_promo.setSelectedIndex(0);
+        countGrandtotal();
     }
     
     ArrayList<String[]> listBarang = new ArrayList<>();
     ArrayList<String[]> listJenis = new ArrayList<>();
+    DefaultTableModel tbl_cart;
     
     public void styleDgv(){
         JTableHeader header = dgv_barangtrans.getTableHeader();
@@ -79,12 +141,15 @@ public class Form_Transaction extends javax.swing.JFrame {
         cb_jenisbarang = new javax.swing.JComboBox<>();
         jScrollPane2 = new javax.swing.JScrollPane();
         dgv_cart = new javax.swing.JTable();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        lbl_grandtotal = new javax.swing.JLabel();
+        lbl_diskon = new javax.swing.JLabel();
         btn_checkout = new javax.swing.JButton();
         btn_clear = new javax.swing.JButton();
         btn_refresh = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        cb_promo = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -98,7 +163,9 @@ public class Form_Transaction extends javax.swing.JFrame {
             new Object [][] {
                 {"CABE0001", "Cabel Belut", "120000", "CPU"},
                 {"BEBE0002", "Belle Best", "1500000", "Printer"},
-                {"KAKA0001", "Kacer Kacur", "50000", "Harddisk"}
+                {"KAKA0001", "Kacer Kacur", "50000", "Harddisk"},
+                {"MEBU0001", "Merdu Buang", "10000", null},
+                {"USAK0003", "Usia Aki", "35000", "Printer"}
             },
             new String [] {
                 "Kode", "Nama", "Harga", "Jenis Barang"
@@ -132,6 +199,11 @@ public class Form_Transaction extends javax.swing.JFrame {
         tb_kode.setForeground(new java.awt.Color(222, 222, 222));
         tb_kode.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
         tb_kode.setCaretColor(new java.awt.Color(222, 222, 222));
+        tb_kode.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tb_kodeKeyReleased(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(222, 222, 222));
@@ -142,6 +214,11 @@ public class Form_Transaction extends javax.swing.JFrame {
         tb_nama.setForeground(new java.awt.Color(222, 222, 222));
         tb_nama.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
         tb_nama.setCaretColor(new java.awt.Color(222, 222, 222));
+        tb_nama.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tb_namaKeyReleased(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(222, 222, 222));
@@ -168,14 +245,16 @@ public class Form_Transaction extends javax.swing.JFrame {
         dgv_cart.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"CABE0001", "Cabel Belut", "120000", "2", "240000"},
-                {"KAKA0001", "Kacer Kacur", "50000", "4", "200000"}
+                {"KAKA0001", "Kacer Kacur", "50000", "4", "200000"},
+                {"MEBU0001", "Merdu Buang", "10000", "7", "70000"},
+                {"USAK0003", "Usia Aki", "35000", "2", "70000"}
             },
             new String [] {
                 "Kode", "Nama", "Harga", "Qty", "Subtotal"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, true, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -190,25 +269,22 @@ public class Form_Transaction extends javax.swing.JFrame {
         dgv_cart.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         dgv_cart.setShowVerticalLines(false);
         dgv_cart.getTableHeader().setReorderingAllowed(false);
-        dgv_cart.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                dgv_cartMousePressed(evt);
+        dgv_cart.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                dgv_cartPropertyChange(evt);
             }
         });
         jScrollPane2.setViewportView(dgv_cart);
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(222, 222, 222));
-        jLabel4.setText("Grand Total : Rp440.000");
+        lbl_grandtotal.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        lbl_grandtotal.setForeground(new java.awt.Color(222, 222, 222));
+        lbl_grandtotal.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lbl_grandtotal.setText("Grand Total : Rp0");
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(222, 222, 222));
-        jLabel5.setText("Diskon : Rp40.000");
-
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(222, 222, 222));
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel6.setText("Pembayaran : Rp40.000");
+        lbl_diskon.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        lbl_diskon.setForeground(new java.awt.Color(222, 222, 222));
+        lbl_diskon.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lbl_diskon.setText("Diskon : Rp0");
 
         btn_checkout.setBackground(new java.awt.Color(58, 58, 58));
         btn_checkout.setFont(new java.awt.Font("Yu Gothic UI", 1, 16)); // NOI18N
@@ -227,6 +303,11 @@ public class Form_Transaction extends javax.swing.JFrame {
                 btn_checkoutMouseExited(evt);
             }
         });
+        btn_checkout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_checkoutActionPerformed(evt);
+            }
+        });
 
         btn_clear.setBackground(new java.awt.Color(58, 58, 58));
         btn_clear.setFont(new java.awt.Font("Yu Gothic UI", 1, 16)); // NOI18N
@@ -243,6 +324,11 @@ public class Form_Transaction extends javax.swing.JFrame {
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btn_clearMouseExited(evt);
+            }
+        });
+        btn_clear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_clearActionPerformed(evt);
             }
         });
 
@@ -272,6 +358,38 @@ public class Form_Transaction extends javax.swing.JFrame {
             }
         });
 
+        jPanel1.setBackground(new java.awt.Color(58, 58, 58));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 193, Short.MAX_VALUE)
+        );
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(222, 222, 222));
+        jLabel7.setText("CART DETAIL");
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(222, 222, 222));
+        jLabel4.setText("Promo");
+
+        cb_promo.setBackground(new java.awt.Color(222, 222, 222));
+        cb_promo.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        cb_promo.setForeground(new java.awt.Color(58, 58, 58));
+        cb_promo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tidak ada" }));
+        cb_promo.setOpaque(false);
+        cb_promo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_promoItemStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout plLayout = new javax.swing.GroupLayout(pl);
         pl.setLayout(plLayout);
         plLayout.setHorizontalGroup(
@@ -279,7 +397,6 @@ public class Form_Transaction extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, plLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(plLayout.createSequentialGroup()
                         .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
@@ -293,61 +410,79 @@ public class Form_Transaction extends javax.swing.JFrame {
                             .addComponent(jLabel1)
                             .addComponent(cb_jenisbarang, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                        .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(24, 24, 24)
                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(plLayout.createSequentialGroup()
-                        .addComponent(btn_clear, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(40, 40, 40)
-                        .addComponent(btn_checkout, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(plLayout.createSequentialGroup()
                         .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addGroup(plLayout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(42, 42, 42))
-                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addGap(42, 42, 42)
-                        .addComponent(jLabel6))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18))
+                                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(plLayout.createSequentialGroup()
+                                        .addComponent(btn_clear, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(40, 40, 40)
+                                        .addComponent(btn_checkout, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(plLayout.createSequentialGroup()
+                                        .addComponent(jLabel7)
+                                        .addGap(18, 18, 18)
+                                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel4)
+                                            .addComponent(cb_promo, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(0, 10, Short.MAX_VALUE)))
+                        .addGap(8, 8, 8))
+                    .addGroup(plLayout.createSequentialGroup()
+                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(lbl_grandtotal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, plLayout.createSequentialGroup()
+                                .addGap(30, 30, 30)
+                                .addComponent(lbl_diskon, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         plLayout.setVerticalGroup(
             plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(plLayout.createSequentialGroup()
                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(plLayout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(plLayout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(plLayout.createSequentialGroup()
-                                    .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel3)
-                                        .addComponent(jLabel2)
-                                        .addComponent(jLabel1))
-                                    .addGap(28, 28, 28))
+                                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel1))
                                 .addGroup(plLayout.createSequentialGroup()
                                     .addGap(18, 18, 18)
                                     .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(tb_nama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(cb_jenisbarang, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(tb_kode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, 0)
-                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel6))
-                .addGap(0, 0, 0)
-                .addComponent(jLabel5)
+                                        .addComponent(tb_kode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jLabel7)
+                            .addGroup(plLayout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(28, 28, 28))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, plLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(cb_promo, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_checkout, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_clear, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(plLayout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lbl_diskon)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lbl_grandtotal)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn_checkout, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn_clear, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(plLayout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(16, 16, 16))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -366,17 +501,49 @@ public class Form_Transaction extends javax.swing.JFrame {
 
     private void dgv_barangtransMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dgv_barangtransMousePressed
         // TODO add your handling code here:
-//        idx = dgv_barangtrans.getSelectedRow();
+        if(evt.getClickCount() == 2){
+            idx = dgv_barangtrans.getSelectedRow();
+            if(idx != -1){
+                DefaultTableModel temp_tbl = (DefaultTableModel)dgv_barangtrans.getModel();
+                int exist = -1;
+                String kode1 = temp_tbl.getValueAt(idx, 0).toString();
+                for(int i = 0; i < tbl_cart.getRowCount(); i++){
+                    String kode2 = tbl_cart.getValueAt(i, 0).toString();
+                    if(kode1.equals(kode2)){
+                        exist = i;
+                    }
+                }
+                if(exist != -1){
+                    tbl_cart.setValueAt(Integer.parseInt(tbl_cart.getValueAt(exist, 3).toString())+1, exist, 3);
+                }else{
+                    String nama = temp_tbl.getValueAt(idx, 1).toString();
+                    int harga = Integer.valueOf(temp_tbl.getValueAt(idx, 2).toString());
+                    tbl_cart.addRow(new Object[] {kode1,nama,harga,1,harga});
+                }
+                countSubtotal();
+                countGrandtotal();
+            }
+        }
     }//GEN-LAST:event_dgv_barangtransMousePressed
-
+    
+    public void countGrandtotal(){
+        if(tbl_cart != null){
+            grand_total = 0;
+            for(int i = 0; i < tbl_cart.getRowCount(); i++){
+                grand_total += Integer.valueOf(tbl_cart.getValueAt(i, 4).toString());
+            }
+            grand_total -= potongan;
+            if(grand_total < 0){
+                grand_total = 0;
+            }
+            lbl_grandtotal.setText("Grand Total : Rp"+String.format("%,d",grand_total));
+        }
+    }
+    
     private void cb_jenisbarangItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_jenisbarangItemStateChanged
         // TODO add your handling code here:
-//        search();
+        search();
     }//GEN-LAST:event_cb_jenisbarangItemStateChanged
-
-    private void dgv_cartMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dgv_cartMousePressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_dgv_cartMousePressed
 
     private void btn_checkoutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_checkoutMouseEntered
         // TODO add your handling code here:
@@ -418,34 +585,106 @@ public class Form_Transaction extends javax.swing.JFrame {
         cb_jenisbarang.setSelectedIndex(0);
         search();
     }//GEN-LAST:event_btn_refreshActionPerformed
+
+    private void dgv_cartPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dgv_cartPropertyChange
+        // TODO add your handling code here:
+        countSubtotal();
+        countGrandtotal();
+    }//GEN-LAST:event_dgv_cartPropertyChange
+
+    private void btn_clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_clearActionPerformed
+        // TODO add your handling code here:
+        clearCart();
+    }//GEN-LAST:event_btn_clearActionPerformed
+
+    private void tb_kodeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb_kodeKeyReleased
+        // TODO add your handling code here:
+        search();
+    }//GEN-LAST:event_tb_kodeKeyReleased
+
+    private void tb_namaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb_namaKeyReleased
+        // TODO add your handling code here:
+        search();
+    }//GEN-LAST:event_tb_namaKeyReleased
+
+    private void cb_promoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_promoItemStateChanged
+        // TODO add your handling code here:
+        if(cb_promo.getSelectedItem().toString().equalsIgnoreCase("Tidak ada")){
+            potongan = 0;
+        }else{
+            potongan = Integer.parseInt(listPromo.get(cb_promo.getSelectedIndex()-1)[2]);
+        }
+        countGrandtotal();
+        lbl_diskon.setText("Diskon : Rp"+String.format("%,d", potongan));
+    }//GEN-LAST:event_cb_promoItemStateChanged
+
+    private void btn_checkoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_checkoutActionPerformed
+        // TODO add your handling code here:
+        if(tbl_cart.getRowCount() <= 0){
+            JOptionPane.showMessageDialog(null, "Tidak ada barang di cart!","Error",JOptionPane.ERROR_MESSAGE);
+        }else{
+            Date dt = new Date();
+            DateFormat df = new SimpleDateFormat("yyyyMMdd");
+            String nota = "NOTA" + df.format(dt);
+            String ctr = DB.query("SELECT LPAD(COUNT(*)+1,4,'0') FROM h_trans WHERE nomor_nota LIKE '%"+nota+"%'").get(0)[0];
+            nota += ctr;
+            //TODO : INSERT QUERY
+            ArrayList<String[]> temp_listcart = new ArrayList<>();
+            for(int i = 0; i < tbl_cart.getRowCount(); i++){
+                String[] tmp = new String[] {tbl_cart.getValueAt(i, 0).toString(),tbl_cart.getValueAt(i, 3).toString(),tbl_cart.getValueAt(i, 4).toString()};
+                temp_listcart.add(tmp);
+            }
+            DetailTransaction_Form frm_trans = new DetailTransaction_Form(grand_total, nota, cb_promo.getSelectedIndex()-1, temp_listcart,frm_menu);
+            frm_trans.setVisible(true);
+            frm_menu.setEnabled(false);
+        }
+    }//GEN-LAST:event_btn_checkoutActionPerformed
+    
+    public void countSubtotal(){
+        TableModel temp;
+        temp = dgv_cart.getModel();
+        ArrayList<Integer> listDelete = new ArrayList<>();
+        for(int i = 0; i < temp.getRowCount(); i++){
+            int harga = Integer.parseInt(temp.getValueAt(i, 2).toString());
+            int qty = 0;
+            try {
+                qty = Integer.parseInt(temp.getValueAt(i, 3).toString());
+            } catch (Exception e) {
+            }
+            if(qty <= 0){
+                listDelete.add(i);
+            }
+            temp.setValueAt(harga*qty, i, 4);
+            temp.setValueAt(qty, i, 3);
+        }
+        for(int i = listDelete.size()-1; i>= 0; i--){
+            ((DefaultTableModel)temp).removeRow(listDelete.get(i));
+        }
+        if(dgv_cart.getRowCount() != 0){
+            dgv_cart.setRowSelectionInterval(0, 0);
+        }
+    }
     
     DefaultTableModel tbl;
     
     public void search(){
-        tbl = new DefaultTableModel(new Object[] {"No","Kode","Nama","Username","Gender"}, 0);
-        
-        int ctr = 1;
-//        for (String[] s : listBarang) {
-//            String jbtn  = DB.query("SELECT nama_jabatan FROM jabatan WHERE id = "+s[11]).get(0)[0];
-//            if(validSearch(tb_kode.getText(), tb_nama.getText())){
-//                tbl.addRow(new Object[] {ctr,s[1],s[4],s[2],jbtn});
-//                ctr++;
-//            }
-//        }
-//        dgv_barangtrans.setModel(tbl);
-    }
-    
-    public boolean validSearch(String kode, String nama, String jenisbarang, String jbrg, String[] data){
-        if(data[1].toLowerCase().contains(kode.toLowerCase())){
-            if(data[2].toLowerCase().contains(nama.toLowerCase())){
-                if(jenisbarang.equalsIgnoreCase(jbrg) || jenisbarang.equalsIgnoreCase("Semua")){
-                    return true;
+        // b.id, b.kode, b.nama, b.harga, j.nama_jenis
+        DefaultTableModel tbl = new DefaultTableModel(new Object[] {"Kode","Nama","Harga","Jenis Barang"}, 0);
+        for(int i = 0; i < listBarang.size();i++){
+            String kode = listBarang.get(i)[1];
+            String nama = listBarang.get(i)[2];
+            String harga = listBarang.get(i)[3];
+            String jenis_barang = listBarang.get(i)[4];
+            if(kode.toLowerCase().contains(tb_kode.getText().toLowerCase())){
+                if(nama.toLowerCase().contains(tb_nama.getText().toLowerCase())){
+                    if(cb_jenisbarang.getSelectedItem().equals("Semua") || jenis_barang.equalsIgnoreCase(cb_jenisbarang.getSelectedItem().toString())){
+                        tbl.addRow(new Object[] {kode,nama,harga,jenis_barang});
+                    }
                 }
             }
         }
-        return false;
+        dgv_barangtrans.setModel(tbl);
     }
-    
     /**
      * @param args the command line arguments
      */
@@ -486,16 +725,19 @@ public class Form_Transaction extends javax.swing.JFrame {
     private javax.swing.JButton btn_clear;
     private javax.swing.JButton btn_refresh;
     private javax.swing.JComboBox<String> cb_jenisbarang;
+    private javax.swing.JComboBox<String> cb_promo;
     private javax.swing.JTable dgv_barangtrans;
     private javax.swing.JTable dgv_cart;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lbl_diskon;
+    private javax.swing.JLabel lbl_grandtotal;
     private javax.swing.JPanel pl;
     private javax.swing.JTextField tb_kode;
     private javax.swing.JTextField tb_nama;

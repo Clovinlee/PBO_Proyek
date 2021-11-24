@@ -106,6 +106,7 @@ public class Form_Menu extends javax.swing.JFrame {
         Form_Laporan frm_his = new Form_Laporan();
         Form_Stock frm_stock = new Form_Stock();
         Form_Transaction frm_trans = new Form_Transaction();
+        frm_trans.setFrm_menu(this);
         listPanel.clear();
         listPanel.add(frm_stock.getPl());
         listPanel.add(frm_trans.getPl());

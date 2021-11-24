@@ -149,21 +149,27 @@ public class DetailAccount_Form extends javax.swing.JFrame {
         lbl_kode.setForeground(new java.awt.Color(222, 222, 222));
         lbl_kode.setText("D<XXXX0001>");
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(222, 222, 222));
         jLabel3.setText("Jenis Kelamin :");
 
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(222, 222, 222));
         jLabel4.setText("Nama :");
 
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(222, 222, 222));
         jLabel5.setText("Alamat :");
 
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(222, 222, 222));
         jLabel6.setText("Tanggal Lahir :");
 
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(222, 222, 222));
         jLabel7.setText("Username :");
 
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(222, 222, 222));
         jLabel8.setText("Password :");
 
@@ -211,6 +217,7 @@ public class DetailAccount_Form extends javax.swing.JFrame {
         cb_jabatan.setBorder(null);
         cb_jabatan.setOpaque(false);
 
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(222, 222, 222));
         jLabel9.setText("Jabatan :");
 
@@ -299,6 +306,7 @@ public class DetailAccount_Form extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(222, 222, 222));
         jLabel2.setText("DETAIL ACCOUNT");
 
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(222, 222, 222));
         jLabel10.setText("No Telepon :");
 
@@ -309,6 +317,7 @@ public class DetailAccount_Form extends javax.swing.JFrame {
         tb_notelp.setCaretColor(new java.awt.Color(58, 58, 58));
         tb_notelp.setMaximumSize(new java.awt.Dimension(6, 22));
 
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(222, 222, 222));
         jLabel11.setText("Kota :");
 
