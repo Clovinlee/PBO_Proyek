@@ -120,14 +120,14 @@ public class Form_Stock extends javax.swing.JFrame {
                 
             } catch (Exception e) {
             }
-            if(validSearch(tb_kode.getText(),tb_namabarang.getText(),tb_harga1.getText(),tb_harga2.getText(),cb_jenisbarang.getSelectedItem().toString(),jns,s)){
+            if(validSearch(tb_kode.getText(),tb_namabarang.getText(),tb_stok1.getText(),tb_stok2.getText(),tb_harga1.getText(),tb_harga2.getText(),cb_jenisbarang.getSelectedItem().toString(),jns,s)){
                 tbl.addRow(new Object[] {ctr,s[1],s[2],s[3],s[4],jns});
                 ctr++;
             }
         }
         dgv_barang.setModel(tbl);
     }
-    public boolean validSearch(String kode, String nama, String hrgawal, String hrgakhir, String jenis,String jns, String[] data){
+    public boolean validSearch(String kode, String nama,String stokawal,String stokakhir ,String hrgawal, String hrgakhir, String jenis,String jns, String[] data){
         int start=0;
         int end=999999999;
         if(data[1].toLowerCase().contains(kode.toLowerCase())){
@@ -135,8 +135,12 @@ public class Form_Stock extends javax.swing.JFrame {
                 if(!hrgawal.equals("")){start = Integer.parseInt(hrgawal);}
                 if(!hrgakhir.equals("")){end = Integer.parseInt(hrgakhir);}
                 if(Integer.parseInt(data[4])>=start && Integer.parseInt(data[4])<=end){
-                    if(jenis.equalsIgnoreCase(jns) || jenis.equalsIgnoreCase("Semua")){
+                    if(!stokawal.equals("")){start = Integer.parseInt(stokawal);}
+                    if(!stokakhir.equals("")){end = Integer.parseInt(stokakhir);}
+                    if(Integer.parseInt(data[3])>=start && Integer.parseInt(data[3])<=end){
+                        if(jenis.equalsIgnoreCase(jns) || jenis.equalsIgnoreCase("Semua")){
                         return true;
+                    }
                     }
                 }
             }
@@ -191,7 +195,6 @@ public class Form_Stock extends javax.swing.JFrame {
 
         dgv_barang.setBackground(new java.awt.Color(58, 58, 58));
         dgv_barang.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        dgv_barang.setForeground(new java.awt.Color(222, 222, 222));
         dgv_barang.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"1", "CABE0001", "Caca Bernerd", "cacab", "Perempuan", null},
@@ -232,7 +235,6 @@ public class Form_Stock extends javax.swing.JFrame {
 
         btn_detail.setBackground(new java.awt.Color(58, 58, 58));
         btn_detail.setFont(new java.awt.Font("Yu Gothic UI", 1, 16)); // NOI18N
-        btn_detail.setForeground(new java.awt.Color(222, 222, 222));
         btn_detail.setText("Details");
         btn_detail.setBorder(null);
         btn_detail.setContentAreaFilled(false);
@@ -254,14 +256,11 @@ public class Form_Stock extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(222, 222, 222));
         jLabel1.setText("Jenis Barang");
 
         tb_kode.setBackground(new java.awt.Color(58, 58, 58));
         tb_kode.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        tb_kode.setForeground(new java.awt.Color(222, 222, 222));
         tb_kode.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-        tb_kode.setCaretColor(new java.awt.Color(222, 222, 222));
         tb_kode.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 tb_kodeKeyReleased(evt);
@@ -269,18 +268,14 @@ public class Form_Stock extends javax.swing.JFrame {
         });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(222, 222, 222));
         jLabel2.setText("Kode");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(222, 222, 222));
         jLabel3.setText("Range Harga");
 
         tb_namabarang.setBackground(new java.awt.Color(58, 58, 58));
         tb_namabarang.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        tb_namabarang.setForeground(new java.awt.Color(222, 222, 222));
         tb_namabarang.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-        tb_namabarang.setCaretColor(new java.awt.Color(222, 222, 222));
         tb_namabarang.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 tb_namabarangKeyReleased(evt);
@@ -288,7 +283,6 @@ public class Form_Stock extends javax.swing.JFrame {
         });
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(222, 222, 222));
         jLabel4.setText("Nama Barang");
 
         cb_jenisbarang.setBackground(new java.awt.Color(222, 222, 222));
@@ -329,7 +323,6 @@ public class Form_Stock extends javax.swing.JFrame {
 
         btn_addbarang.setBackground(new java.awt.Color(58, 58, 58));
         btn_addbarang.setFont(new java.awt.Font("Yu Gothic UI", 1, 16)); // NOI18N
-        btn_addbarang.setForeground(new java.awt.Color(222, 222, 222));
         btn_addbarang.setText("Add Barang");
         btn_addbarang.setBorder(null);
         btn_addbarang.setContentAreaFilled(false);
@@ -351,12 +344,10 @@ public class Form_Stock extends javax.swing.JFrame {
         });
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(222, 222, 222));
         jLabel5.setText("-");
 
         btn_morejenis.setBackground(new java.awt.Color(58, 58, 58));
         btn_morejenis.setFont(new java.awt.Font("Yu Gothic UI", 1, 16)); // NOI18N
-        btn_morejenis.setForeground(new java.awt.Color(222, 222, 222));
         btn_morejenis.setText("...");
         btn_morejenis.setBorder(null);
         btn_morejenis.setContentAreaFilled(false);
@@ -379,9 +370,7 @@ public class Form_Stock extends javax.swing.JFrame {
 
         tb_harga2.setBackground(new java.awt.Color(58, 58, 58));
         tb_harga2.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        tb_harga2.setForeground(new java.awt.Color(222, 222, 222));
         tb_harga2.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-        tb_harga2.setCaretColor(new java.awt.Color(222, 222, 222));
         tb_harga2.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 tb_harga2KeyReleased(evt);
@@ -390,9 +379,7 @@ public class Form_Stock extends javax.swing.JFrame {
 
         tb_harga1.setBackground(new java.awt.Color(58, 58, 58));
         tb_harga1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        tb_harga1.setForeground(new java.awt.Color(222, 222, 222));
         tb_harga1.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-        tb_harga1.setCaretColor(new java.awt.Color(222, 222, 222));
         tb_harga1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 tb_harga1KeyReleased(evt);
@@ -400,23 +387,27 @@ public class Form_Stock extends javax.swing.JFrame {
         });
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(222, 222, 222));
         jLabel6.setText("-");
 
         tb_stok2.setBackground(new java.awt.Color(58, 58, 58));
         tb_stok2.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        tb_stok2.setForeground(new java.awt.Color(222, 222, 222));
         tb_stok2.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-        tb_stok2.setCaretColor(new java.awt.Color(222, 222, 222));
+        tb_stok2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tb_stok2KeyReleased(evt);
+            }
+        });
 
         tb_stok1.setBackground(new java.awt.Color(58, 58, 58));
         tb_stok1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        tb_stok1.setForeground(new java.awt.Color(222, 222, 222));
         tb_stok1.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-        tb_stok1.setCaretColor(new java.awt.Color(222, 222, 222));
+        tb_stok1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tb_stok1KeyReleased(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(222, 222, 222));
         jLabel7.setText("Range Stok");
 
         javax.swing.GroupLayout plLayout = new javax.swing.GroupLayout(pl);
@@ -568,6 +559,8 @@ public class Form_Stock extends javax.swing.JFrame {
         tb_kode.setText("");
         tb_harga1.setText("");
         tb_harga2.setText("");
+        tb_stok1.setText("");
+        tb_stok2.setText("");
         cb_jenisbarang.setSelectedIndex(0);
         search();
     }//GEN-LAST:event_btn_refreshActionPerformed
@@ -625,6 +618,16 @@ public class Form_Stock extends javax.swing.JFrame {
         // TODO add your handling code here:
         idx = dgv_barang.getSelectedRow();
     }//GEN-LAST:event_dgv_barangMousePressed
+
+    private void tb_stok1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb_stok1KeyReleased
+        // TODO add your handling code here:
+        search();
+    }//GEN-LAST:event_tb_stok1KeyReleased
+
+    private void tb_stok2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb_stok2KeyReleased
+        // TODO add your handling code here:
+        search();
+    }//GEN-LAST:event_tb_stok2KeyReleased
     
     
     int idx = -1;
