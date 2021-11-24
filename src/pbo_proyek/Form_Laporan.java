@@ -9,6 +9,8 @@ import javax.swing.JPanel;
 import ExternalCode.JTableEdit;
 import java.awt.Color;
 import java.awt.Font;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.BorderFactory;
@@ -72,18 +74,21 @@ public class Form_Laporan extends javax.swing.JFrame {
     ArrayList<String[]> listdiskon;
     ArrayList<String[]> listkaryawan;
     ArrayList<String[]> listDtrans;
+    ArrayList<String[]> listbarang;
     int selectedidx = -1;
+    int granddtotal ;
     public void loadDgv(){
-        
+        granddtotal = 0;
         listHtrans = DB.query("SELECT * FROM h_trans");
-        tbl = new DefaultTableModel(new Object[] {"Nomor Nota","Tanggal Transaksi","Diskon","Kode Karyawan","Grand Total"}, 0);
+        tbl = new DefaultTableModel(new Object[] {"Nomor Nota","Tanggal Transaksi","Promo","Kode Karyawan","Grand Total"}, 0);
         tb_Htrans.setDefaultEditor(Object.class, null);
         listdiskon = DB.query("SELECT * FROM diskon");
         for (String[] s :listdiskon) {
             cb_diskon.addItem(s[1]);
         }
         listkaryawan = DB.query("SELECT * FROM karyawan");
-        
+        listbarang = DB.query("SELECT * FROM barang");
+        listDtrans = DB.query("SELECT * FROM d_trans");
         
         int ctr = 1;
         String diskon="";
@@ -93,21 +98,27 @@ public class Form_Laporan extends javax.swing.JFrame {
                 if(s[3].equals(j[0])){
                     diskon = j[1];
                 }
+                else if(diskon.equals("-")){
+                    diskon = "-";
+                }
             }
             for(String[] k:listkaryawan){
                 if(s[4].equals(k[0])){
                     karyawan = k[1];
                 }
             }
+            granddtotal += Integer.parseInt(s[2]);
             tbl.addRow(new Object[] {s[0],s[1],diskon,karyawan,s[2]});
+            diskon = "-";
             ctr++;
         }
         tb_Htrans.setModel(tbl);
-        
+        lbl_grandtotal.setText("Grand Total: Rp."+String.valueOf(granddtotal));
     }
     
     public void search(){
-        tbl = new DefaultTableModel(new Object[] {"Nomor Nota","Tanggal Transaksi","Diskon","Kode Karyawan","Grand Total"}, 0);
+        granddtotal = 0;
+        tbl = new DefaultTableModel(new Object[] {"Nomor Nota","Tanggal Transaksi","Promo","Kode Karyawan","Grand Total"}, 0);
         tb_Htrans.setDefaultEditor(Object.class, null);
         String diskon="";
         String karyawan="";
@@ -115,6 +126,9 @@ public class Form_Laporan extends javax.swing.JFrame {
             for(String[] j:listdiskon){
                 if(s[3].equals(j[0])){
                     diskon = j[1];
+                }
+                else if(diskon.equals("-")){
+                    diskon = "-";
                 }
             }
             for(String[] k:listkaryawan){
@@ -124,12 +138,22 @@ public class Form_Laporan extends javax.swing.JFrame {
             }
             if(validSearch(tb_nota.getText().toLowerCase(),tb_karyawan.getText().toLowerCase(),dp_tanggal.getDate(),dp_tanggal1.getDate(),karyawan,s,cb_diskon.getSelectedItem().toString(),diskon)){
                 tbl.addRow(new Object[] {s[0],s[1],diskon,karyawan,s[2]});
-                
+                diskon = "-";
+                granddtotal += Integer.parseInt(s[2]);
+            }
+            else if(cb_diskon.getSelectedIndex() == 1){
+                if (s[3] == null){
+                    tbl.addRow(new Object[] {s[0],s[1],diskon,karyawan,s[2]});
+                    diskon = "-";
+                    granddtotal += Integer.parseInt(s[2]);
+                }
             }
         }
         tb_Htrans.setModel(tbl);
+        lbl_grandtotal.setText("Grand Total: Rp."+String.valueOf(granddtotal));
     }
     public boolean validSearch(String nota, String kodekaryawan, Date tanggalawal, Date tanggalakhir, String karyawan, String[] data, String selecteddiskon, String diskon){
+        
         if(data[0].toLowerCase().contains(nota.toLowerCase())){
             if(karyawan.toLowerCase().contains(kodekaryawan)){
                 if(selecteddiskon.equalsIgnoreCase("Semua") || selecteddiskon.equalsIgnoreCase(diskon)){
@@ -145,6 +169,7 @@ public class Form_Laporan extends javax.swing.JFrame {
                     
                 }
                 }
+                
                 else{
                     if (selecteddiskon.toLowerCase().equals(diskon)){
                         Date tgltrans;
@@ -196,6 +221,7 @@ public class Form_Laporan extends javax.swing.JFrame {
         btn_find = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(848, 540));
 
         pl.setBackground(new java.awt.Color(84, 84, 96));
         pl.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -222,7 +248,7 @@ public class Form_Laporan extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(222, 222, 222));
-        jLabel5.setText("Diskon");
+        jLabel5.setText("Promo");
 
         tb_karyawan.setBackground(new java.awt.Color(58, 58, 58));
         tb_karyawan.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
@@ -258,6 +284,11 @@ public class Form_Laporan extends javax.swing.JFrame {
         tb_Htrans.setSelectionBackground(new java.awt.Color(90, 90, 90));
         tb_Htrans.setSelectionForeground(new java.awt.Color(222, 222, 222));
         tb_Htrans.setShowVerticalLines(false);
+        tb_Htrans.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tb_HtransMousePressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(tb_Htrans);
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -347,7 +378,7 @@ public class Form_Laporan extends javax.swing.JFrame {
         lbl_grandtotal.setForeground(new java.awt.Color(222, 222, 222));
         lbl_grandtotal.setText("Grand Total : Rp0");
 
-        cb_diskon.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Semua" }));
+        cb_diskon.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Semua", "Tanpa Promo" }));
         cb_diskon.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cb_diskonItemStateChanged(evt);
@@ -500,9 +531,7 @@ public class Form_Laporan extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(pl, javax.swing.GroupLayout.PREFERRED_SIZE, 848, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+            .addComponent(pl, javax.swing.GroupLayout.DEFAULT_SIZE, 753, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -526,7 +555,75 @@ public class Form_Laporan extends javax.swing.JFrame {
 
     private void btn_exportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_exportActionPerformed
         // TODO add your handling code here:
-        
+        String simpan = "";
+        simpan += 
+        "╔═════════════════════════════════════════╗\n" +
+        "║              C O M P U F Y              ║\n" +
+        "╠═════════════════════════════════════════╣\n" +
+        "║            LAPORAN TRANSAKSI            ║\n" +
+        "║   -----------------------------------   ║\n"
+        ;
+        for (int i = 0;i < tbl.getRowCount();i++){
+            String tanggallapor = tb_Htrans.getModel().getValueAt(i, 1).toString();
+            String karyawanlapor = tb_Htrans.getModel().getValueAt(i, 3).toString();
+            String totallapor = tb_Htrans.getModel().getValueAt(i, 4).toString();
+            String nomorrnota = tb_Htrans.getModel().getValueAt(i, 0).toString();
+            String diskonlapor = tb_Htrans.getModel().getValueAt(i, 2).toString();
+            if (diskonlapor.equals("-")){
+                diskonlapor = "-";
+            }
+            String hargadiskon = "";
+            if (!diskonlapor.equals("-")){
+                for (String[] l : listdiskon){
+                if (diskonlapor.equalsIgnoreCase(l[1])){
+                    hargadiskon = l[2];
+                }
+            }
+            }
+            simpan += "║   "+nomorrnota+"                      ║\n";
+            simpan += "║     Tanggal Transaksi: "+tanggallapor+"       ║\n";
+            simpan += "║     Kode Karyawan    : "+karyawanlapor+"         ║\n";
+            simpan += "║     Promo            : "+diskonlapor;
+            for (int n = 0 ; n < 17-diskonlapor.chars().count();n++){
+                simpan += " ";
+            }
+            simpan += "║\n";
+            if (diskonlapor.equals("-")){
+                simpan += "║     Potongan Promo   : Rp.0             ║\n";
+            }
+            else{
+                simpan += "║     Potongan Promo   : Rp."+hargadiskon;
+                for(int o = 0; o < 14-hargadiskon.chars().count();o++){
+                    simpan += " ";
+                }
+                simpan += "║\n";
+            }
+            simpan += "║     Total Transaksi  : Rp."+totallapor;
+            for (int j = 0;j< 14-totallapor.chars().count();j++){
+                simpan+= " ";
+            }
+            simpan += "║\n";
+            simpan += "║   -----------------------------------   ║\n";
+            
+        }
+        simpan += "║                                         ║\n";
+        simpan += "║";
+        for (int m = 0; m<41-lbl_grandtotal.getText().chars().count();m++){
+            simpan += " ";
+        }
+        simpan += lbl_grandtotal.getText()+"║\n";
+        simpan += "╚═════════════════════════════════════════╝";
+        System.out.println(simpan);
+        try {
+            FileWriter fout = new FileWriter("laporan_transaksi.txt");
+                BufferedWriter bw = new BufferedWriter(fout);
+                System.out.println(simpan);
+                bw.write(simpan);
+                                bw.close();
+                fout.close();
+                System.out.println("sukses simpan");
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_btn_exportActionPerformed
 
     private void btn_refreshMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_refreshMouseEntered
@@ -546,7 +643,12 @@ public class Form_Laporan extends javax.swing.JFrame {
         tb_karyawan.setText("");
         tb_nota.setText("");
         selectedidx = -1;
-        tb_Dtrans.removeAll();
+        while (tb2.getRowCount()>0){
+            tb2.removeRow(0);
+        }
+        tb_Dtrans.setModel(tb2);
+        
+        
     }//GEN-LAST:event_btn_refreshActionPerformed
 
     private void tb_notaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb_notaKeyReleased
@@ -563,10 +665,12 @@ public class Form_Laporan extends javax.swing.JFrame {
 
     private void btn_export1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_export1MouseEntered
         // TODO add your handling code here:
+        btn_export1.setBackground(Palette.getButtonSelectedColor());
     }//GEN-LAST:event_btn_export1MouseEntered
 
     private void btn_export1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_export1MouseExited
         // TODO add your handling code here:
+        btn_export1.setBackground(Palette.getTableDark1());
     }//GEN-LAST:event_btn_export1MouseExited
 
     private void btn_export1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_export1ActionPerformed
@@ -588,6 +692,38 @@ public class Form_Laporan extends javax.swing.JFrame {
         search();
         // CALL SEARCH EVERY THIS BUTTON PRESSED
     }//GEN-LAST:event_btn_findActionPerformed
+
+    private void tb_HtransMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_HtransMousePressed
+        // TODO add your handling code here:
+        selectedidx = tb_Htrans.getSelectedRow();
+        if (selectedidx != -1){
+            String nonota = tb_Htrans.getModel().getValueAt(selectedidx, 0).toString();
+            
+            
+            tb2 = new DefaultTableModel(new Object[] {"Kode Barang","Nama Barang","Harga Barang","Subtotal"}, 0);
+            tb_Dtrans.setDefaultEditor(Object.class, null);
+            String barang="";
+            String harga="";
+            String kode="";
+            for (String[] s : listDtrans) {
+                if (s[0].equals(nonota)){
+                    for(String[] j : listbarang){
+                        if(s[1].equals(j[0])){
+                            barang = j[2];
+                            harga = j[4];
+                            kode = j[1];
+                        }
+                    }
+                    tb2.addRow(new Object[] {kode,barang,harga,s[4]});
+                }
+                
+            }
+            tb_Dtrans.setModel(tb2);
+        }
+        else{
+
+        }
+    }//GEN-LAST:event_tb_HtransMousePressed
 
     private void dp_tanggalPropertyChange(java.beans.PropertyChangeEvent evt) {                                          
         // TODO add your handling code here:
