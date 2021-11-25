@@ -39,6 +39,11 @@ public class DB {
         return DB.query(sql,null);
     }
     
+    public static boolean trans(String sql){
+        c.setAutoCommit(false);
+        PreparedStatement ps = c.prepareStatement("insert into h_trans values")
+    }
+    
     public static ArrayList<String[]> query(String sql, Object[] data){
         ArrayList<String[]> resultData = new ArrayList<>();
         if(data == null){
