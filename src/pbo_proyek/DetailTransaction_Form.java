@@ -7,6 +7,7 @@ package pbo_proyek;
 
 import java.awt.Color;
 import java.awt.Cursor;
+import java.util.Date;
 import java.util.ArrayList;
 
 /**
@@ -26,6 +27,7 @@ public class DetailTransaction_Form extends javax.swing.JFrame {
     private Color gry = new Color(102,102,102);
     
     private Form_Menu frm_menu;
+    private Form_Transaction frm_trans;
     
     public DetailTransaction_Form(int grand_total, String kode, int promo, ArrayList<String[]> listCart, Form_Menu frm_menu){
         this();
@@ -275,8 +277,22 @@ public class DetailTransaction_Form extends javax.swing.JFrame {
 
     private void btn_confirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_confirmActionPerformed
         // TODO add your handling code here:
+        // TODO : Use trans
         if(valid == 1){
             
+            String promo_q = "";
+            if(promo != -1){
+                promo_q = String.valueOf(promo);
+            }
+            DB.insert("INSERT INTO h_trans VALUES(?, ?, ?, ?, ?)", new Object[] {kode,new Date(),grand_total, promo_q, User.getUser_login().getId()});
+            for (String[] s : listCart) {
+                //kode, harga, qty, subtotal
+                String id_barang = DB.query("SELECT id FROM barang WHERE kode = "+s[0]).get(0)[0];
+                DB.insert("INSERT INTO d_trans VALUES(?, ?, ?, ?, ?)", new Object[] {kode, id_barang, s[2], s[1], s[3]});
+            }
+            frm_menu.setEnabled(true);
+            frm_trans.clearCart();
+            this.dispose();
         }
     }//GEN-LAST:event_btn_confirmActionPerformed
 
@@ -290,7 +306,14 @@ public class DetailTransaction_Form extends javax.swing.JFrame {
         // TODO add your handling code here:
         setState(this.ICONIFIED);
     }//GEN-LAST:event_lbl_minimizeMouseClicked
-    
+
+    public Form_Transaction getFrm_trans() {
+        return frm_trans;
+    }
+
+    public void setFrm_trans(Form_Transaction frm_trans) {
+        this.frm_trans = frm_trans;
+    }
     
     int x,y;
     private void pl_titlebarMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pl_titlebarMouseDragged

@@ -631,11 +631,12 @@ public class Form_Transaction extends javax.swing.JFrame {
             //TODO : INSERT QUERY
             ArrayList<String[]> temp_listcart = new ArrayList<>();
             for(int i = 0; i < tbl_cart.getRowCount(); i++){
-                String[] tmp = new String[] {tbl_cart.getValueAt(i, 0).toString(),tbl_cart.getValueAt(i, 3).toString(),tbl_cart.getValueAt(i, 4).toString()};
+                String[] tmp = new String[] {tbl_cart.getValueAt(i, 0).toString(), tbl_cart.getValueAt(i, 2).toString(),tbl_cart.getValueAt(i, 3).toString(),tbl_cart.getValueAt(i, 4).toString()};
                 temp_listcart.add(tmp);
             }
             DetailTransaction_Form frm_trans = new DetailTransaction_Form(grand_total, nota, cb_promo.getSelectedIndex()-1, temp_listcart,frm_menu);
             frm_trans.setVisible(true);
+            frm_trans.setFrm_trans(this);
             frm_menu.setEnabled(false);
         }
     }//GEN-LAST:event_btn_checkoutActionPerformed
