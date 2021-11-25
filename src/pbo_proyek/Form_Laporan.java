@@ -20,6 +20,7 @@ import javax.swing.plaf.ColorUIResource;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.text.SimpleDateFormat;  
+import java.lang.*;
 /**
  *
  * @author chris
@@ -558,7 +559,9 @@ public class Form_Laporan extends javax.swing.JFrame {
         String simpan = "";
         simpan += 
         "╔═════════════════════════════════════════╗\n" +
+        "║                                         ║\n" +
         "║              C O M P U F Y              ║\n" +
+        "║                                         ║\n" +
         "╠═════════════════════════════════════════╣\n" +
         "║            LAPORAN TRANSAKSI            ║\n" +
         "║   -----------------------------------   ║\n"
@@ -675,6 +678,103 @@ public class Form_Laporan extends javax.swing.JFrame {
 
     private void btn_export1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_export1ActionPerformed
         // TODO add your handling code here:
+        String simpan1 = "";
+        simpan1 += "╔═════════════════════════════════════════╗\n" +
+        "║                                         ║\n" +
+        "║              C O M P U F Y              ║\n" +
+        "║                                         ║\n" +
+        "╠═════════════════════════════════════════╣\n" +
+        "║               LAPORAN STOK              ║\n" +
+        "║   -----------------------------------   ║\n"
+        ;
+        for (int i = 0; i<tbl.getRowCount();i++){
+            String nomorrnota = tb_Htrans.getModel().getValueAt(i, 0).toString();
+            simpan1 += "║   "+nomorrnota+"                      ║\n";
+            for (String[] j : listDtrans){
+                if (j[0].equals(nomorrnota)){
+                    for (String[] k: listbarang){
+                        if (k[0].equals(j[1])){
+                            String namabarng = k[2];
+                            for (int l = 0; l<Math.ceil(namabarng.chars().count()/17)+1;l++){
+                                
+                                if (l != Math.ceil(namabarng.chars().count()/17)){
+                                   simpan1+= "║     "+namabarng.substring(17*(l),((17*(l+1)-1+1)))+"                   ║\n"; 
+                                }
+                                else{
+                                    simpan1+= "║     "+namabarng.substring(18*(l));
+                                    for (int m = 0; m < 17-namabarng.substring(18*(l)).chars().count();m++){
+                                        simpan1+= " ";
+                                    }
+                                    simpan1 += "  ";
+                                    for (int n = 0; n < 3-j[2].chars().count();n++){
+                                        simpan1+= " ";
+                                    }
+                                    simpan1 += j[2]+"  "+k[1]+"    ║\n";
+                                    
+                                }
+                            }
+                            simpan1 += "║                                         ║\n";
+                        }
+                    }
+                    
+                    
+                }
+            }
+        }
+        simpan1 += "║   -----------------------------------   ║\n";
+        simpan1 += "║   TOTAL PENGELUARAN BARANG              ║\n";
+        simpan1 += "║   -----------------------------------   ║\n";
+        int totalbarang = 0;
+        for (String[] o : listbarang){
+            int simpanbarang = 0;
+            for (String[] p : listDtrans){
+                for (int q = 0; q < tbl.getRowCount();q++){
+                    String nomorrnota = tb_Htrans.getModel().getValueAt(q, 0).toString();
+                    if (nomorrnota.equals(p[0])){
+                        if (p[1].equals(o[0])){
+                            simpanbarang += Integer.parseInt(p[2]);
+                            totalbarang += Integer.parseInt(p[2]);
+                        }
+                    }
+                }
+            }
+            String namabarng = o[2];
+            for (int r = 0; r<Math.ceil(namabarng.chars().count()/17)+1;r++){                               
+                if (r != Math.ceil(namabarng.chars().count()/17)){
+                    simpan1+= "║     "+namabarng.substring(17*(r),((17*(r+1)-1+1)))+"                   ║\n"; 
+                }
+                else{
+                    simpan1+= "║     "+namabarng.substring(18*(r));
+                    for (int m = 0; m < 17-namabarng.substring(18*(r)).chars().count();m++){
+                        simpan1+= " ";
+                    }
+                    simpan1 += "  ";
+                    for (int n = 0; n < 3-String.valueOf(simpanbarang).chars().count();n++){
+                        simpan1+= " ";
+                    }
+                    simpan1 += simpanbarang+"  "+o[1]+"    ║\n";                                   
+                }
+            }
+            simpan1 += "║                                         ║\n";
+        }
+        simpan1 += "║   -----------------------------------   ║\n";
+        simpan1 += "║          TOTAL BARANG   "+String.valueOf(totalbarang);
+        for (int a = 0; a < 16-String.valueOf(totalbarang).chars().count();a++){
+            simpan1 += " ";
+        }
+        simpan1 += "║\n";
+        simpan1 += "╚═════════════════════════════════════════╝";
+        System.out.println(simpan1);
+        try {
+            FileWriter fout = new FileWriter("laporan_stok.txt");
+                BufferedWriter bw = new BufferedWriter(fout);
+                System.out.println(simpan1);
+                bw.write(simpan1);
+                                bw.close();
+                fout.close();
+                System.out.println("sukses simpan");
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_btn_export1ActionPerformed
 
     private void btn_findMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_findMouseEntered

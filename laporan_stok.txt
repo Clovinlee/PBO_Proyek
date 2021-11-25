@@ -1,0 +1,54 @@
+╔═════════════════════════════════════════╗
+║                                         ║
+║              C O M P U F Y              ║
+║                                         ║
+╠═════════════════════════════════════════╣
+║               LAPORAN STOK              ║
+║   -----------------------------------   ║
+║   NOTA202110130001                      ║
+║     Mouse Logitech M1                   ║
+║     0                    2  MOLO0001    ║
+║                                         ║
+║   NOTA202110210001                      ║
+║     RAM Imperion 16GB                   ║
+║     DDR4                 1  RAIM0001    ║
+║                                         ║
+║   NOTA202110300001                      ║
+║     Hardisk Seagate B                   ║
+║     rracuda 1TB          1  HASE0001    ║
+║                                         ║
+║   NOTA202111090001                      ║
+║     RAM Imperion 16GB                   ║
+║     DDR4                 2  RAIM0001    ║
+║                                         ║
+║   NOTA202111100001                      ║
+║     Monitor LED Phili                   ║
+║     ps 272E1 27" 1080                   ║
+║     144Hz                1  MOLE0001    ║
+║                                         ║
+║   -----------------------------------   ║
+║   TOTAL PENGELUARAN BARANG              ║
+║   -----------------------------------   ║
+║     Mouse Logitech M1                   ║
+║     0                    2  MOLO0001    ║
+║                                         ║
+║     RAM Imperion 16GB                   ║
+║     DDR4                 3  RAIM0001    ║
+║                                         ║
+║     Keyboard Logitech                   ║
+║     Classic K100         0  KELO0001    ║
+║                                         ║
+║     Hardisk Seagate B                   ║
+║     rracuda 1TB          1  HASE0001    ║
+║                                         ║
+║     Monitor LED Phili                   ║
+║     ps 272E1 27" 1080                   ║
+║     144Hz                1  MOLE0001    ║
+║                                         ║
+║     mos baru             0  MOBA0001    ║
+║                                         ║
+║     Mos lama baru        0  MOLA0001    ║
+║                                         ║
+║   -----------------------------------   ║
+║          TOTAL BARANG   7               ║
+╚═════════════════════════════════════════╝
