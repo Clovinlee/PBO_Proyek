@@ -21,6 +21,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.text.SimpleDateFormat;  
 import java.lang.*;
+import javax.swing.JOptionPane;
 /**
  *
  * @author chris
@@ -82,6 +83,7 @@ public class Form_Laporan extends javax.swing.JFrame {
         granddtotal = 0;
         listHtrans = DB.query("SELECT * FROM h_trans");
         tbl = new DefaultTableModel(new Object[] {"Nomor Nota","Tanggal Transaksi","Promo","Kode Karyawan","Grand Total"}, 0);
+        tb2 = new DefaultTableModel(new Object[] {"Kode Barang","Nama Barang","Harga Barang","Subtotal"}, 0);
         tb_Htrans.setDefaultEditor(Object.class, null);
         listdiskon = DB.query("SELECT * FROM diskon");
         for (String[] s :listdiskon) {
@@ -137,24 +139,26 @@ public class Form_Laporan extends javax.swing.JFrame {
                     karyawan = k[1];
                 }
             }
-            if(validSearch(tb_nota.getText().toLowerCase(),tb_karyawan.getText().toLowerCase(),dp_tanggal.getDate(),dp_tanggal1.getDate(),karyawan,s,cb_diskon.getSelectedItem().toString(),diskon)){
+            String cbpilih ;
+            if (cb_diskon.getSelectedItem().toString().equals("Tanpa Promo")){
+                cbpilih = "-";
+            }
+            else{
+                cbpilih = cb_diskon.getSelectedItem().toString();
+            }
+            if(validSearch(tb_nota.getText().toLowerCase(),tb_karyawan.getText().toLowerCase(),dp_tanggal.getDate(),dp_tanggal1.getDate(),karyawan,s,cbpilih,diskon)){
                 tbl.addRow(new Object[] {s[0],s[1],diskon,karyawan,s[2]});
-                diskon = "-";
+                
                 granddtotal += Integer.parseInt(s[2]);
             }
-            else if(cb_diskon.getSelectedIndex() == 1){
-                if (s[3] == null){
-                    tbl.addRow(new Object[] {s[0],s[1],diskon,karyawan,s[2]});
-                    diskon = "-";
-                    granddtotal += Integer.parseInt(s[2]);
-                }
-            }
+            diskon = "-";
         }
         tb_Htrans.setModel(tbl);
         lbl_grandtotal.setText("Grand Total: Rp."+String.valueOf(granddtotal));
     }
     public boolean validSearch(String nota, String kodekaryawan, Date tanggalawal, Date tanggalakhir, String karyawan, String[] data, String selecteddiskon, String diskon){
-        
+        System.out.println(selecteddiskon);
+        System.out.println(diskon);
         if(data[0].toLowerCase().contains(nota.toLowerCase())){
             if(karyawan.toLowerCase().contains(kodekaryawan)){
                 if(selecteddiskon.equalsIgnoreCase("Semua") || selecteddiskon.equalsIgnoreCase(diskon)){
@@ -568,6 +572,7 @@ public class Form_Laporan extends javax.swing.JFrame {
         ;
         for (int i = 0;i < tbl.getRowCount();i++){
             String tanggallapor = tb_Htrans.getModel().getValueAt(i, 1).toString();
+            tanggallapor = tanggallapor.substring(0,10);
             String karyawanlapor = tb_Htrans.getModel().getValueAt(i, 3).toString();
             String totallapor = tb_Htrans.getModel().getValueAt(i, 4).toString();
             String nomorrnota = tb_Htrans.getModel().getValueAt(i, 0).toString();
@@ -616,15 +621,15 @@ public class Form_Laporan extends javax.swing.JFrame {
         }
         simpan += lbl_grandtotal.getText()+"║\n";
         simpan += "╚═════════════════════════════════════════╝";
-        System.out.println(simpan);
+        
         try {
-            FileWriter fout = new FileWriter("laporan_transaksi.txt");
+            FileWriter fout = new FileWriter("Laporan/laporan_transaksi.txt");
                 BufferedWriter bw = new BufferedWriter(fout);
-                System.out.println(simpan);
+                
                 bw.write(simpan);
                                 bw.close();
                 fout.close();
-                System.out.println("sukses simpan");
+                JOptionPane.showMessageDialog(null, "Sukses Export Laporan!","Sukses",JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btn_exportActionPerformed
@@ -646,12 +651,12 @@ public class Form_Laporan extends javax.swing.JFrame {
         tb_karyawan.setText("");
         tb_nota.setText("");
         selectedidx = -1;
-        while (tb2.getRowCount()>0){
+        if (tb2.getRowCount() != 0){
+            while (tb2.getRowCount()>0){
             tb2.removeRow(0);
         }
         tb_Dtrans.setModel(tb2);
-        
-        
+        }
     }//GEN-LAST:event_btn_refreshActionPerformed
 
     private void tb_notaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb_notaKeyReleased
@@ -684,10 +689,10 @@ public class Form_Laporan extends javax.swing.JFrame {
         "║              C O M P U F Y              ║\n" +
         "║                                         ║\n" +
         "╠═════════════════════════════════════════╣\n" +
-        "║               LAPORAN STOK              ║\n" +
-        "║   -----------------------------------   ║\n"
+        "║               LAPORAN STOK              ║\n"
         ;
         for (int i = 0; i<tbl.getRowCount();i++){
+            simpan1 += "║   -----------------------------------   ║\n";
             String nomorrnota = tb_Htrans.getModel().getValueAt(i, 0).toString();
             simpan1 += "║   "+nomorrnota+"                      ║\n";
             for (String[] j : listDtrans){
@@ -698,11 +703,16 @@ public class Form_Laporan extends javax.swing.JFrame {
                             for (int l = 0; l<Math.ceil(namabarng.chars().count()/17)+1;l++){
                                 
                                 if (l != Math.ceil(namabarng.chars().count()/17)){
-                                   simpan1+= "║     "+namabarng.substring(17*(l),((17*(l+1)-1+1)))+"                   ║\n"; 
+                                    if (l == 0){
+                                       simpan1+= "║     "+namabarng.substring(0,17)+"                   ║\n"; 
+                                    }
+                                    else{
+                                      simpan1 += "║     "+namabarng.substring((17*(l)),((17*(l+1))))+"                   ║\n";   
+                                    }
                                 }
                                 else{
-                                    simpan1+= "║     "+namabarng.substring(18*(l));
-                                    for (int m = 0; m < 17-namabarng.substring(18*(l)).chars().count();m++){
+                                    simpan1+= "║     "+namabarng.substring(17*(l));
+                                    for (int m = 0; m < 17-namabarng.substring(17*(l)).chars().count();m++){
                                         simpan1+= " ";
                                     }
                                     simpan1 += "  ";
@@ -720,6 +730,7 @@ public class Form_Laporan extends javax.swing.JFrame {
                     
                 }
             }
+            
         }
         simpan1 += "║   -----------------------------------   ║\n";
         simpan1 += "║   TOTAL PENGELUARAN BARANG              ║\n";
@@ -737,15 +748,36 @@ public class Form_Laporan extends javax.swing.JFrame {
                         }
                     }
                 }
+                
             }
             String namabarng = o[2];
-            for (int r = 0; r<Math.ceil(namabarng.chars().count()/17)+1;r++){                               
+            boolean chckbarang = false;
+            for (String[] v : listDtrans){
+                for (int e = 0; e<tbl.getRowCount();e++){
+                    String nomorrnota = tb_Htrans.getModel().getValueAt(e, 0).toString();
+                    if(v[0].equals(nomorrnota)){
+                        if (o[0].equals(v[1])){
+                            chckbarang = true;
+                        }
+                    }
+                }
+                
+            }
+            if (chckbarang == true){
+                for (int r = 0; r<Math.ceil(namabarng.chars().count()/17)+1;r++){ 
+                
                 if (r != Math.ceil(namabarng.chars().count()/17)){
-                    simpan1+= "║     "+namabarng.substring(17*(r),((17*(r+1)-1+1)))+"                   ║\n"; 
+                    if (r == 0){
+                        simpan1+= "║     "+namabarng.substring(0,17)+"                   ║\n"; 
+                    }
+                    else{
+                      simpan1+= "║     "+namabarng.substring(17*(r),((17*(r+1))))+"                   ║\n";   
+                    }
+                    
                 }
                 else{
-                    simpan1+= "║     "+namabarng.substring(18*(r));
-                    for (int m = 0; m < 17-namabarng.substring(18*(r)).chars().count();m++){
+                    simpan1+= "║     "+namabarng.substring(17*(r));
+                    for (int m = 0; m < 17-namabarng.substring(17*(r)).chars().count();m++){
                         simpan1+= " ";
                     }
                     simpan1 += "  ";
@@ -755,24 +787,28 @@ public class Form_Laporan extends javax.swing.JFrame {
                     simpan1 += simpanbarang+"  "+o[1]+"    ║\n";                                   
                 }
             }
+            }
+            
             simpan1 += "║                                         ║\n";
         }
         simpan1 += "║   -----------------------------------   ║\n";
-        simpan1 += "║          TOTAL BARANG   "+String.valueOf(totalbarang);
-        for (int a = 0; a < 16-String.valueOf(totalbarang).chars().count();a++){
+        simpan1 += "║                     TOTAL BARANG ";
+        for (int a = 0; a < 4-String.valueOf(totalbarang).chars().count();a++){
             simpan1 += " ";
         }
-        simpan1 += "║\n";
+        simpan1 += String.valueOf(totalbarang)+"   ║\n";
+        simpan1 += "║                                         ║\n";
         simpan1 += "╚═════════════════════════════════════════╝";
-        System.out.println(simpan1);
+        
         try {
-            FileWriter fout = new FileWriter("laporan_stok.txt");
+            FileWriter fout = new FileWriter("Laporan/laporan_stok.txt");
                 BufferedWriter bw = new BufferedWriter(fout);
-                System.out.println(simpan1);
+                
                 bw.write(simpan1);
                                 bw.close();
                 fout.close();
-                System.out.println("sukses simpan");
+                
+                JOptionPane.showMessageDialog(null, "Sukses Export Laporan!","Sukses",JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btn_export1ActionPerformed
