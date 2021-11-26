@@ -634,7 +634,7 @@ public class Form_Transaction extends javax.swing.JFrame {
                 String[] tmp = new String[] {tbl_cart.getValueAt(i, 0).toString(), tbl_cart.getValueAt(i, 2).toString(),tbl_cart.getValueAt(i, 3).toString(),tbl_cart.getValueAt(i, 4).toString()};
                 temp_listcart.add(tmp);
             }
-            DetailTransaction_Form frm_trans = new DetailTransaction_Form(grand_total, nota, cb_promo.getSelectedIndex()-1, temp_listcart,frm_menu);
+            DetailTransaction_Form frm_trans = new DetailTransaction_Form(grand_total, nota, cb_promo.getSelectedIndex(), temp_listcart,frm_menu);
             frm_trans.setVisible(true);
             frm_trans.setFrm_trans(this);
             frm_menu.setEnabled(false);

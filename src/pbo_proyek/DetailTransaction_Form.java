@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.util.Date;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -279,16 +280,15 @@ public class DetailTransaction_Form extends javax.swing.JFrame {
         // TODO add your handling code here:
         // TODO : Use trans
         if(valid == 1){
-            
-            String promo_q = "";
-            if(promo != -1){
+            String promo_q = "NULL";
+            if(promo > 0){
                 promo_q = String.valueOf(promo);
             }
-            DB.insert("INSERT INTO h_trans VALUES(?, ?, ?, ?, ?)", new Object[] {kode,new Date(),grand_total, promo_q, User.getUser_login().getId()});
-            for (String[] s : listCart) {
-                //kode, harga, qty, subtotal
-                String id_barang = DB.query("SELECT id FROM barang WHERE kode = "+s[0]).get(0)[0];
-                DB.insert("INSERT INTO d_trans VALUES(?, ?, ?, ?, ?)", new Object[] {kode, id_barang, s[2], s[1], s[3]});
+            boolean valid = DB.trans("INSERT INTO h_trans VALUES(?, ?, ?, ?, ?)", new Object[] {kode,new Date(),grand_total, promo_q, User.getUser_login().getId()},listCart,kode);
+            if(valid == false){
+                JOptionPane.showMessageDialog(null, "Transaksi Gagal!","Error",JOptionPane.ERROR_MESSAGE);
+            }else{
+                JOptionPane.showMessageDialog(null, "Transaksi Sukses!","Sukses",JOptionPane.INFORMATION_MESSAGE);
             }
             frm_menu.setEnabled(true);
             frm_trans.clearCart();
