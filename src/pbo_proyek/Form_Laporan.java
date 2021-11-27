@@ -597,16 +597,20 @@ public class Form_Laporan extends javax.swing.JFrame {
             }
             simpan += "║\n";
             if (diskonlapor.equals("-")){
-                simpan += "║     Potongan Promo   : Rp.0             ║\n";
+                simpan += "║     Potongan Promo   : Rp 0             ║\n";
             }
             else{
-                simpan += "║     Potongan Promo   : Rp."+hargadiskon;
+                int angkadiskon = Integer.parseInt(hargadiskon);
+                hargadiskon = String.format("%,d", angkadiskon);
+                simpan += "║     Potongan Promo   : Rp "+hargadiskon;
                 for(int o = 0; o < 14-hargadiskon.chars().count();o++){
                     simpan += " ";
                 }
                 simpan += "║\n";
             }
-            simpan += "║     Total Transaksi  : Rp."+totallapor;
+            int angkalapor = Integer.parseInt(totallapor);
+            totallapor = String.format("%,d", angkalapor);
+            simpan += "║     Total Transaksi  : Rp "+totallapor;
             for (int j = 0;j< 14-totallapor.chars().count();j++){
                 simpan+= " ";
             }
@@ -616,10 +620,13 @@ public class Form_Laporan extends javax.swing.JFrame {
         }
         simpan += "║                                         ║\n";
         simpan += "║";
-        for (int m = 0; m<41-lbl_grandtotal.getText().chars().count();m++){
+        int angkagrand = Integer.parseInt(lbl_grandtotal.getText().substring(16));
+        String tulisangrand = String.format("%,d", angkagrand);
+        for (int m = 0; m<25-tulisangrand.chars().count();m++){
             simpan += " ";
         }
-        simpan += lbl_grandtotal.getText()+"║\n";
+        
+        simpan += "Grand Total: Rp "+ tulisangrand+"║\n";
         simpan += "╚═════════════════════════════════════════╝";
         
         try {
@@ -787,9 +794,10 @@ public class Form_Laporan extends javax.swing.JFrame {
                     simpan1 += simpanbarang+"  "+o[1]+"    ║\n";                                   
                 }
             }
+                simpan1 += "║                                         ║\n";
             }
             
-            simpan1 += "║                                         ║\n";
+            
         }
         simpan1 += "║   -----------------------------------   ║\n";
         simpan1 += "║                     TOTAL BARANG ";
