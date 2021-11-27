@@ -658,12 +658,8 @@ public class Form_Laporan extends javax.swing.JFrame {
         tb_karyawan.setText("");
         tb_nota.setText("");
         selectedidx = -1;
-        if (tb2.getRowCount() != 0){
-            while (tb2.getRowCount()>0){
-            tb2.removeRow(0);
-        }
+        tb2.setRowCount(0);
         tb_Dtrans.setModel(tb2);
-        }
     }//GEN-LAST:event_btn_refreshActionPerformed
 
     private void tb_notaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb_notaKeyReleased
@@ -703,10 +699,12 @@ public class Form_Laporan extends javax.swing.JFrame {
             String nomorrnota = tb_Htrans.getModel().getValueAt(i, 0).toString();
             simpan1 += "║   "+nomorrnota+"                      ║\n";
             for (String[] j : listDtrans){
+                int ctrspasi = 0;
                 if (j[0].equals(nomorrnota)){
+                    
                     for (String[] k: listbarang){
                         if (k[0].equals(j[1])){
-                            int ctrspasi = 0;
+                            
                             if (ctrspasi != 0){
                                 simpan1 += "║                                         ║\n";
                             }
