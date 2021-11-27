@@ -5,20 +5,6 @@
 ╠═════════════════════════════════════════╣
 ║            LAPORAN TRANSAKSI            ║
 ║   -----------------------------------   ║
-║   NOTA202110130001                      ║
-║     Tanggal Transaksi: 2021-10-13       ║
-║     Kode Karyawan    : LUGE0001         ║
-║     Promo            : DISKONMURAH      ║
-║     Potongan Promo   : Rp 150,000       ║
-║     Total Transaksi  : Rp 268,000       ║
-║   -----------------------------------   ║
-║   NOTA202110300001                      ║
-║     Tanggal Transaksi: 2021-10-30       ║
-║     Kode Karyawan    : LUGE0001         ║
-║     Promo            : BANYAKDISKON     ║
-║     Potongan Promo   : Rp 100,000       ║
-║     Total Transaksi  : Rp 669,000       ║
-║   -----------------------------------   ║
 ║                                         ║
-║                  Grand Total: Rp 937,000║
+║                        Grand Total: Rp 0║
 ╚═════════════════════════════════════════╝
