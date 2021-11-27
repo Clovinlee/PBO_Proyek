@@ -5,17 +5,42 @@
 ╠═════════════════════════════════════════╣
 ║               LAPORAN STOK              ║
 ║   -----------------------------------   ║
+║   NOTA202110130001                      ║
+║     Mouse Logitech M1                   ║
+║     90                   2  MOLO0001    ║
+║   -----------------------------------   ║
+║   NOTA202110210001                      ║
+║     RAM Imperion 16GB                   ║
+║      DDR4                1  RAIM0001    ║
+║   -----------------------------------   ║
+║   NOTA202110300001                      ║
+║     Hardisk Seagate B                   ║
+║     arracuda 1TB         1  HASE0001    ║
+║   -----------------------------------   ║
 ║   NOTA202111090001                      ║
 ║     RAM Imperion 16GB                   ║
 ║      DDR4                2  RAIM0001    ║
-║                                         ║
+║   -----------------------------------   ║
+║   NOTA202111100001                      ║
+║     Monitor LED Phili                   ║
+║     ps 272E1 27" 1080                   ║
+║     p 144Hz              1  MOLE0001    ║
 ║   -----------------------------------   ║
 ║   TOTAL PENGELUARAN BARANG              ║
 ║   -----------------------------------   ║
-║     RAM Imperion 16GB                   ║
-║      DDR4                2  RAIM0001    ║
+║     Mouse Logitech M1                   ║
+║     90                   2  MOLO0001    ║
 ║                                         ║
+║     RAM Imperion 16GB                   ║
+║      DDR4                3  RAIM0001    ║
+║                                         ║
+║     Hardisk Seagate B                   ║
+║     arracuda 1TB         1  HASE0001    ║
+║                                         ║
+║     Monitor LED Phili                   ║
+║     ps 272E1 27" 1080                   ║
+║     p 144Hz              1  MOLE0001    ║
 ║   -----------------------------------   ║
-║                     TOTAL BARANG    2   ║
+║                     TOTAL BARANG    7   ║
 ║                                         ║
 ╚═════════════════════════════════════════╝

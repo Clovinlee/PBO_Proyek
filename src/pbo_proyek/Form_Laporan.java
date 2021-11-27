@@ -706,7 +706,12 @@ public class Form_Laporan extends javax.swing.JFrame {
                 if (j[0].equals(nomorrnota)){
                     for (String[] k: listbarang){
                         if (k[0].equals(j[1])){
+                            int ctrspasi = 0;
+                            if (ctrspasi != 0){
+                                simpan1 += "║                                         ║\n";
+                            }
                             String namabarng = k[2];
+                            
                             for (int l = 0; l<Math.ceil(namabarng.chars().count()/17)+1;l++){
                                 
                                 if (l != Math.ceil(namabarng.chars().count()/17)){
@@ -730,7 +735,7 @@ public class Form_Laporan extends javax.swing.JFrame {
                                     
                                 }
                             }
-                            simpan1 += "║                                         ║\n";
+                            ctrspasi += 1;
                         }
                     }
                     
@@ -743,6 +748,7 @@ public class Form_Laporan extends javax.swing.JFrame {
         simpan1 += "║   TOTAL PENGELUARAN BARANG              ║\n";
         simpan1 += "║   -----------------------------------   ║\n";
         int totalbarang = 0;
+        int ctrspasi = 0;
         for (String[] o : listbarang){
             int simpanbarang = 0;
             for (String[] p : listDtrans){
@@ -757,6 +763,8 @@ public class Form_Laporan extends javax.swing.JFrame {
                 }
                 
             }
+            
+           
             String namabarng = o[2];
             boolean chckbarang = false;
             for (String[] v : listDtrans){
@@ -771,8 +779,13 @@ public class Form_Laporan extends javax.swing.JFrame {
                 
             }
             if (chckbarang == true){
-                for (int r = 0; r<Math.ceil(namabarng.chars().count()/17)+1;r++){ 
                 
+                if (ctrspasi != 0){
+                        simpan1 += "║                                         ║\n";
+                }
+                ctrspasi += 1;
+                for (int r = 0; r<Math.ceil(namabarng.chars().count()/17)+1;r++){ 
+                    
                 if (r != Math.ceil(namabarng.chars().count()/17)){
                     if (r == 0){
                         simpan1+= "║     "+namabarng.substring(0,17)+"                   ║\n"; 
@@ -791,10 +804,12 @@ public class Form_Laporan extends javax.swing.JFrame {
                     for (int n = 0; n < 3-String.valueOf(simpanbarang).chars().count();n++){
                         simpan1+= " ";
                     }
-                    simpan1 += simpanbarang+"  "+o[1]+"    ║\n";                                   
+                    simpan1 += simpanbarang+"  "+o[1]+"    ║\n";   
+                    
                 }
+                
             }
-                simpan1 += "║                                         ║\n";
+//                simpan1 += "║                                         ║\n";
             }
             
             

@@ -12,13 +12,6 @@
 ║     Potongan Promo   : Rp 150,000       ║
 ║     Total Transaksi  : Rp 268,000       ║
 ║   -----------------------------------   ║
-║   NOTA202110210001                      ║
-║     Tanggal Transaksi: 2021-10-21       ║
-║     Kode Karyawan    : WAIV0001         ║
-║     Promo            : -                ║
-║     Potongan Promo   : Rp 0             ║
-║     Total Transaksi  : Rp 625,000       ║
-║   -----------------------------------   ║
 ║   NOTA202110300001                      ║
 ║     Tanggal Transaksi: 2021-10-30       ║
 ║     Kode Karyawan    : LUGE0001         ║
@@ -26,20 +19,6 @@
 ║     Potongan Promo   : Rp 100,000       ║
 ║     Total Transaksi  : Rp 669,000       ║
 ║   -----------------------------------   ║
-║   NOTA202111090001                      ║
-║     Tanggal Transaksi: 2021-11-09       ║
-║     Kode Karyawan    : WAIV0001         ║
-║     Promo            : -                ║
-║     Potongan Promo   : Rp 0             ║
-║     Total Transaksi  : Rp 1,250,000     ║
-║   -----------------------------------   ║
-║   NOTA202111100001                      ║
-║     Tanggal Transaksi: 2021-11-10       ║
-║     Kode Karyawan    : GLVL0001         ║
-║     Promo            : POTONGHARGA      ║
-║     Potongan Promo   : Rp 75,000        ║
-║     Total Transaksi  : Rp 2,899,000     ║
-║   -----------------------------------   ║
 ║                                         ║
-║                Grand Total: Rp 5,711,000║
+║                  Grand Total: Rp 937,000║
 ╚═════════════════════════════════════════╝
