@@ -635,6 +635,7 @@ public class Form_Transaction extends javax.swing.JFrame {
                 temp_listcart.add(tmp);
             }
             DetailTransaction_Form frm_trans = new DetailTransaction_Form(grand_total, nota, cb_promo.getSelectedIndex(), temp_listcart,frm_menu);
+            frm_trans.setPotongan(potongan);
             frm_trans.setVisible(true);
             frm_trans.setFrm_trans(this);
             frm_menu.setEnabled(false);

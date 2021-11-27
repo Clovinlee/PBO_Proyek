@@ -74,7 +74,7 @@ public class DetailJenisBarang_Form extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(58, 58, 58));
         jPanel1.setPreferredSize(new java.awt.Dimension(772, 496));
 
-        jListjenis.setForeground(new java.awt.Color(222, 222, 222));
+        jListjenis.setForeground(new java.awt.Color(58, 58, 58));
         jListjenis.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }

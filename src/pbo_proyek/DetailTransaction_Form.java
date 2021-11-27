@@ -276,6 +276,16 @@ public class DetailTransaction_Form extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btn_cancelActionPerformed
 
+    private int potongan = 0;
+
+    public int getPotongan() {
+        return potongan;
+    }
+
+    public void setPotongan(int potongan) {
+        this.potongan = potongan;
+    }
+    
     private void btn_confirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_confirmActionPerformed
         // TODO add your handling code here:
         // TODO : Use trans
@@ -288,6 +298,7 @@ public class DetailTransaction_Form extends javax.swing.JFrame {
             if(valid == false){
                 JOptionPane.showMessageDialog(null, "Transaksi Gagal!","Error",JOptionPane.ERROR_MESSAGE);
             }else{
+                generateNota(kode, grand_total, User.getUser_login().getKode(), listCart);
                 JOptionPane.showMessageDialog(null, "Transaksi Sukses!","Sukses",JOptionPane.INFORMATION_MESSAGE);
             }
             frm_menu.setEnabled(true);
@@ -295,7 +306,14 @@ public class DetailTransaction_Form extends javax.swing.JFrame {
             this.dispose();
         }
     }//GEN-LAST:event_btn_confirmActionPerformed
-
+    
+    public void generateNota(String kode, int grand_total, String id_karyawan, ArrayList<String[]> listCart){
+        //TODO : ALAN & ESTIFAN
+        // CODE
+        // kode, harga, qty, subtotal <-- STRUKTUR LISTCART
+        //Variabel : potongan, bayar, kembalian
+    }
+    
     private void lbl_closeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_closeMouseClicked
         // TODO add your handling code here:
         frm_menu.setEnabled(true);
@@ -306,11 +324,11 @@ public class DetailTransaction_Form extends javax.swing.JFrame {
         // TODO add your handling code here:
         setState(this.ICONIFIED);
     }//GEN-LAST:event_lbl_minimizeMouseClicked
-
+    
     public Form_Transaction getFrm_trans() {
         return frm_trans;
     }
-
+    
     public void setFrm_trans(Form_Transaction frm_trans) {
         this.frm_trans = frm_trans;
     }

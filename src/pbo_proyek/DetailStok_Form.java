@@ -338,7 +338,7 @@ public class DetailStok_Form extends javax.swing.JFrame {
     private void btn_deletestokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deletestokActionPerformed
         // TODO add your handling code here:
         
-        if(JOptionPane.showConfirmDialog(null, "Yakin hapus stok "+data_stok[2]+" ?","Hapus stok",JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+        if(JOptionPane.showConfirmDialog(null, "Yakin hapus barang "+data_stok[2]+" ?","Hapus barang",JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
             int output = DB.delete("UPDATE barang SET STATUS = 0 WHERE id = ?",new Object[] {data_stok[0]});
             if(output <= 0){
                 JOptionPane.showMessageDialog(null, "Error saat menghapus!","Error",JOptionPane.ERROR_MESSAGE);
@@ -346,7 +346,7 @@ public class DetailStok_Form extends javax.swing.JFrame {
                 frm_stc.loadDgv();
                 frm_stc.search();
                 frm_stc.setIdx(-1);
-                JOptionPane.showMessageDialog(null, "Sukses delete Stok","Sukses",JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Sukses delete barang","Sukses",JOptionPane.INFORMATION_MESSAGE);
                 this.dispose();
             }
         }
