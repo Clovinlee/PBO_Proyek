@@ -67,10 +67,14 @@ public class Form_Transaction extends javax.swing.JFrame {
             cb_jenisbarang.addItem(s[1]);
         }
     }
+   
     
     private int grand_total = 0;
     private int potongan = 0;
     
+    public int getPotongan(){
+        return potongan;
+    }
     public void loadDgv(){
         listBarang = DB.query("select b.id, b.kode, b.nama, b.harga, j.nama_jenis from barang b, jenis_barang j where b.status = 1 AND j.id = b.fk_jenis_barang;");
         tbl = new DefaultTableModel(new Object[] {"Kode","Nama","Harga","Jenis Barang"}, 0);

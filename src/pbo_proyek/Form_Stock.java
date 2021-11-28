@@ -132,17 +132,21 @@ public class Form_Stock extends javax.swing.JFrame {
         int end=999999999;
         if(data[1].toLowerCase().contains(kode.toLowerCase())){
             if(data[2].toLowerCase().contains(nama.toLowerCase())){
-                if(!hrgawal.equals("")){start = Integer.parseInt(hrgawal);}
-                if(!hrgakhir.equals("")){end = Integer.parseInt(hrgakhir);}
-                if(Integer.parseInt(data[4])>=start && Integer.parseInt(data[4])<=end){
-                    if(!stokawal.equals("")){start = Integer.parseInt(stokawal);}
-                    if(!stokakhir.equals("")){end = Integer.parseInt(stokakhir);}
-                    if(Integer.parseInt(data[3])>=start && Integer.parseInt(data[3])<=end){
-                        if(jenis.equalsIgnoreCase(jns) || jenis.equalsIgnoreCase("Semua")){
-                        return true;
-                    }
+                try {
+                    if(!hrgawal.equals("")){start = Integer.parseInt(hrgawal);}
+                    if(!hrgakhir.equals("")){end = Integer.parseInt(hrgakhir);}
+                    if(Integer.parseInt(data[4])>=start && Integer.parseInt(data[4])<=end){
+                        if(!stokawal.equals("")){start = Integer.parseInt(stokawal);}
+                        if(!stokakhir.equals("")){end = Integer.parseInt(stokakhir);}
+                        if(Integer.parseInt(data[3])>=start && Integer.parseInt(data[3])<=end){
+                            if(jenis.equalsIgnoreCase(jns) || jenis.equalsIgnoreCase("Semua")){
+                            return true;
+                         }   
                     }
                 }
+                } catch (Exception e) {
+                    return false;
+                }     
             }
         }
         return false;

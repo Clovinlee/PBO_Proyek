@@ -7,6 +7,10 @@ package pbo_proyek;
 
 import java.awt.Color;
 import java.awt.Cursor;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -298,7 +302,7 @@ public class DetailTransaction_Form extends javax.swing.JFrame {
             if(valid == false){
                 JOptionPane.showMessageDialog(null, "Transaksi Gagal!","Error",JOptionPane.ERROR_MESSAGE);
             }else{
-                generateNota(kode, grand_total, User.getUser_login().getKode(), listCart);
+                generateNota(kode, grand_total, User.getUser_login().getKode(), listCart,frm_trans.getPotongan(),bayar,kembalian);
                 JOptionPane.showMessageDialog(null, "Transaksi Sukses!","Sukses",JOptionPane.INFORMATION_MESSAGE);
             }
             frm_menu.setEnabled(true);
@@ -307,11 +311,68 @@ public class DetailTransaction_Form extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_confirmActionPerformed
     
-    public void generateNota(String kode, int grand_total, String id_karyawan, ArrayList<String[]> listCart){
+    public void generateNota(String kode, int grand_total, String id_karyawan, ArrayList<String[]> listCart,int potongan,int bayar,int kembalian){
         //TODO : ALAN & ESTIFAN
         // CODE
         // kode, harga, qty, subtotal <-- STRUKTUR LISTCART
         //Variabel : potongan, bayar, kembalian
+        String simpan = "";
+        LocalDateTime mydate = LocalDateTime.now();
+        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy (HH:mm:ss)");
+        String date = mydate.format(myFormatObj);
+        simpan += 
+        "╔═══════════════════════════════════════════════════╗\n" +
+        "║                                                   ║\n" +
+        "║                   C O M P U F Y                   ║\n" +
+        "║                                                   ║\n" +
+        "╠═══════════════════════════════════════════════════╣\n"
+        ;
+        String kodenota = kode.substring(0,4)+"********"+kode.substring(kode.length()-4,kode.length());
+        simpan += String.format("║%-51s║"," "+kodenota+" "+date+" "+id_karyawan)+"\n";;
+        simpan += "║———————————————————————————————————————————————————║\n";
+        simpan += "║                                                   ║\n";
+        
+        for(String[] a :frm_trans.listBarang){
+             for(String[] s: listCart){
+                 if(a[1].equals(s[0])){
+                     if(a[2].length()>19){
+                       simpan+=String.format("║%-51s║"," "+a[2].substring(0,a[2].length()-5))+"\n";
+                       simpan+=String.format("║%-25s"," "+a[2].substring(a[2].length()-6,a[2].length())+" ")+String.format("%26s║","  "+s[2]+" "+s[1]+" "+s[3]+" ")+"\n";
+                       simpan+="║                                                   ║\n";
+                     }else if(a[2].length()>38){
+                       simpan+=String.format("║%-51s║"," "+a[2].substring(0,a[2].length()-10))+"\n";
+                       simpan+=String.format("║%-51s║"," "+a[2].substring(a[2].length()-9,a[2].length()-3))+"\n";
+                       simpan+=String.format("║%-25s"," "+a[2].substring(a[2].length()-2,a[2].length())+" ")+String.format("%26s║","  "+s[2]+" "+s[1]+" "+s[3]+" ")+"\n";
+                       simpan+="║                                                   ║\n";
+                     }
+                     else{
+                        simpan += String.format("║%-25s"," "+a[2])+String.format("%26s║","  "+s[2]+" "+s[1]+" "+s[3]+" ")+"\n";
+                        simpan+="║                                                   ║\n";
+                     }
+                 }                
+            }
+        }
+
+        simpan+="║                         ————————————————————————  ║\n";
+        simpan+=String.format("║%51s║"," Potongan  "+potongan+"  ")+"\n";
+        simpan+=String.format("║%51s║"," Grand Total "+grand_total+"  ")+"\n";     
+        simpan+="║                         ————————————————————————  ║\n";
+        simpan+=String.format("║%51s║"," Total Bayar "+bayar+"  ")+"\n";     
+        simpan+=String.format("║%51s║"," Total Kembalian "+kembalian+"  ")+"\n";    
+        simpan+="║                                                   ║\n"+   
+                "║  =============== www.compufy.com ===============  ║\n"+ 
+                "║                                                   ║\n"+   
+                "╚═══════════════════════════════════════════════════╝";
+        try {
+            FileWriter fout = new FileWriter("nota/"+kode+".txt");
+                BufferedWriter bw = new BufferedWriter(fout);
+                
+                bw.write(simpan);
+                                bw.close();
+                fout.close();
+                JOptionPane.showMessageDialog(null, "Sukses Membuat nota!","Sukses",JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+        }
     }
     
     private void lbl_closeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_closeMouseClicked
