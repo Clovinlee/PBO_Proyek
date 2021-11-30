@@ -328,37 +328,89 @@ public class DetailTransaction_Form extends javax.swing.JFrame {
         "╠═══════════════════════════════════════════════════╣\n"
         ;
         String kodenota = kode.substring(0,4)+"********"+kode.substring(kode.length()-4,kode.length());
-        simpan += String.format("║%-51s║"," "+kodenota+" "+date+" "+id_karyawan)+"\n";;
+        simpan += String.format("║%-51s║"," "+kodenota+"  "+date+"  "+id_karyawan)+"\n";;
         simpan += "║———————————————————————————————————————————————————║\n";
         simpan += "║                                                   ║\n";
         
         for(String[] a :frm_trans.listBarang){
              for(String[] s: listCart){
                  if(a[1].equals(s[0])){
-                     if(a[2].length()>19){
-                       simpan+=String.format("║%-51s║"," "+a[2].substring(0,a[2].length()-5))+"\n";
-                       simpan+=String.format("║%-25s"," "+a[2].substring(a[2].length()-6,a[2].length())+" ")+String.format("%26s║","  "+s[2]+" "+s[1]+" "+s[3]+" ")+"\n";
-                       simpan+="║                                                   ║\n";
-                     }else if(a[2].length()>38){
-                       simpan+=String.format("║%-51s║"," "+a[2].substring(0,a[2].length()-10))+"\n";
-                       simpan+=String.format("║%-51s║"," "+a[2].substring(a[2].length()-9,a[2].length()-3))+"\n";
-                       simpan+=String.format("║%-25s"," "+a[2].substring(a[2].length()-2,a[2].length())+" ")+String.format("%26s║","  "+s[2]+" "+s[1]+" "+s[3]+" ")+"\n";
-                       simpan+="║                                                   ║\n";
-                     }
-                     else{
-                        simpan += String.format("║%-25s"," "+a[2])+String.format("%26s║","  "+s[2]+" "+s[1]+" "+s[3]+" ")+"\n";
-                        simpan+="║                                                   ║\n";
-                     }
+                     for(int l =0;l<Math.ceil(a[2].chars().count()/19)+1;l++){
+                         if(l != Math.ceil(a[2].chars().count()/19)){
+                             if(l==0){
+                                 simpan+=String.format("║%-51s║"," "+a[2].substring(0,19))+"\n";
+                             }
+                             else{
+                                 simpan+=String.format("║%-51s║"," "+a[2].substring(19*(l),(19*(l+1))))+"\n";
+                             }   
+                         }
+                         else{
+                             simpan+=String.format("║%-19s"," "+a[2].substring(17*(l)));
+                               
+                             simpan+=String.format("   %-1s",s[2]);
+                             if(s[1].length()>=7){
+                                 simpan+=String.format("  %,d",Integer.parseInt(s[1]));
+                                for (int j = 0;j< 11-s[1].chars().count();j++){
+                                simpan+= " ";
+                                }
+                             }
+                             else{
+                                 simpan+=String.format("  %,d",Integer.parseInt(s[1]));
+                                for (int j = 0;j< 12-s[1].chars().count();j++){
+                                simpan+= " ";
+                                }
+                             }
+                             if(s[3].length()>=7){
+                                simpan+=String.format("%,d",Integer.parseInt(s[3]));
+                                for (int j = 0;j< 11-s[3].chars().count();j++){
+                                simpan+= " ";
+                                }
+                             }
+                             else{
+                                simpan+=String.format("%,d",Integer.parseInt(s[3]));
+                                for (int j = 0;j< 12-s[3].chars().count();j++){
+                                simpan+= " ";
+                                }
+                             }
+                             
+                             simpan += "║\n";
+                             simpan+="║                                                   ║\n";
+                         }
+                     }               
                  }                
             }
         }
 
         simpan+="║                         ————————————————————————  ║\n";
-        simpan+=String.format("║%51s║"," Potongan  "+potongan+"  ")+"\n";
-        simpan+=String.format("║%51s║"," Grand Total "+grand_total+"  ")+"\n";     
+        simpan+=String.format("║                            Potongan  %,d",potongan);
+        for (int j = 0;j< 12-String.valueOf(potongan).length();j++){
+          simpan+= " ";
+        }
+        simpan += "║\n";
+        simpan+=String.format("║                         Grand Total  %,d",grand_total);   
+        for (int j = 0;j< 11-String.valueOf(grand_total).length();j++){
+          simpan+= " ";
+        }
+        simpan += "║\n";
         simpan+="║                         ————————————————————————  ║\n";
-        simpan+=String.format("║%51s║"," Total Bayar "+bayar+"  ")+"\n";     
-        simpan+=String.format("║%51s║"," Total Kembalian "+kembalian+"  ")+"\n";    
+        simpan+=String.format("║                         Total Bayar  %,d",bayar);   
+        for (int j = 0;j< 11-String.valueOf(bayar).length();j++){
+          simpan+= " ";
+        }
+        simpan += "║\n";
+        simpan+=String.format("║                     Total Kembalian  %,d",kembalian); 
+        if(String.valueOf(kembalian).length()>=7){
+            for (int j = 0;j< 11-String.valueOf(kembalian).length();j++){
+            simpan+= " ";
+            }
+        }
+        else{
+            for (int j = 0;j< 12-String.valueOf(kembalian).length();j++){
+            simpan+= " ";
+            }
+        }
+        
+        simpan += "║\n";
         simpan+="║                                                   ║\n"+   
                 "║  =============== www.compufy.com ===============  ║\n"+ 
                 "║                                                   ║\n"+   
@@ -369,8 +421,7 @@ public class DetailTransaction_Form extends javax.swing.JFrame {
                 
                 bw.write(simpan);
                                 bw.close();
-                fout.close();
-                JOptionPane.showMessageDialog(null, "Sukses Membuat nota!","Sukses",JOptionPane.INFORMATION_MESSAGE);
+                fout.close();              
         } catch (Exception e) {
         }
     }
