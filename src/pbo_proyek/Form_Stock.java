@@ -377,6 +377,7 @@ public class Form_Stock extends javax.swing.JFrame {
 
         btn_morejenis.setBackground(new java.awt.Color(58, 58, 58));
         btn_morejenis.setFont(new java.awt.Font("Yu Gothic UI", 1, 16)); // NOI18N
+        btn_morejenis.setForeground(new java.awt.Color(222, 222, 222));
         btn_morejenis.setText("...");
         btn_morejenis.setBorder(null);
         btn_morejenis.setContentAreaFilled(false);

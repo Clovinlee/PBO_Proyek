@@ -80,7 +80,6 @@ public class InsertBarang_Form extends javax.swing.JFrame {
         lbl_minimize = new javax.swing.JLabel();
         pl = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        tb_nama = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         cb_jenis = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
@@ -89,6 +88,10 @@ public class InsertBarang_Form extends javax.swing.JFrame {
         btn_tambah = new javax.swing.JButton();
         tb_stok = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        pl_foto = new javax.swing.JPanel();
+        btn_changepicture = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tb_nama = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -146,12 +149,6 @@ public class InsertBarang_Form extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(222, 222, 222));
         jLabel4.setText("Nama Barang:");
 
-        tb_nama.setBackground(new java.awt.Color(244, 244, 244));
-        tb_nama.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        tb_nama.setForeground(new java.awt.Color(58, 58, 58));
-        tb_nama.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-        tb_nama.setCaretColor(new java.awt.Color(58, 58, 58));
-
         jLabel9.setForeground(new java.awt.Color(222, 222, 222));
         jLabel9.setText("Jenis Barang:");
 
@@ -198,58 +195,101 @@ public class InsertBarang_Form extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(222, 222, 222));
         jLabel2.setText("INSERT BARANG");
 
+        pl_foto.setBackground(new java.awt.Color(222, 222, 222));
+
+        javax.swing.GroupLayout pl_fotoLayout = new javax.swing.GroupLayout(pl_foto);
+        pl_foto.setLayout(pl_fotoLayout);
+        pl_fotoLayout.setHorizontalGroup(
+            pl_fotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        pl_fotoLayout.setVerticalGroup(
+            pl_fotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 158, Short.MAX_VALUE)
+        );
+
+        btn_changepicture.setBackground(new java.awt.Color(222, 222, 222));
+        btn_changepicture.setFont(new java.awt.Font("Yu Gothic UI", 1, 14)); // NOI18N
+        btn_changepicture.setForeground(new java.awt.Color(58, 58, 58));
+        btn_changepicture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pbo_proyek/Images/wrench-solid.png"))); // NOI18N
+        btn_changepicture.setText("Change Picture");
+        btn_changepicture.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 6, 1, 1));
+        btn_changepicture.setContentAreaFilled(false);
+        btn_changepicture.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_changepicture.setFocusPainted(false);
+        btn_changepicture.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btn_changepicture.setIconTextGap(10);
+        btn_changepicture.setOpaque(true);
+
+        tb_nama.setBackground(new java.awt.Color(244, 244, 244));
+        tb_nama.setColumns(20);
+        tb_nama.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        tb_nama.setForeground(new java.awt.Color(58, 58, 58));
+        tb_nama.setRows(5);
+        tb_nama.setCaretColor(new java.awt.Color(58, 58, 58));
+        jScrollPane1.setViewportView(tb_nama);
+
         javax.swing.GroupLayout plLayout = new javax.swing.GroupLayout(pl);
         pl.setLayout(plLayout);
         plLayout.setHorizontalGroup(
             plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(plLayout.createSequentialGroup()
-                .addGap(16, 16, 16)
+                .addGap(21, 21, 21)
+                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(pl_foto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_changepicture, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_tambah, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(plLayout.createSequentialGroup()
-                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(tb_stok, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel10)
-                                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel7)
-                                    .addComponent(tb_nama)
-                                    .addComponent(tb_harga, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(18, 18, 18)
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel2))
+                    .addGroup(plLayout.createSequentialGroup()
                         .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel9)
-                            .addComponent(cb_jenis, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(17, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, plLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2)
+                            .addComponent(cb_jenis, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7)
+                            .addComponent(tb_harga, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(tb_stok, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(plLayout.createSequentialGroup()
+                                    .addComponent(jLabel10)
+                                    .addGap(72, 72, 72)))
+                            .addComponent(btn_tambah, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 15, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         plLayout.setVerticalGroup(
             plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, plLayout.createSequentialGroup()
+            .addGroup(plLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
-                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tb_nama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cb_jenis, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tb_harga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(plLayout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cb_jenis, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pl_foto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_changepicture, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(plLayout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tb_harga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tb_stok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btn_tambah, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(19, 19, 19))
+                .addGap(40, 40, 40))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -264,7 +304,7 @@ public class InsertBarang_Form extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(pl_titlebar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(pl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pl, javax.swing.GroupLayout.PREFERRED_SIZE, 375, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
 
@@ -389,6 +429,7 @@ public class InsertBarang_Form extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_changepicture;
     private javax.swing.JButton btn_tambah;
     private javax.swing.JComboBox<String> cb_jenis;
     private javax.swing.JLabel jLabel10;
@@ -396,12 +437,14 @@ public class InsertBarang_Form extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbl_close;
     private javax.swing.JLabel lbl_minimize;
     private javax.swing.JPanel pl;
+    private javax.swing.JPanel pl_foto;
     private javax.swing.JPanel pl_titlebar;
     private javax.swing.JTextField tb_harga;
-    private javax.swing.JTextField tb_nama;
+    private javax.swing.JTextArea tb_nama;
     private javax.swing.JTextField tb_stok;
     // End of variables declaration//GEN-END:variables
 }
