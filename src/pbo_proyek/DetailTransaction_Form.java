@@ -318,19 +318,19 @@ public class DetailTransaction_Form extends javax.swing.JFrame {
         //Variabel : potongan, bayar, kembalian
         String simpan = "";
         LocalDateTime mydate = LocalDateTime.now();
-        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy (HH:mm:ss)");
+        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy  (HH:mm:ss)");
         String date = mydate.format(myFormatObj);
         simpan += 
-        "╔═══════════════════════════════════════════════════╗\n" +
-        "║                                                   ║\n" +
-        "║                   C O M P U F Y                   ║\n" +
-        "║                                                   ║\n" +
-        "╠═══════════════════════════════════════════════════╣\n"
+        "╔════════════════════════════════════════════════════╗\n" +
+        "║                                                    ║\n" +
+        "║                   C O M P U F Y                    ║\n" +
+        "║                                                    ║\n" +
+        "╠════════════════════════════════════════════════════╣\n"
         ;
         String kodenota = kode.substring(0,4)+"********"+kode.substring(kode.length()-4,kode.length());
-        simpan += String.format("║%-51s║"," "+kodenota+"  "+date+"  "+id_karyawan)+"\n";;
-        simpan += "║———————————————————————————————————————————————————║\n";
-        simpan += "║                                                   ║\n";
+        simpan += String.format("║%-52s║"," "+kodenota+"  "+date+"  "+id_karyawan)+"\n";;
+        simpan += "║————————————————————————————————————————————————————║\n";
+        simpan += "║                                                    ║\n";
         
         for(String[] a :frm_trans.listBarang){
              for(String[] s: listCart){
@@ -338,16 +338,18 @@ public class DetailTransaction_Form extends javax.swing.JFrame {
                      for(int l =0;l<Math.ceil(a[2].chars().count()/19)+1;l++){
                          if(l != Math.ceil(a[2].chars().count()/19)){
                              if(l==0){
-                                 simpan+=String.format("║%-51s║"," "+a[2].substring(0,19))+"\n";
+                                 simpan+=String.format("║%-52s║"," "+a[2].substring(0,19))+"\n";
                              }
                              else{
-                                 simpan+=String.format("║%-51s║"," "+a[2].substring(19*(l),(19*(l+1))))+"\n";
+                                 simpan+=String.format("║%-52s║"," "+a[2].substring(19*(l),(19*(l+1))))+"\n";
                              }   
                          }
                          else{
-                             simpan+=String.format("║%-19s"," "+a[2].substring(17*(l)));
+                             simpan+=String.format("║%-20s"," "+a[2].substring(17*(l)));
                                
-                             simpan+=String.format("   %-1s",s[2]);
+                             
+                             simpan+=String.format("  %-3s",s[2]);
+                             
                              if(s[1].length()>=7){
                                  simpan+=String.format("  %,d",Integer.parseInt(s[1]));
                                 for (int j = 0;j< 11-s[1].chars().count();j++){
@@ -360,92 +362,93 @@ public class DetailTransaction_Form extends javax.swing.JFrame {
                                 simpan+= " ";
                                 }
                              }
+                             
                              if(s[3].length()>=7){
                                 simpan+=String.format("%,d",Integer.parseInt(s[3]));
-                                for (int j = 0;j< 11-s[3].chars().count();j++){
+                                for (int j = 0;j< 10-s[3].chars().count();j++){
                                 simpan+= " ";
                                 }
                              }
                              else{
                                 simpan+=String.format("%,d",Integer.parseInt(s[3]));
-                                for (int j = 0;j< 12-s[3].chars().count();j++){
+                                for (int j = 0;j< 11-s[3].chars().count();j++){
                                 simpan+= " ";
                                 }
                              }
                              
                              simpan += "║\n";
-                             simpan+="║                                                   ║\n";
+                             simpan+="║                                                    ║\n";
                          }
                      }               
                  }                
             }
         }
 
-        simpan+="║                         ————————————————————————  ║\n";
-        simpan+=String.format("║                            Potongan  %,d",potongan);
+        simpan+="║                           ———————————————————————— ║\n";
+        simpan+=String.format("║                              Potongan  %,d",potongan);
         if(String.valueOf(potongan).length()>=7){
-            for (int j = 0;j< 11-String.valueOf(potongan).length();j++){
+            for (int j = 0;j< 10-String.valueOf(potongan).length();j++){
             simpan+= " ";
             }
         }
         else if(String.valueOf(potongan).length()<=2){
-            for (int j = 0;j< 13-String.valueOf(potongan).length();j++){
-            simpan+= " ";
-            }
-        }
-        else{
             for (int j = 0;j< 12-String.valueOf(potongan).length();j++){
             simpan+= " ";
             }
         }
+        else{
+            for (int j = 0;j< 11-String.valueOf(potongan).length();j++){
+            simpan+= " ";
+            }
+        }
         simpan += "║\n";
-        simpan+=String.format("║                         Grand Total  %,d",grand_total);   
+        simpan+=String.format("║                           Grand Total  %,d",grand_total);   
         if(String.valueOf(grand_total).length()>=7){
+            for (int j = 0;j< 10-String.valueOf(grand_total).length();j++){
+            simpan+= " ";
+            }
+        }
+        else{
             for (int j = 0;j< 11-String.valueOf(grand_total).length();j++){
             simpan+= " ";
             }
         }
-        else{
-            for (int j = 0;j< 12-String.valueOf(grand_total).length();j++){
+        simpan += "║\n";
+        simpan+="║                           ———————————————————————— ║\n";
+        simpan+=String.format("║                           Total Bayar  %,d",bayar);   
+        if(String.valueOf(bayar).length()>=7){
+            for (int j = 0;j< 10-String.valueOf(bayar).length();j++){
             simpan+= " ";
             }
         }
-        simpan += "║\n";
-        simpan+="║                         ————————————————————————  ║\n";
-        simpan+=String.format("║                         Total Bayar  %,d",bayar);   
-        if(String.valueOf(bayar).length()>=7){
+        else{
             for (int j = 0;j< 11-String.valueOf(bayar).length();j++){
             simpan+= " ";
             }
         }
-        else{
-            for (int j = 0;j< 12-String.valueOf(bayar).length();j++){
-            simpan+= " ";
-            }
-        }
         simpan += "║\n";
-        simpan+=String.format("║                     Total Kembalian  %,d",kembalian); 
+        simpan+=String.format("║                       Total Kembalian  %,d",kembalian); 
         if(String.valueOf(kembalian).length()>=7){
-            for (int j = 0;j< 11-String.valueOf(kembalian).length();j++){
+            for (int j = 0;j< 10-String.valueOf(kembalian).length();j++){
             simpan+= " ";
             }
         }
         else if(String.valueOf(kembalian).length()<=2){
-            for (int j = 0;j< 13-String.valueOf(potongan).length();j++){
+            for (int j = 0;j< 12-String.valueOf(potongan).length();j++){
             simpan+= " ";
             }
         }
         else{
-            for (int j = 0;j< 12-String.valueOf(kembalian).length();j++){
+            for (int j = 0;j< 11-String.valueOf(kembalian).length();j++){
             simpan+= " ";
             }
         }
         
         simpan += "║\n";
-        simpan+="║                                                   ║\n"+   
-                "║  =============== www.compufy.com ===============  ║\n"+ 
-                "║                                                   ║\n"+   
-                "╚═══════════════════════════════════════════════════╝";
+        simpan+="║                                                    ║\n"+   
+                "║  =============== www.compufy.com ================  ║\n"+ 
+                "║                                                    ║\n"+   
+                "╚════════════════════════════════════════════════════╝";
         try {
             FileWriter fout = new FileWriter("nota/"+kode+".txt");
                 BufferedWriter bw = new BufferedWriter(fout);
