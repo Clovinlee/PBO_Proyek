@@ -383,24 +383,55 @@ public class DetailTransaction_Form extends javax.swing.JFrame {
 
         simpan+="║                         ————————————————————————  ║\n";
         simpan+=String.format("║                            Potongan  %,d",potongan);
-        for (int j = 0;j< 12-String.valueOf(potongan).length();j++){
-          simpan+= " ";
+        if(String.valueOf(potongan).length()>=7){
+            for (int j = 0;j< 11-String.valueOf(potongan).length();j++){
+            simpan+= " ";
+            }
+        }
+        else if(String.valueOf(potongan).length()<=2){
+            for (int j = 0;j< 13-String.valueOf(potongan).length();j++){
+            simpan+= " ";
+            }
+        }
+        else{
+            for (int j = 0;j< 12-String.valueOf(potongan).length();j++){
+            simpan+= " ";
+            }
         }
         simpan += "║\n";
         simpan+=String.format("║                         Grand Total  %,d",grand_total);   
-        for (int j = 0;j< 11-String.valueOf(grand_total).length();j++){
-          simpan+= " ";
+        if(String.valueOf(grand_total).length()>=7){
+            for (int j = 0;j< 11-String.valueOf(grand_total).length();j++){
+            simpan+= " ";
+            }
+        }
+        else{
+            for (int j = 0;j< 12-String.valueOf(grand_total).length();j++){
+            simpan+= " ";
+            }
         }
         simpan += "║\n";
         simpan+="║                         ————————————————————————  ║\n";
         simpan+=String.format("║                         Total Bayar  %,d",bayar);   
-        for (int j = 0;j< 11-String.valueOf(bayar).length();j++){
-          simpan+= " ";
+        if(String.valueOf(bayar).length()>=7){
+            for (int j = 0;j< 11-String.valueOf(bayar).length();j++){
+            simpan+= " ";
+            }
+        }
+        else{
+            for (int j = 0;j< 12-String.valueOf(bayar).length();j++){
+            simpan+= " ";
+            }
         }
         simpan += "║\n";
         simpan+=String.format("║                     Total Kembalian  %,d",kembalian); 
         if(String.valueOf(kembalian).length()>=7){
             for (int j = 0;j< 11-String.valueOf(kembalian).length();j++){
+            simpan+= " ";
+            }
+        }
+        else if(String.valueOf(kembalian).length()<=2){
+            for (int j = 0;j< 13-String.valueOf(potongan).length();j++){
             simpan+= " ";
             }
         }
