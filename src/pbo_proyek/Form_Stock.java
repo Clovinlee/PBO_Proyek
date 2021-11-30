@@ -118,10 +118,18 @@ public class Form_Stock extends javax.swing.JFrame {
                     
                     try {
                         stok_awal = Integer.parseInt(stokawal);
-                    } catch (Exception e) {return false;}
+                    } catch (Exception e){
+                        if(!stokawal.equalsIgnoreCase("")){
+                            return false;
+                        }
+                    }
                     try {
                         stok_akhir = Integer.parseInt(stokakhir);
-                    } catch (Exception e) {return false;}
+                    } catch (Exception e) {
+                        if(!stokakhir.equalsIgnoreCase("")){
+                            return false;
+                        }
+                    }
                     
                     int stok_now = Integer.parseInt(data[3]);
                     if(stok_awal < stok_now || stokawal.equals("")){
@@ -130,10 +138,18 @@ public class Form_Stock extends javax.swing.JFrame {
                             int harga_akhir = -1;
                             try {
                                 harga_awal = Integer.parseInt(hrgawal);
-                            } catch (Exception e) {}
+                            } catch (Exception e) {
+                                if(!hrgawal.equalsIgnoreCase("")){
+                                    return false;
+                                }
+                            }
                             try {
                                 harga_akhir = Integer.parseInt(hrgakhir);
-                            } catch (Exception e) {}
+                            } catch (Exception e) {
+                                if(!hrgakhir.equalsIgnoreCase("")){
+                                    return false;
+                                }
+                            }
                             int harga_now = Integer.parseInt(data[4]);
                             if(harga_awal < harga_now || hrgawal.equals("")){
                                 if(harga_akhir > harga_now || hrgakhir.equals("")){
@@ -361,7 +377,6 @@ public class Form_Stock extends javax.swing.JFrame {
 
         btn_morejenis.setBackground(new java.awt.Color(58, 58, 58));
         btn_morejenis.setFont(new java.awt.Font("Yu Gothic UI", 1, 16)); // NOI18N
-        btn_morejenis.setForeground(new java.awt.Color(222, 222, 222));
         btn_morejenis.setText("...");
         btn_morejenis.setBorder(null);
         btn_morejenis.setContentAreaFilled(false);
@@ -624,7 +639,6 @@ public class Form_Stock extends javax.swing.JFrame {
             DetailStok_Form ds_frm = new DetailStok_Form(data);
             ds_frm.setFrm_stc(this);
             ds_frm.setVisible(true);
-            idx = -1;
         }
     }//GEN-LAST:event_btn_detailActionPerformed
 
