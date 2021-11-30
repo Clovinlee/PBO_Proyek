@@ -30,7 +30,7 @@ public class Form_Stock extends javax.swing.JFrame {
     
     /** Creates new form Form_Stock */
     public Form_Stock() {
-       
+        
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             UIManager.put("ComboBox.selectionBackground",new ColorUIResource(Palette.getTableDark1()));
@@ -91,66 +91,63 @@ public class Form_Stock extends javax.swing.JFrame {
     public void search(){
         tbl = new DefaultTableModel(new Object[] {"No","Kode","Nama","Stok","Harga","Jenis"}, 0);
         dgv_barang.setDefaultEditor(Object.class, null);
-        String jns="";
         
         int ctr = 1;
-        for(String [] s: listStok){
-            jns ="Semua";
+        
+        //stok = id, kode, nama, stok, harga, status, fk_jenis_barang
+        for (String[] stok : listStok) {
+            String jns = "Semua";
             for(String[] j:listJenis){
-                if(s[6].equals(j[0])){
-                    jns=j[1];
+                if(stok[6].equals(j[0])){
+                    jns = j[1];
                 }
-            }/*
-            if(s[6].equals("1")){
-                jns = "Monitor";
-            }else if(s[6].equals("2")){
-                jns = "CPU";
-            }else if(s[6].equals("3")){
-                jns = "Mouse";
-            }else if(s[6].equals("4")){
-                jns = "Keyboard";
-            }else if(s[6].equals("5")){
-                jns = "Ram";
-            }else if(s[6].equals("6")){
-                jns = "Hardisk";
-            }else if(s[6].equals("7")){
-                jns = "Printer";
-            }*/
-            try {
-                
-            } catch (Exception e) {
             }
-            if(validSearch(tb_kode.getText(),tb_namabarang.getText(),tb_stok1.getText(),tb_stok2.getText(),tb_harga1.getText(),tb_harga2.getText(),cb_jenisbarang.getSelectedItem().toString(),jns,s)){
-                tbl.addRow(new Object[] {ctr,s[1],s[2],s[3],s[4],jns});
+            if(validSearch(tb_kode.getText(),tb_namabarang.getText(),tb_stok1.getText(),tb_stok2.getText(),tb_harga1.getText(),tb_harga2.getText(),cb_jenisbarang.getSelectedItem().toString(),stok,jns)){
+                tbl.addRow(new Object[] {ctr,stok[1],stok[2],stok[3],stok[4],jns});
                 ctr++;
             }
         }
         dgv_barang.setModel(tbl);
     }
-    public boolean validSearch(String kode, String nama,String stokawal,String stokakhir ,String hrgawal, String hrgakhir, String jenis,String jns, String[] data){
-        int start=0;
-        int end=999999999;
-        if(data[1].toLowerCase().contains(kode.toLowerCase())){
-            if(data[2].toLowerCase().contains(nama.toLowerCase())){
-                try {
-                    if(!hrgawal.equals("")){start = Integer.parseInt(hrgawal);}
-                    if(!hrgakhir.equals("")){end = Integer.parseInt(hrgakhir);}
-                    if(Integer.parseInt(data[4])>=start && Integer.parseInt(data[4])<=end){
-                        if(!stokawal.equals("")){start = Integer.parseInt(stokawal);}
-                        if(!stokakhir.equals("")){end = Integer.parseInt(stokakhir);}
-                        if(Integer.parseInt(data[3])>=start && Integer.parseInt(data[3])<=end){
-                            if(jenis.equalsIgnoreCase(jns) || jenis.equalsIgnoreCase("Semua")){
-                            return true;
-                         }   
+    public boolean validSearch(String kode, String nama,String stokawal,String stokakhir ,String hrgawal, String hrgakhir, String jenis, String[] data, String jns){
+        if(jns.equalsIgnoreCase(jenis) || jenis.equalsIgnoreCase("Semua")){
+            if(data[1].toLowerCase().contains(kode.toLowerCase())){
+                if(data[2].toLowerCase().contains(nama.toLowerCase())){
+                    int stok_awal = -1;
+                    int stok_akhir = -1;
+                    
+                    try {
+                        stok_awal = Integer.parseInt(stokawal);
+                    } catch (Exception e) {return false;}
+                    try {
+                        stok_akhir = Integer.parseInt(stokakhir);
+                    } catch (Exception e) {return false;}
+                    
+                    int stok_now = Integer.parseInt(data[3]);
+                    if(stok_awal < stok_now || stokawal.equals("")){
+                        if(stok_akhir > stok_now || stokakhir.equals("")){
+                            int harga_awal = -1;
+                            int harga_akhir = -1;
+                            try {
+                                harga_awal = Integer.parseInt(hrgawal);
+                            } catch (Exception e) {}
+                            try {
+                                harga_akhir = Integer.parseInt(hrgakhir);
+                            } catch (Exception e) {}
+                            int harga_now = Integer.parseInt(data[4]);
+                            if(harga_awal < harga_now || hrgawal.equals("")){
+                                if(harga_akhir > harga_now || hrgakhir.equals("")){
+                                    return true;
+                                }
+                            }
+                        }
                     }
                 }
-                } catch (Exception e) {
-                    return false;
-                }     
             }
         }
         return false;
     }
+    
     public int getIdx(int selected_idx){
         int temp_idx = -1;
         String kode_search = dgv_barang.getValueAt(selected_idx, 1).toString();
