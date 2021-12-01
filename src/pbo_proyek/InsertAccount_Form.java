@@ -275,6 +275,7 @@ public class InsertAccount_Form extends javax.swing.JFrame {
         });
 
         lbl_img.setBackground(new java.awt.Color(222, 222, 222));
+        lbl_img.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         btn_removepicture.setBackground(new java.awt.Color(222, 222, 222));
         btn_removepicture.setFont(new java.awt.Font("Yu Gothic UI", 1, 14)); // NOI18N
@@ -542,7 +543,9 @@ public class InsertAccount_Form extends javax.swing.JFrame {
     
     File f;
     BufferedImage bi;
-    //0 --> File select , 1 --> DB, -1 --> angka random. supaya keluar image not found
+    // 0 --> File select, 
+    // 1 --> DB, 
+    // -1 --> angka random. supaya keluar image not found
     public void loadImage(String fileName, int mode){
         InputStream is;
         Image img;

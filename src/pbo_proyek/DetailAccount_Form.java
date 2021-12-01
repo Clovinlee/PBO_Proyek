@@ -635,7 +635,9 @@ public class DetailAccount_Form extends javax.swing.JFrame {
     
     BufferedImage bi;
     
-    //0 --> File select , 1 --> DB
+    // 0 --> File select, 
+    // 1 --> DB, 
+    // -1 --> angka random. supaya keluar image not found
     public void loadImage(String fileName, int mode){
         InputStream is;
         Image img;
