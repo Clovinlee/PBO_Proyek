@@ -1,7 +1,8 @@
 nbproject/
 dist/
 build/
-lib/
+lib/MySQLDriver
+lib/CopyLibs
 *.xml
 *.mf
 nbproject/private/private.xml
