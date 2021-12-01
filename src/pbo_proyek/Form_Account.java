@@ -60,7 +60,7 @@ public class Form_Account extends javax.swing.JFrame {
     }
     
     public void loadDgv(){
-        listUser = DB.query("SELECT * FROM karyawan where status = 1");
+        listUser = DB.query("SELECT * FROM karyawan where status = 1 ORDER BY id DESC");
         tbl = new DefaultTableModel(new Object[] {"No","Kode","Nama","Username","Jabatan"}, 0);
         dgv_account.setDefaultEditor(Object.class, null);
         

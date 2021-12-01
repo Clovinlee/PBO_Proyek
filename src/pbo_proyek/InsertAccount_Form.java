@@ -5,9 +5,24 @@
 */
 package pbo_proyek;
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 
 /**
  *
@@ -24,6 +39,9 @@ public class InsertAccount_Form extends javax.swing.JFrame {
         btng1 = new ButtonGroup();
         btng1.add(rb_laki);
         btng1.add(rb_perempuan);
+        bi = null;
+        f = null;
+        loadImage("",-1);
     }
     
     /**
@@ -58,7 +76,6 @@ public class InsertAccount_Form extends javax.swing.JFrame {
         tb_alamat = new javax.swing.JTextArea();
         btn_tambah = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        pl_foto = new javax.swing.JPanel();
         tb_kota = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         tb_email = new javax.swing.JTextField();
@@ -66,6 +83,8 @@ public class InsertAccount_Form extends javax.swing.JFrame {
         tb_notelp = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         btn_changepicture = new javax.swing.JButton();
+        lbl_img = new javax.swing.JLabel();
+        btn_removepicture = new javax.swing.JButton();
 
         jLabel8.setForeground(new java.awt.Color(222, 222, 222));
         jLabel8.setText("Password :");
@@ -210,19 +229,6 @@ public class InsertAccount_Form extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(222, 222, 222));
         jLabel2.setText("INSERT ACCOUNT");
 
-        pl_foto.setBackground(new java.awt.Color(222, 222, 222));
-
-        javax.swing.GroupLayout pl_fotoLayout = new javax.swing.GroupLayout(pl_foto);
-        pl_foto.setLayout(pl_fotoLayout);
-        pl_fotoLayout.setHorizontalGroup(
-            pl_fotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 158, Short.MAX_VALUE)
-        );
-        pl_fotoLayout.setVerticalGroup(
-            pl_fotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 158, Short.MAX_VALUE)
-        );
-
         tb_kota.setBackground(new java.awt.Color(244, 244, 244));
         tb_kota.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         tb_kota.setForeground(new java.awt.Color(58, 58, 58));
@@ -262,6 +268,31 @@ public class InsertAccount_Form extends javax.swing.JFrame {
         btn_changepicture.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btn_changepicture.setIconTextGap(10);
         btn_changepicture.setOpaque(true);
+        btn_changepicture.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_changepictureActionPerformed(evt);
+            }
+        });
+
+        lbl_img.setBackground(new java.awt.Color(222, 222, 222));
+
+        btn_removepicture.setBackground(new java.awt.Color(222, 222, 222));
+        btn_removepicture.setFont(new java.awt.Font("Yu Gothic UI", 1, 14)); // NOI18N
+        btn_removepicture.setForeground(new java.awt.Color(58, 58, 58));
+        btn_removepicture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pbo_proyek/Images/trash-solid.png"))); // NOI18N
+        btn_removepicture.setText("Remove Picture");
+        btn_removepicture.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 6, 1, 1));
+        btn_removepicture.setContentAreaFilled(false);
+        btn_removepicture.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_removepicture.setFocusPainted(false);
+        btn_removepicture.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btn_removepicture.setIconTextGap(10);
+        btn_removepicture.setOpaque(true);
+        btn_removepicture.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_removepictureActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout plLayout = new javax.swing.GroupLayout(pl);
         pl.setLayout(plLayout);
@@ -270,70 +301,59 @@ public class InsertAccount_Form extends javax.swing.JFrame {
             .addGroup(plLayout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(plLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, plLayout.createSequentialGroup()
                         .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(pl_foto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btn_changepicture, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
+                            .addComponent(lbl_img, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
+                            .addComponent(btn_removepicture, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel11)
-                            .addComponent(btn_tambah, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tb_kota))
-                        .addGap(18, 18, 18)
+                        .addGap(18, 18, Short.MAX_VALUE)
                         .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(plLayout.createSequentialGroup()
                                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(dt_tgl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel6))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(jLabel7)
+                                    .addComponent(tb_username, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel10)
+                                    .addComponent(tb_password, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(plLayout.createSequentialGroup()
-                                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(plLayout.createSequentialGroup()
-                                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel7)
-                                            .addComponent(tb_username, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jLabel10)
-                                            .addComponent(tb_password, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel2)
-                                        .addGroup(plLayout.createSequentialGroup()
-                                            .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(jLabel4)
-                                                .addComponent(tb_nama, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
-                                                .addComponent(jLabel13)
-                                                .addComponent(tb_notelp))
-                                            .addGap(18, 18, 18)
-                                            .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(jLabel9)
-                                                .addComponent(cb_jabatan, 0, 135, Short.MAX_VALUE)
-                                                .addComponent(jLabel12)
-                                                .addComponent(tb_email))))
-                                    .addGroup(plLayout.createSequentialGroup()
-                                        .addGap(6, 6, 6)
-                                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel3)
-                                            .addGroup(plLayout.createSequentialGroup()
-                                                .addComponent(rb_laki)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(rb_perempuan)))))
-                                .addGap(0, 13, Short.MAX_VALUE))))
+                                .addComponent(rb_laki)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(rb_perempuan))
+                            .addComponent(dt_tgl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6)
+                            .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel2)
+                                .addGroup(plLayout.createSequentialGroup()
+                                    .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jLabel4)
+                                        .addComponent(tb_nama)
+                                        .addComponent(jLabel13)
+                                        .addComponent(tb_notelp, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jLabel9)
+                                        .addComponent(cb_jabatan, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel12)
+                                        .addComponent(tb_email, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jLabel3))
+                        .addGap(17, 17, 17))
                     .addGroup(plLayout.createSequentialGroup()
                         .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btn_tambah, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         plLayout.setVerticalGroup(
             plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(plLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2)
                 .addGap(11, 11, 11)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(plLayout.createSequentialGroup()
-                        .addComponent(pl_foto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(8, 8, 8)
-                        .addComponent(btn_changepicture, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(plLayout.createSequentialGroup()
                         .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
@@ -362,30 +382,38 @@ public class InsertAccount_Form extends javax.swing.JFrame {
                                 .addComponent(jLabel10)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(tb_password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(plLayout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(rb_perempuan, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(rb_laki, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(6, 6, 6)
+                                .addGap(34, 34, 34)
+                                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(rb_perempuan, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(rb_laki, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(plLayout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(jLabel3))))
+                    .addGroup(plLayout.createSequentialGroup()
+                        .addComponent(lbl_img, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, Short.MAX_VALUE)
+                        .addComponent(btn_removepicture, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(plLayout.createSequentialGroup()
+                        .addComponent(btn_changepicture, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel11))
                     .addGroup(plLayout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addGap(7, 7, 7)
-                        .addComponent(dt_tgl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(plLayout.createSequentialGroup()
-                        .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tb_kota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(dt_tgl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tb_kota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btn_tambah, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -485,8 +513,19 @@ public class InsertAccount_Form extends javax.swing.JFrame {
         String err = checkValid(gndr, pw);
         if(err.equals("")){
             String kode = generateKode(tb_nama.getText());
-            boolean valid = DB.insert("INSERT INTO karyawan(kode,username,password,nama,nomor_telepon,gender,tanggal_lahir,kota,alamat,status,fk_jabatan,email) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", new Object[] {kode,tb_username.getText(),pw,tb_nama.getText(),tb_notelp.getText(),gndr,dt_tgl.getDate(),tb_kota.getText(),tb_alamat.getText(),1,cb_jabatan.getSelectedIndex()+1,tb_email.getText()});
+            String img_name = "NULL";
+            if(f != null){
+                img_name = kode + "." + FilenameUtils.getExtension(f.getName());
+            }
+            boolean valid = DB.insert("INSERT INTO karyawan(kode,username,password,nama,nomor_telepon,gender,tanggal_lahir,kota,alamat,status,fk_jabatan,email,images) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", new Object[] {kode,tb_username.getText(),pw,tb_nama.getText(),tb_notelp.getText(),gndr,dt_tgl.getDate(),tb_kota.getText(),tb_alamat.getText(),1,cb_jabatan.getSelectedIndex()+1,tb_email.getText(),img_name});
             if(valid){
+                if(!img_name.equalsIgnoreCase("NULL")){
+                File f_copy = new File(System.getProperty("user.dir")+"/Images/"+img_name);
+                    try {
+                        FileUtils.copyFile(f, f_copy);
+                    } catch (Exception ex) {
+                    }
+                }
                 JOptionPane.showMessageDialog(null, "Insert Sukses!","Sukses",JOptionPane.INFORMATION_MESSAGE);
                 frm_acc.loadDgv();
                 frm_acc.search();
@@ -500,6 +539,56 @@ public class InsertAccount_Form extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_btn_tambahActionPerformed
+    
+    File f;
+    BufferedImage bi;
+    //0 --> File select , 1 --> DB, -1 --> angka random. supaya keluar image not found
+    public void loadImage(String fileName, int mode){
+        InputStream is;
+        Image img;
+        ImageIcon img_icon;
+        try {
+            if(!fileName.equalsIgnoreCase("null") && !fileName.equals("")){
+                if(mode == 0){
+                    is = new FileInputStream(fileName);
+                }else{
+                    is = new FileInputStream(System.getProperty("user.dir")+"/Images/"+fileName);
+                }
+            }else{
+                is = Form_Login.class.getResourceAsStream("Images/no_img.png");
+            }
+            bi = ImageIO.read(is);
+            img = bi.getScaledInstance(lbl_img.getWidth(), -1, Image.SCALE_SMOOTH);
+            img_icon = new ImageIcon(img);
+            lbl_img.setIcon(img_icon);
+        }catch (FileNotFoundException ex){
+            JOptionPane.showMessageDialog(null, "Image not found","Error",JOptionPane.ERROR_MESSAGE);
+            f = null;
+            loadImage("null",0);
+        }
+        catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Bad file format","Error",JOptionPane.ERROR_MESSAGE);
+            f = null;
+            loadImage("null",0);
+        }
+    }
+    
+    private void btn_changepictureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_changepictureActionPerformed
+        // TODO add your handling code here:
+        JFileChooser fc = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Images", "jpg", "jpeg", "png", "bmp");
+        fc.setFileFilter(filter);
+        int result = fc.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            f = fc.getSelectedFile();
+            loadImage(f.getPath(),0);
+        }
+    }//GEN-LAST:event_btn_changepictureActionPerformed
+
+    private void btn_removepictureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_removepictureActionPerformed
+        f = null;
+        loadImage("", -1);
+    }//GEN-LAST:event_btn_removepictureActionPerformed
     
     public boolean checkNama(String nama){
         String[] temp = nama.split(" ");
@@ -567,6 +656,7 @@ public class InsertAccount_Form extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_changepicture;
+    private javax.swing.JButton btn_removepicture;
     private javax.swing.JButton btn_tambah;
     private javax.swing.JComboBox<String> cb_jabatan;
     private com.toedter.calendar.JDateChooser dt_tgl;
@@ -584,9 +674,9 @@ public class InsertAccount_Form extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbl_close;
+    private javax.swing.JLabel lbl_img;
     private javax.swing.JLabel lbl_minimize;
     private javax.swing.JPanel pl;
-    private javax.swing.JPanel pl_foto;
     private javax.swing.JPanel pl_titlebar;
     private javax.swing.JRadioButton rb_laki;
     private javax.swing.JRadioButton rb_perempuan;

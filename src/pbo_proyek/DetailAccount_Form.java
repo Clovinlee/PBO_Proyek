@@ -5,17 +5,25 @@
 */
 package pbo_proyek;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.text.DateFormat;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 
 /**
  *
@@ -34,11 +42,13 @@ public class DetailAccount_Form extends javax.swing.JFrame {
         btng1 = new ButtonGroup();
         btng1.add(rb_laki);
         btng1.add(rb_perempuan);
+        f = null;
     }
     
     public DetailAccount_Form(String[] data){
         this();
         this.data_user = data;
+        loadImage(data_user[13],1);
         tb_username.setText(data[2]);
         tb_alamat.setText(data[9]);
         tb_password.setText(data[3]);
@@ -129,10 +139,11 @@ public class DetailAccount_Form extends javax.swing.JFrame {
         tb_notelp = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         tb_kota = new javax.swing.JTextField();
-        pl_foto = new javax.swing.JPanel();
         tb_email = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         btn_changepicture = new javax.swing.JButton();
+        lbl_img = new javax.swing.JLabel();
+        btn_removepicture = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(500, 515));
@@ -333,19 +344,6 @@ public class DetailAccount_Form extends javax.swing.JFrame {
         tb_kota.setCaretColor(new java.awt.Color(58, 58, 58));
         tb_kota.setMaximumSize(new java.awt.Dimension(6, 22));
 
-        pl_foto.setBackground(new java.awt.Color(222, 222, 222));
-
-        javax.swing.GroupLayout pl_fotoLayout = new javax.swing.GroupLayout(pl_foto);
-        pl_foto.setLayout(pl_fotoLayout);
-        pl_fotoLayout.setHorizontalGroup(
-            pl_fotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 158, Short.MAX_VALUE)
-        );
-        pl_fotoLayout.setVerticalGroup(
-            pl_fotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 158, Short.MAX_VALUE)
-        );
-
         tb_email.setBackground(new java.awt.Color(244, 244, 244));
         tb_email.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         tb_email.setForeground(new java.awt.Color(58, 58, 58));
@@ -369,6 +367,34 @@ public class DetailAccount_Form extends javax.swing.JFrame {
         btn_changepicture.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btn_changepicture.setIconTextGap(10);
         btn_changepicture.setOpaque(true);
+        btn_changepicture.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_changepictureActionPerformed(evt);
+            }
+        });
+
+        lbl_img.setBackground(new java.awt.Color(222, 222, 222));
+        lbl_img.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_img.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lbl_img.setIconTextGap(0);
+
+        btn_removepicture.setBackground(new java.awt.Color(222, 222, 222));
+        btn_removepicture.setFont(new java.awt.Font("Yu Gothic UI", 1, 14)); // NOI18N
+        btn_removepicture.setForeground(new java.awt.Color(58, 58, 58));
+        btn_removepicture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pbo_proyek/Images/trash-solid.png"))); // NOI18N
+        btn_removepicture.setText("Remove Picture");
+        btn_removepicture.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 6, 1, 1));
+        btn_removepicture.setContentAreaFilled(false);
+        btn_removepicture.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_removepicture.setFocusPainted(false);
+        btn_removepicture.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btn_removepicture.setIconTextGap(10);
+        btn_removepicture.setOpaque(true);
+        btn_removepicture.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_removepictureActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout plLayout = new javax.swing.GroupLayout(pl);
         pl.setLayout(plLayout);
@@ -392,23 +418,24 @@ public class DetailAccount_Form extends javax.swing.JFrame {
                             .addComponent(lbl_kode)
                             .addGroup(plLayout.createSequentialGroup()
                                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(pl_foto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btn_changepicture, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jLabel5)
                                     .addComponent(jLabel11)
-                                    .addComponent(tb_kota, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(tb_kota, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lbl_img, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
+                                    .addComponent(btn_changepicture, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btn_removepicture, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(18, 18, 18)
                                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel6)
                                     .addComponent(dt_tgl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(plLayout.createSequentialGroup()
                                         .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(tb_notelp, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
+                                            .addComponent(tb_notelp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(jLabel7)
-                                            .addComponent(tb_username, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
+                                            .addComponent(tb_username, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(jLabel4)
                                             .addComponent(jLabel10)
-                                            .addComponent(tb_nama, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                            .addComponent(tb_nama, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(18, 18, 18)
                                         .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(jLabel8)
@@ -465,37 +492,40 @@ public class DetailAccount_Form extends javax.swing.JFrame {
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(tb_password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(pl_foto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lbl_img, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(11, 11, 11)
                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(plLayout.createSequentialGroup()
-                        .addGap(2, 2, 2)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(rb_perempuan, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(rb_laki, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(plLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(btn_changepicture, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(btn_removepicture, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(jLabel6))
+                .addComponent(btn_changepicture, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(plLayout.createSequentialGroup()
-                        .addComponent(tb_kota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel5))
-                    .addComponent(dt_tgl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
+                        .addComponent(tb_kota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(plLayout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(dt_tgl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(12, 12, 12)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_updateuser, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_deleteuser, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
+
+        lbl_img.getAccessibleContext().setAccessibleName("lb_img");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -524,12 +554,32 @@ public class DetailAccount_Form extends javax.swing.JFrame {
             gndr = "P";
         }
         String dt = new SimpleDateFormat("yyyy-MM-dd").format(dt_tgl.getDate());
-        int output = DB.update("UPDATE Karyawan SET username = ?, password = ?, nama = ?, nomor_telepon = ?, gender = ?, tanggal_lahir = ?, alamat = ?, kota = ?, fk_jabatan = ? , email = ? WHERE id = ?", new Object[] {tb_username.getText(),pw,tb_nama.getText(),tb_notelp.getText() ,gndr,dt,tb_alamat.getText(),tb_kota.getText(),cb_jabatan.getSelectedIndex()+1,tb_email.getText(),data_user[0]});
+        String img_name = data_user[13];
+        int output = 0;
+        try {
+            DB.autoCommit(false);
+            if(f != null){
+                img_name = data_user[1] + "." + FilenameUtils.getExtension(f.getName());
+            }else{
+                img_name = "NULL";
+            }
+            output = DB.update("UPDATE Karyawan SET username = ?, password = ?, nama = ?, nomor_telepon = ?, gender = ?, tanggal_lahir = ?, alamat = ?, kota = ?, fk_jabatan = ? , email = ?, images = ? WHERE id = ?", new Object[] {tb_username.getText(),pw,tb_nama.getText(),tb_notelp.getText() ,gndr,dt,tb_alamat.getText(),tb_kota.getText(),cb_jabatan.getSelectedIndex()+1,tb_email.getText(),img_name, data_user[0]});
+            if(f != null){
+                File f_copy = new File(System.getProperty("user.dir")+"/Images/"+img_name);
+                FileUtils.copyFile(f, f_copy);
+            }
+            DB.f_commit();
+        } catch (Exception e) {
+            DB.f_rollback();
+            output = 0;
+        }
         if(output != 0){
             frm_acc.loadDgv();
             frm_acc.search();
             frm_acc.setIdx(-1);
             JOptionPane.showMessageDialog(null, "Sukses ubah data","Sukses",JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            JOptionPane.showMessageDialog(null, "Gagal ubah data!","Error",JOptionPane.ERROR_MESSAGE);
         }
         
     }//GEN-LAST:event_btn_updateuserActionPerformed
@@ -583,6 +633,59 @@ public class DetailAccount_Form extends javax.swing.JFrame {
         y = evt.getY();
     }//GEN-LAST:event_pl_titlebarMousePressed
     
+    BufferedImage bi;
+    
+    //0 --> File select , 1 --> DB
+    public void loadImage(String fileName, int mode){
+        InputStream is;
+        Image img;
+        ImageIcon img_icon;
+        try {
+            if(!fileName.equalsIgnoreCase("null") && !fileName.equals("")){
+                if(mode == 0){
+                    is = new FileInputStream(fileName);
+                }else{
+                    is = new FileInputStream(System.getProperty("user.dir")+"/Images/"+fileName);
+                }
+            }else{
+                is = Form_Login.class.getResourceAsStream("Images/no_img.png");
+            }
+            bi = ImageIO.read(is);
+            img = bi.getScaledInstance(lbl_img.getWidth(), -1, Image.SCALE_SMOOTH);
+            img_icon = new ImageIcon(img);
+            lbl_img.setIcon(img_icon);
+        }catch (FileNotFoundException ex){
+            JOptionPane.showMessageDialog(null, "Image not found","Error",JOptionPane.ERROR_MESSAGE);
+            f = null;
+            loadImage("null",0);
+        }
+        catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Bad file format","Error",JOptionPane.ERROR_MESSAGE);
+            f = null;
+            loadImage("null",0);
+        }
+    }
+    
+    
+    File f;
+    private void btn_changepictureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_changepictureActionPerformed
+        // TODO add your handling code here:
+        JFileChooser fc = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Images", "jpg", "jpeg", "png", "bmp");
+        fc.setFileFilter(filter);
+        int result = fc.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            f = fc.getSelectedFile();
+            loadImage(f.getPath(),0);
+        }
+    }//GEN-LAST:event_btn_changepictureActionPerformed
+
+    private void btn_removepictureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_removepictureActionPerformed
+        // TODO add your handling code here:
+        f = null;
+        loadImage("", -1);
+    }//GEN-LAST:event_btn_removepictureActionPerformed
+    
     /**
      * @param args the command line arguments
      */
@@ -621,6 +724,7 @@ public class DetailAccount_Form extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_changepicture;
     private javax.swing.JButton btn_deleteuser;
+    private javax.swing.JButton btn_removepicture;
     private javax.swing.JButton btn_updateuser;
     private javax.swing.JComboBox<String> cb_jabatan;
     private com.toedter.calendar.JDateChooser dt_tgl;
@@ -638,10 +742,10 @@ public class DetailAccount_Form extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbl_close;
+    private javax.swing.JLabel lbl_img;
     private javax.swing.JLabel lbl_kode;
     private javax.swing.JLabel lbl_minimize;
     private javax.swing.JPanel pl;
-    private javax.swing.JPanel pl_foto;
     private javax.swing.JPanel pl_titlebar;
     private javax.swing.JRadioButton rb_laki;
     private javax.swing.JRadioButton rb_perempuan;

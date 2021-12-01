@@ -40,6 +40,29 @@ public class DB {
         return DB.query(sql,null);
     }
     
+    public static void autoCommit(boolean bln){
+        try {
+            c.setAutoCommit(bln);
+        } catch (Exception ex) {
+        }
+    }
+    
+    public static void f_commit(){
+        try {
+            c.commit();
+        } catch (Exception e) {
+        }
+    }
+    
+    public static void f_rollback(){
+        try {
+            c.rollback();
+            c.setAutoCommit(false);
+        } catch (Exception e) {
+        }
+    }
+    
+    
     public static boolean trans(String sql, Object[] data, ArrayList<String[]> listDetail, String kode){
         try {
             c.setAutoCommit(false);
