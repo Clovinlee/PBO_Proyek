@@ -502,6 +502,7 @@ public class InsertAccount_Form extends javax.swing.JFrame {
         }
         return err;
     }
+    
     private void btn_tambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambahActionPerformed
         // TODO add your handling code here:
         String gndr = "";

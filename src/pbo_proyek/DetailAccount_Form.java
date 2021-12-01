@@ -15,6 +15,7 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
@@ -545,43 +546,82 @@ public class DetailAccount_Form extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosing
-
+    
+    public boolean checkNama(String nama){
+        String[] temp = nama.split(" ");
+        if(temp.length >= 2){
+            if(temp[0].length() < 2 || temp[1].length() < 2){
+                return false;
+            }
+        }else{
+            if(nama.length() < 4){
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    public String checkValid(String gndr, String pw){
+        String err = "";
+        //Check Username password empty
+        if(pw.equals("") || tb_username.getText().equals("")){
+            err = "Username dan password tidak boleh kosong!";
+        }
+        //Check checked gender
+        else if(gndr.equals("")){
+            err = "Gender belum dipilih!";
+        }
+        else if(!checkNama(tb_nama.getText())){
+            err = "Panjang nama invalid! Minimal tiap kata terdiri dari 2 huruf atau 4 huruf";
+        }
+        else if(tb_notelp.equals("")){
+            err = "Nomor telepon tidak boleh kosong!";
+        }else if(tb_email.getText().equals("")){
+            err = "Email tidak boleh kosong!";
+        }else{
+            ArrayList<String[]> tmp = DB.query("SELECT count(*) FROM karyawan WHERE username = ?", new Object[] {tb_username.getText()});
+            if(!tmp.get(0)[0].equals("0")){
+                err = "Username sudah terpakai!";
+            }
+        }
+        return err;
+    }
+    
     private void btn_updateuserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateuserActionPerformed
         // TODO add your handling code here:
+        String gndr = rb_laki.isSelected() ? "L" : "P";
         String pw = String.valueOf(tb_password.getPassword());
-        String gndr = "L";
-        if(rb_perempuan.isSelected()){
-            gndr = "P";
-        }
-        String dt = new SimpleDateFormat("yyyy-MM-dd").format(dt_tgl.getDate());
-        String img_name = data_user[13];
-        int output = 0;
-        try {
-            DB.autoCommit(false);
-            if(f != null){
-                img_name = data_user[1] + "." + FilenameUtils.getExtension(f.getName());
+        String err = checkValid(gndr, pw);
+        if(err.equals("")){
+            String dt = new SimpleDateFormat("yyyy-MM-dd").format(dt_tgl.getDate());
+            String img_name = data_user[13];
+            int output = 0;
+            try {
+                DB.autoCommit(false);
+                if(f != null){
+                    img_name = data_user[1] + "." + FilenameUtils.getExtension(f.getName());
+                }else{
+                    img_name = "NULL";
+                }
+                output = DB.update("UPDATE Karyawan SET username = ?, password = ?, nama = ?, nomor_telepon = ?, gender = ?, tanggal_lahir = ?, alamat = ?, kota = ?, fk_jabatan = ? , email = ?, images = ? WHERE id = ?", new Object[] {tb_username.getText(),pw,tb_nama.getText(),tb_notelp.getText() ,gndr,dt,tb_alamat.getText(),tb_kota.getText(),cb_jabatan.getSelectedIndex()+1,tb_email.getText(),img_name, data_user[0]});
+                if(f != null){
+                    File f_copy = new File(System.getProperty("user.dir")+"/Images/User/"+img_name);
+                    FileUtils.copyFile(f, f_copy);
+                }
+                DB.f_commit();
+            } catch (Exception e) {
+                DB.f_rollback();
+                output = 0;
+            }
+            if(output != 0){
+                frm_acc.loadDgv();
+                frm_acc.search();
+                frm_acc.setIdx(-1);
+                JOptionPane.showMessageDialog(null, "Sukses ubah data","Sukses",JOptionPane.INFORMATION_MESSAGE);
             }else{
-                img_name = "NULL";
+                JOptionPane.showMessageDialog(null, "Gagal ubah data!","Error",JOptionPane.ERROR_MESSAGE);
             }
-            output = DB.update("UPDATE Karyawan SET username = ?, password = ?, nama = ?, nomor_telepon = ?, gender = ?, tanggal_lahir = ?, alamat = ?, kota = ?, fk_jabatan = ? , email = ?, images = ? WHERE id = ?", new Object[] {tb_username.getText(),pw,tb_nama.getText(),tb_notelp.getText() ,gndr,dt,tb_alamat.getText(),tb_kota.getText(),cb_jabatan.getSelectedIndex()+1,tb_email.getText(),img_name, data_user[0]});
-            if(f != null){
-                File f_copy = new File(System.getProperty("user.dir")+"/Images/User/"+img_name);
-                FileUtils.copyFile(f, f_copy);
-            }
-            DB.f_commit();
-        } catch (Exception e) {
-            DB.f_rollback();
-            output = 0;
         }
-        if(output != 0){
-            frm_acc.loadDgv();
-            frm_acc.search();
-            frm_acc.setIdx(-1);
-            JOptionPane.showMessageDialog(null, "Sukses ubah data","Sukses",JOptionPane.INFORMATION_MESSAGE);
-        }else{
-            JOptionPane.showMessageDialog(null, "Gagal ubah data!","Error",JOptionPane.ERROR_MESSAGE);
-        }
-        
     }//GEN-LAST:event_btn_updateuserActionPerformed
 
     private void btn_deleteuserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteuserActionPerformed
@@ -635,8 +675,8 @@ public class DetailAccount_Form extends javax.swing.JFrame {
     
     BufferedImage bi;
     
-    // 0 --> File select, 
-    // 1 --> DB, 
+    // 0 --> File select,
+    // 1 --> DB,
     // -1 --> angka random. supaya keluar image not found
     public void loadImage(String fileName, int mode){
         InputStream is;
