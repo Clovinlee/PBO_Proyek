@@ -565,7 +565,7 @@ public class DetailAccount_Form extends javax.swing.JFrame {
             }
             output = DB.update("UPDATE Karyawan SET username = ?, password = ?, nama = ?, nomor_telepon = ?, gender = ?, tanggal_lahir = ?, alamat = ?, kota = ?, fk_jabatan = ? , email = ?, images = ? WHERE id = ?", new Object[] {tb_username.getText(),pw,tb_nama.getText(),tb_notelp.getText() ,gndr,dt,tb_alamat.getText(),tb_kota.getText(),cb_jabatan.getSelectedIndex()+1,tb_email.getText(),img_name, data_user[0]});
             if(f != null){
-                File f_copy = new File(System.getProperty("user.dir")+"/Images/"+img_name);
+                File f_copy = new File(System.getProperty("user.dir")+"/Images/User/"+img_name);
                 FileUtils.copyFile(f, f_copy);
             }
             DB.f_commit();
@@ -645,7 +645,7 @@ public class DetailAccount_Form extends javax.swing.JFrame {
                 if(mode == 0){
                     is = new FileInputStream(fileName);
                 }else{
-                    is = new FileInputStream(System.getProperty("user.dir")+"/Images/"+fileName);
+                    is = new FileInputStream(System.getProperty("user.dir")+"/Images/User/"+fileName);
                 }
             }else{
                 is = Form_Login.class.getResourceAsStream("Images/no_img.png");

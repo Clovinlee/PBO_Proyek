@@ -520,7 +520,7 @@ public class InsertAccount_Form extends javax.swing.JFrame {
             boolean valid = DB.insert("INSERT INTO karyawan(kode,username,password,nama,nomor_telepon,gender,tanggal_lahir,kota,alamat,status,fk_jabatan,email,images) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", new Object[] {kode,tb_username.getText(),pw,tb_nama.getText(),tb_notelp.getText(),gndr,dt_tgl.getDate(),tb_kota.getText(),tb_alamat.getText(),1,cb_jabatan.getSelectedIndex()+1,tb_email.getText(),img_name});
             if(valid){
                 if(!img_name.equalsIgnoreCase("NULL")){
-                File f_copy = new File(System.getProperty("user.dir")+"/Images/"+img_name);
+                File f_copy = new File(System.getProperty("user.dir")+"/Images/User/"+img_name);
                     try {
                         FileUtils.copyFile(f, f_copy);
                     } catch (Exception ex) {
@@ -552,7 +552,7 @@ public class InsertAccount_Form extends javax.swing.JFrame {
                 if(mode == 0){
                     is = new FileInputStream(fileName);
                 }else{
-                    is = new FileInputStream(System.getProperty("user.dir")+"/Images/"+fileName);
+                    is = new FileInputStream(System.getProperty("user.dir")+"/Images/User/"+fileName);
                 }
             }else{
                 is = Form_Login.class.getResourceAsStream("Images/no_img.png");
