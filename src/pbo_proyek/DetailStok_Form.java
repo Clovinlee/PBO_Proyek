@@ -5,8 +5,20 @@
 */
 package pbo_proyek;
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 
 /**
  *
@@ -26,6 +38,7 @@ public class DetailStok_Form extends javax.swing.JFrame {
     public DetailStok_Form(String[] data){
         this();
         this.data_stok = data;
+        loadImage(data_stok[7],1);
         tb_nama.setText(data[2]);
         tb_harga.setText(data[4]);
         tb_stok.setText(data[3]);
@@ -70,7 +83,40 @@ public class DetailStok_Form extends javax.swing.JFrame {
     public void setData_stock(String[] data_stok) {
         this.data_stok = data_stok;
     }
-    
+    BufferedImage bi;
+     File f;
+    // 0 --> File select,
+    // 1 --> DB,
+    // -1 --> angka random. supaya keluar image not found
+    public void loadImage(String fileName, int mode){
+        InputStream is;
+        Image img;
+        ImageIcon img_icon;
+        try {
+            if(!fileName.equalsIgnoreCase("null") && !fileName.equals("")){
+                if(mode == 0){
+                    is = new FileInputStream(fileName);
+                }else{
+                    is = new FileInputStream(System.getProperty("user.dir")+"/Images/Barang/"+fileName);
+                }
+            }else{
+                is = Form_Login.class.getResourceAsStream("Images/no_img.png");
+            }
+            bi = ImageIO.read(is);
+            img = bi.getScaledInstance(lbl_img.getWidth(), -1, Image.SCALE_SMOOTH);
+            img_icon = new ImageIcon(img);
+            lbl_img.setIcon(img_icon);
+        }catch (FileNotFoundException ex){
+            JOptionPane.showMessageDialog(null, "Image not found","Error",JOptionPane.ERROR_MESSAGE);
+            f = null;
+            loadImage("null",0);
+        }
+        catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Bad file format","Error",JOptionPane.ERROR_MESSAGE);
+            f = null;
+            loadImage("null",0);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -95,8 +141,9 @@ public class DetailStok_Form extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tb_nama = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
-        pl_foto = new javax.swing.JPanel();
         btn_changepicture = new javax.swing.JButton();
+        lbl_img = new javax.swing.JLabel();
+        btn_removepicture = new javax.swing.JButton();
         pl_titlebar = new javax.swing.JPanel();
         lbl_close = new javax.swing.JLabel();
         lbl_minimize = new javax.swing.JLabel();
@@ -108,20 +155,15 @@ public class DetailStok_Form extends javax.swing.JFrame {
         pl.setBackground(new java.awt.Color(58, 58, 58));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(222, 222, 222));
         jLabel1.setText("Kode :");
 
         lbl_kode.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lbl_kode.setForeground(new java.awt.Color(222, 222, 222));
         lbl_kode.setText("D<XXXX0001>");
 
-        jLabel4.setForeground(new java.awt.Color(222, 222, 222));
         jLabel4.setText("Nama Barang :");
 
-        jLabel7.setForeground(new java.awt.Color(222, 222, 222));
         jLabel7.setText("Stok :");
 
-        jLabel8.setForeground(new java.awt.Color(222, 222, 222));
         jLabel8.setText("Harga :");
 
         tb_harga.setBackground(new java.awt.Color(244, 244, 244));
@@ -136,7 +178,6 @@ public class DetailStok_Form extends javax.swing.JFrame {
         cb_jenis.setForeground(new java.awt.Color(58, 58, 58));
         cb_jenis.setOpaque(false);
 
-        jLabel9.setForeground(new java.awt.Color(222, 222, 222));
         jLabel9.setText("Jenis :");
 
         tb_stok.setBackground(new java.awt.Color(244, 244, 244));
@@ -185,21 +226,7 @@ public class DetailStok_Form extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tb_nama);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(222, 222, 222));
         jLabel2.setText("DETAIL STOK");
-
-        pl_foto.setBackground(new java.awt.Color(222, 222, 222));
-
-        javax.swing.GroupLayout pl_fotoLayout = new javax.swing.GroupLayout(pl_foto);
-        pl_foto.setLayout(pl_fotoLayout);
-        pl_fotoLayout.setHorizontalGroup(
-            pl_fotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        pl_fotoLayout.setVerticalGroup(
-            pl_fotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 158, Short.MAX_VALUE)
-        );
 
         btn_changepicture.setBackground(new java.awt.Color(222, 222, 222));
         btn_changepicture.setFont(new java.awt.Font("Yu Gothic UI", 1, 14)); // NOI18N
@@ -213,6 +240,34 @@ public class DetailStok_Form extends javax.swing.JFrame {
         btn_changepicture.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btn_changepicture.setIconTextGap(10);
         btn_changepicture.setOpaque(true);
+        btn_changepicture.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_changepictureActionPerformed(evt);
+            }
+        });
+
+        lbl_img.setBackground(new java.awt.Color(222, 222, 222));
+        lbl_img.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_img.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lbl_img.setIconTextGap(0);
+
+        btn_removepicture.setBackground(new java.awt.Color(222, 222, 222));
+        btn_removepicture.setFont(new java.awt.Font("Yu Gothic UI", 1, 14)); // NOI18N
+        btn_removepicture.setForeground(new java.awt.Color(58, 58, 58));
+        btn_removepicture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pbo_proyek/Images/trash-solid.png"))); // NOI18N
+        btn_removepicture.setText("Remove Picture");
+        btn_removepicture.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 6, 1, 1));
+        btn_removepicture.setContentAreaFilled(false);
+        btn_removepicture.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_removepicture.setFocusPainted(false);
+        btn_removepicture.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btn_removepicture.setIconTextGap(10);
+        btn_removepicture.setOpaque(true);
+        btn_removepicture.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_removepictureActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout plLayout = new javax.swing.GroupLayout(pl);
         pl.setLayout(plLayout);
@@ -227,11 +282,12 @@ public class DetailStok_Form extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addContainerGap())
                     .addGroup(plLayout.createSequentialGroup()
-                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(pl_foto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btn_changepicture, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(lbl_kode))
+                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btn_removepicture, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lbl_kode)
+                                .addComponent(lbl_img, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btn_changepicture, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel9)
@@ -277,13 +333,16 @@ public class DetailStok_Form extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tb_stok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tb_harga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel8))
                     .addGroup(plLayout.createSequentialGroup()
-                        .addComponent(pl_foto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(btn_changepicture, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(4, 4, 4)
+                        .addComponent(lbl_img, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btn_removepicture, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tb_harga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_changepicture, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_updatestok, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -365,7 +424,22 @@ public class DetailStok_Form extends javax.swing.JFrame {
         int jenis = cb_jenis.getSelectedIndex();
         String hrg = tb_harga.getText();
         String stok = tb_stok.getText();
-        int output = DB.update("UPDATE barang SET nama = ?, stok = ?, harga = ?,fk_jenis_barang = ?  WHERE id = ?", new Object[] {nama,stok,hrg,jenis+1,data_stok[0]});
+        String img_name = data_stok[7];
+        if(f != null){
+            img_name = data_stok[1] + "." + FilenameUtils.getExtension(f.getName());
+        }else{
+            img_name = "NULL";
+        }
+        int output = DB.update("UPDATE barang SET nama = ?, stok = ?, harga = ?,fk_jenis_barang = ?,images = ?  WHERE id = ?", 
+                new Object[] {nama,stok,hrg,jenis+1,img_name,data_stok[0]});
+        try {
+            if(f != null){
+                    File f_copy = new File(System.getProperty("user.dir")+"/Images/Barang/"+img_name);
+                    FileUtils.copyFile(f, f_copy);
+                }
+        } catch (Exception e) {
+        }
+        
         if(output != 0){
             frm_stc.loadDgv();
             frm_stc.search();
@@ -420,6 +494,24 @@ public class DetailStok_Form extends javax.swing.JFrame {
         x = evt.getX();
         y = evt.getY();
     }//GEN-LAST:event_pl_titlebarMousePressed
+
+    private void btn_removepictureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_removepictureActionPerformed
+        // TODO add your handling code here:
+        f = null;
+        loadImage("", -1);
+    }//GEN-LAST:event_btn_removepictureActionPerformed
+
+    private void btn_changepictureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_changepictureActionPerformed
+        // TODO add your handling code here:
+        JFileChooser fc = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Images", "jpg", "jpeg", "png", "bmp");
+        fc.setFileFilter(filter);
+        int result = fc.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            f = fc.getSelectedFile();
+            loadImage(f.getPath(),0);
+        }
+    }//GEN-LAST:event_btn_changepictureActionPerformed
     
     /**
      * @param args the command line arguments
@@ -459,6 +551,7 @@ public class DetailStok_Form extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_changepicture;
     private javax.swing.JButton btn_deletestok;
+    private javax.swing.JButton btn_removepicture;
     private javax.swing.JButton btn_updatestok;
     private javax.swing.JComboBox<String> cb_jenis;
     private javax.swing.JLabel jLabel1;
@@ -469,10 +562,10 @@ public class DetailStok_Form extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbl_close;
+    private javax.swing.JLabel lbl_img;
     private javax.swing.JLabel lbl_kode;
     private javax.swing.JLabel lbl_minimize;
     private javax.swing.JPanel pl;
-    private javax.swing.JPanel pl_foto;
     private javax.swing.JPanel pl_titlebar;
     private javax.swing.JTextField tb_harga;
     private javax.swing.JTextArea tb_nama;
