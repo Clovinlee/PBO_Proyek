@@ -117,13 +117,13 @@ public class DetailStok_Form extends javax.swing.JFrame {
             loadImage("null",0);
         }
     }
-    public static boolean isNumeric(String str) { 
-    try {  
-        Double.parseDouble(str);  
-        return true;
-    } catch(NumberFormatException e){  
-        return false;  
-        }  
+    public static boolean isNumeric(String str) {
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch(NumberFormatException e){
+            return false;
+        }
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -432,7 +432,16 @@ public class DetailStok_Form extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    public boolean checkAngka(String t){
+        try {
+            int a = Integer.parseInt(t);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+    
     private void btn_updatestokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updatestokActionPerformed
         // TODO add your handling code here:
         boolean valid =true;
@@ -443,35 +452,35 @@ public class DetailStok_Form extends javax.swing.JFrame {
         String img_name = data_stok[7];
         if(tb_nama.getText().isEmpty()){
             valid =false;
-            JOptionPane.showMessageDialog(null, "Isi nama barang","Error",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Nama barang tidak boleh kosong","Error",JOptionPane.INFORMATION_MESSAGE);
         }
         if(tb_harga.getText().isEmpty()){
             valid =false;
-            JOptionPane.showMessageDialog(null, "Isi harga barang","Error",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Harga barang tidak boleh kosong","Error",JOptionPane.INFORMATION_MESSAGE);
         }else{
-            if(isNumeric(tb_harga.getText())==false){
+            if(!checkAngka(tb_harga.getText())){
                 valid =false;
-                JOptionPane.showMessageDialog(null, "Isi dengan angka","Error",JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Harga barang harus berupa angka","Error",JOptionPane.ERROR_MESSAGE);
             }else{
-            int harga = Integer.parseInt(tb_harga.getText());
+                int harga = Integer.parseInt(tb_harga.getText());
                 if (harga < 1){
-                  valid =false;
-                  JOptionPane.showMessageDialog(null, "Harga Barang tidak boleh kurang dari 1!","Error",JOptionPane.ERROR_MESSAGE);
+                    valid =false;
+                    JOptionPane.showMessageDialog(null, "Harga Barang tidak boleh kurang dari 1!","Error",JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
         if(tb_stok.getText().isEmpty()){
             valid =false;
-            JOptionPane.showMessageDialog(null, "Isi stok barang","Error",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Stok barang tidak boleh kosong","Error",JOptionPane.INFORMATION_MESSAGE);
         }else{
-            if(isNumeric(tb_stok.getText())==false){
+            if(!checkAngka(tb_stok.getText())){
                 valid =false;
-                JOptionPane.showMessageDialog(null, "Isi dengan angka","Error",JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Stok barang harus berupa angka","Error",JOptionPane.ERROR_MESSAGE);
             }else{
                 int stck = Integer.parseInt(tb_stok.getText());
                 if (stck < 0){
-                  valid =false;
-                  JOptionPane.showMessageDialog(null, "Stok Barang tidak boleh kurang dari 0!","Error",JOptionPane.ERROR_MESSAGE);
+                    valid =false;
+                    JOptionPane.showMessageDialog(null, "Stok Barang tidak boleh kurang dari 0!","Error",JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
@@ -481,16 +490,16 @@ public class DetailStok_Form extends javax.swing.JFrame {
             img_name = "NULL";
         }
         if(valid){
-            int output = DB.update("UPDATE barang SET nama = ?, stok = ?, harga = ?,fk_jenis_barang = ?,images = ?  WHERE id = ?", 
+            int output = DB.update("UPDATE barang SET nama = ?, stok = ?, harga = ?,fk_jenis_barang = ?,images = ?  WHERE id = ?",
                     new Object[] {nama,stok,hrg,jenis+1,img_name,data_stok[0]});
             try {
                 if(f != null){
-                        File f_copy = new File(System.getProperty("user.dir")+"/Images/Barang/"+img_name);
-                        FileUtils.copyFile(f, f_copy);
-                    }
+                    File f_copy = new File(System.getProperty("user.dir")+"/Images/Barang/"+img_name);
+                    FileUtils.copyFile(f, f_copy);
+                }
             } catch (Exception e) {
             }
-
+            
             if(output != 0){
                 frm_stc.loadDgv();
                 frm_stc.search();

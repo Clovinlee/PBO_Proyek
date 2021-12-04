@@ -1,8 +1,8 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+* To change this license header, choose License Headers in Project Properties.
+* To change this template file, choose Tools | Templates
+* and open the template in the editor.
+*/
 package pbo_proyek;
 
 import java.awt.Image;
@@ -26,7 +26,7 @@ import org.apache.commons.io.FilenameUtils;
  * @author Kevin
  */
 public class InsertBarang_Form extends javax.swing.JFrame {
-
+    
     int state_mode = -1; //-1 not full, 1 full screen
     private int x,y;
     BufferedImage bi;
@@ -82,13 +82,13 @@ public class InsertBarang_Form extends javax.swing.JFrame {
         kode_final += res.get(0)[0];
         return kode_final;
     }
-    public static boolean isNumeric(String str) { 
-    try {  
-        Double.parseDouble(str);  
-        return true;
-    } catch(NumberFormatException e){  
-        return false;  
-        }  
+    public static boolean isNumeric(String str) {
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch(NumberFormatException e){
+            return false;
+        }
     }
     public void loadImage(String fileName, int mode){
         InputStream is;
@@ -383,7 +383,16 @@ public class InsertBarang_Form extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    public boolean checkAngka(String t){
+        try {
+            int a = Integer.parseInt(t);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+    
     private void btn_tambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambahActionPerformed
         // TODO add your handling code here:
         if(!checkNama(tb_nama.getText())){
@@ -393,58 +402,58 @@ public class InsertBarang_Form extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Stok Barang tidak boleh kosong!","Error",JOptionPane.ERROR_MESSAGE);
             }
             else{
-                if(isNumeric(tb_stok.getText())==false){
-                JOptionPane.showMessageDialog(null, "Isi dengan angka","Error",JOptionPane.INFORMATION_MESSAGE);
+                if(!checkAngka(tb_stok.getText())){
+                    JOptionPane.showMessageDialog(null, "Stok barang harus diisi angka!","Error",JOptionPane.ERROR_MESSAGE);
                 }
                 else{
-                int stck = Integer.parseInt(tb_stok.getText());
-                if (stck < 0){
-                  JOptionPane.showMessageDialog(null, "Stok Barang tidak boleh kurang dari 0!","Error",JOptionPane.ERROR_MESSAGE);
-                }
-                else{
-                    if(tb_nama.getText().equals("")){
-                        JOptionPane.showMessageDialog(null, "Nama Barang tidak boleh kosong!","Error",JOptionPane.ERROR_MESSAGE);
+                    int stck = Integer.parseInt(tb_stok.getText());
+                    if (stck < 0){
+                        JOptionPane.showMessageDialog(null, "Stok Barang tidak boleh kurang dari 0!","Error",JOptionPane.ERROR_MESSAGE);
                     }
-                     else{
-                        if(tb_harga.getText().equals("")){
-                            JOptionPane.showMessageDialog(null, "harga Barang tidak boleh kosong!","Error",JOptionPane.ERROR_MESSAGE);
+                    else{
+                        if(tb_nama.getText().equals("")){
+                            JOptionPane.showMessageDialog(null, "Nama Barang tidak boleh kosong!","Error",JOptionPane.ERROR_MESSAGE);
                         }
                         else{
-                            if(isNumeric(tb_harga.getText())==false){
-                            JOptionPane.showMessageDialog(null, "Isi dengan angka","Error",JOptionPane.INFORMATION_MESSAGE);
+                            if(tb_harga.getText().equals("")){
+                                JOptionPane.showMessageDialog(null, "Harga Barang tidak boleh kosong!","Error",JOptionPane.ERROR_MESSAGE);
                             }
                             else{
-                                int hrg = Integer.parseInt(tb_harga.getText());
-                                if (hrg < 1){
-                                    JOptionPane.showMessageDialog(null, "Harga Barang tidak boleh kurang dari 1!","Error",JOptionPane.ERROR_MESSAGE);
+                                if(!checkAngka(tb_harga.getText())){
+                                    JOptionPane.showMessageDialog(null, "Harga barang harus berupa angka!","Error",JOptionPane.ERROR_MESSAGE);
                                 }
                                 else{
-                                    if(cb_jenis.getSelectedItem().toString().equals("")){
-                                        JOptionPane.showMessageDialog(null, "Jenis Barang tidak boleh kosong!","Error",JOptionPane.ERROR_MESSAGE);
+                                    int hrg = Integer.parseInt(tb_harga.getText());
+                                    if (hrg < 1){
+                                        JOptionPane.showMessageDialog(null, "Harga Barang tidak boleh kurang dari 1!","Error",JOptionPane.ERROR_MESSAGE);
                                     }
                                     else{
-                                        String kode = generateKode(tb_nama.getText());
-                                        String img_name = "NULL";
-                                        if(f != null){
-                                        img_name = kode + "." + FilenameUtils.getExtension(f.getName());
+                                        if(cb_jenis.getSelectedItem().toString().equals("")){
+                                            JOptionPane.showMessageDialog(null, "Jenis Barang tidak boleh kosong!","Error",JOptionPane.ERROR_MESSAGE);
                                         }
-                                        System.out.println(kode);
-                                        boolean valid = DB.insert("INSERT INTO barang(kode,nama,stok,harga,status,fk_jenis_barang,images) VALUES(?, ?, ?, ?, ?, ?, ?)", new Object[] {kode,tb_nama.getText(),stck,hrg,1,cb_jenis.getSelectedIndex()+1,img_name});
-                                        if(valid){
-                                            if(!img_name.equalsIgnoreCase("NULL")){
-                                            File f_copy = new File(System.getProperty("user.dir")+"/Images/Barang/"+img_name);
-                                                try {
-                                                    FileUtils.copyFile(f, f_copy);
-                                                } catch (Exception ex) {
-                                                }
+                                        else{
+                                            String kode = generateKode(tb_nama.getText());
+                                            String img_name = "NULL";
+                                            if(f != null){
+                                                img_name = kode + "." + FilenameUtils.getExtension(f.getName());
                                             }
-                                            JOptionPane.showMessageDialog(null, "Insert Sukses!","Sukses",JOptionPane.INFORMATION_MESSAGE);
-                                            frm_acc.loadDgv();
-                                            frm_acc.search();
-                                            frm_acc.setIdx(-1);
-                                            this.dispose();
-                                        }else{
-                                            JOptionPane.showMessageDialog(null, "Insert gagal!","Error",JOptionPane.ERROR_MESSAGE);
+                                            System.out.println(kode);
+                                            boolean valid = DB.insert("INSERT INTO barang(kode,nama,stok,harga,status,fk_jenis_barang,images) VALUES(?, ?, ?, ?, ?, ?, ?)", new Object[] {kode,tb_nama.getText(),stck,hrg,1,cb_jenis.getSelectedIndex()+1,img_name});
+                                            if(valid){
+                                                if(!img_name.equalsIgnoreCase("NULL")){
+                                                    File f_copy = new File(System.getProperty("user.dir")+"/Images/Barang/"+img_name);
+                                                    try {
+                                                        FileUtils.copyFile(f, f_copy);
+                                                    } catch (Exception ex) {
+                                                    }
+                                                }
+                                                JOptionPane.showMessageDialog(null, "Insert Sukses!","Sukses",JOptionPane.INFORMATION_MESSAGE);
+                                                frm_acc.loadDgv();
+                                                frm_acc.search();
+                                                frm_acc.setIdx(-1);
+                                                this.dispose();
+                                            }else{
+                                                JOptionPane.showMessageDialog(null, "Insert gagal!","Error",JOptionPane.ERROR_MESSAGE);
                                             }
                                         }
                                     }
@@ -453,7 +462,7 @@ public class InsertBarang_Form extends javax.swing.JFrame {
                         }
                     }
                 }
-            }   
+            }
         }  
     }//GEN-LAST:event_btn_tambahActionPerformed
 
@@ -501,7 +510,7 @@ public class InsertBarang_Form extends javax.swing.JFrame {
             loadImage(f.getPath(),0);
         }
     }//GEN-LAST:event_btn_changepictureActionPerformed
-
+    
     /**
      * @param args the command line arguments
      */
@@ -509,8 +518,8 @@ public class InsertBarang_Form extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+        * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+        */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -528,7 +537,7 @@ public class InsertBarang_Form extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(InsertBarang_Form.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

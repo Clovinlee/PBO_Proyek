@@ -569,6 +569,16 @@ public class DetailAccount_Form extends javax.swing.JFrame {
         return true;
     }
     
+     public boolean checkAngka(String t){
+        try {
+            int a = Integer.parseInt(t);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+    
+    
     public String checkValid(String gndr, String pw){
         String err = "";
         //Check Username password empty
@@ -584,14 +594,14 @@ public class DetailAccount_Form extends javax.swing.JFrame {
         }
         else if(tb_notelp.equals("")){
             err = "Nomor telepon tidak boleh kosong!";
-        }else if ( isNumeric(tb_notelp.getText())==false){
+        }else if (!checkAngka(tb_notelp.getText())){
             err = "Nomor telepon harus angka!";
         }else if(tb_email.getText().equals("")){
             err = "Email tidak boleh kosong!";
         }else if (!tb_email.getText().contains("@")){
-            err = "Email tidak terdapat @";
+            err = "Format email tidak valid!";
         }else if (tb_email.getText().substring(0,1).equals("@") || tb_email.getText().substring(tb_email.getText().length()).equals("@")){
-            err = "@ pada email tidak boleh didepan atau belakang sendiri";
+            err = "Format email tidak valid!";
         }else{
             ArrayList<String[]> tmp = DB.query("SELECT count(*) FROM karyawan WHERE username = ?", new Object[] {tb_username.getText()});
             if(!tb_username.getText().equals(data_user[2])){
