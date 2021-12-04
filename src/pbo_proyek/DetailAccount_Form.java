@@ -25,6 +25,7 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import static pbo_proyek.DetailStok_Form.isNumeric;
 
 /**
  *
@@ -100,7 +101,14 @@ public class DetailAccount_Form extends javax.swing.JFrame {
         this.data_user = data_user;
     }
     
-    
+    public static boolean isNumeric(String str) { 
+    try {  
+        Double.parseDouble(str);  
+        return true;
+    } catch(NumberFormatException e){  
+        return false;  
+        }  
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -523,7 +531,7 @@ public class DetailAccount_Form extends javax.swing.JFrame {
                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_updateuser, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_deleteuser, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         lbl_img.getAccessibleContext().setAccessibleName("lb_img");
@@ -576,8 +584,14 @@ public class DetailAccount_Form extends javax.swing.JFrame {
         }
         else if(tb_notelp.equals("")){
             err = "Nomor telepon tidak boleh kosong!";
+        }else if ( isNumeric(tb_notelp.getText())==false){
+            err = "Nomor telepon harus angka!";
         }else if(tb_email.getText().equals("")){
             err = "Email tidak boleh kosong!";
+        }else if (!tb_email.getText().contains("@")){
+            err = "Email tidak terdapat @";
+        }else if (tb_email.getText().substring(0,1).equals("@") || tb_email.getText().substring(tb_email.getText().length()).equals("@")){
+            err = "@ pada email tidak boleh didepan atau belakang sendiri";
         }else{
             ArrayList<String[]> tmp = DB.query("SELECT count(*) FROM karyawan WHERE username = ?", new Object[] {tb_username.getText()});
             if(!tmp.get(0)[0].equals("0")){
@@ -621,6 +635,8 @@ public class DetailAccount_Form extends javax.swing.JFrame {
             }else{
                 JOptionPane.showMessageDialog(null, "Gagal ubah data!","Error",JOptionPane.ERROR_MESSAGE);
             }
+        }else{
+            JOptionPane.showMessageDialog(null, err,"Error",JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btn_updateuserActionPerformed
 

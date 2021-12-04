@@ -23,6 +23,7 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import static pbo_proyek.DetailAccount_Form.isNumeric;
 
 /**
  *
@@ -469,7 +470,14 @@ public class InsertAccount_Form extends javax.swing.JFrame {
     public void setFrm_acc(Form_Account frm_acc) {
         this.frm_acc = frm_acc;
     }
-    
+    public static boolean isNumeric(String str) { 
+    try {  
+        Double.parseDouble(str);  
+        return true;
+    } catch(NumberFormatException e){  
+        return false;  
+        }  
+    }
     
     private void pl_titlebarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pl_titlebarMousePressed
         // TODO add your handling code here:
@@ -492,8 +500,14 @@ public class InsertAccount_Form extends javax.swing.JFrame {
         }
         else if(tb_notelp.equals("")){
             err = "Nomor telepon tidak boleh kosong!";
+        }else if ( isNumeric(tb_notelp.getText())==false){
+            err = "Nomor telepon harus angka!";
         }else if(tb_email.getText().equals("")){
             err = "Email tidak boleh kosong!";
+        }else if (!tb_email.getText().contains("@")){
+            err = "Email tidak terdapat @";
+        }else if (tb_email.getText().substring(0,1).equals("@") || tb_email.getText().substring(tb_email.getText().length()).equals("@")){
+            err = "@ pada email tidak boleh didepan atau belakang sendiri";
         }else{
             ArrayList<String[]> tmp = DB.query("SELECT count(*) FROM karyawan WHERE username = ?", new Object[] {tb_username.getText()});
             if(!tmp.get(0)[0].equals("0")){
