@@ -446,10 +446,10 @@ public class DetailStok_Form extends javax.swing.JFrame {
                 valid =false;
                 JOptionPane.showMessageDialog(null, "Isi dengan angka","Error",JOptionPane.INFORMATION_MESSAGE);
             }else{
-            int stck = Integer.parseInt(tb_harga.getText());
-                if (stck < 0){
+            int harga = Integer.parseInt(tb_harga.getText());
+                if (harga < 1){
                   valid =false;
-                  JOptionPane.showMessageDialog(null, "Harga Barang tidak boleh kurang dari 0!","Error",JOptionPane.ERROR_MESSAGE);
+                  JOptionPane.showMessageDialog(null, "Harga Barang tidak boleh kurang dari 1!","Error",JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
