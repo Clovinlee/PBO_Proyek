@@ -163,15 +163,20 @@ public class DetailStok_Form extends javax.swing.JFrame {
         pl.setBackground(new java.awt.Color(58, 58, 58));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(222, 222, 222));
         jLabel1.setText("Kode :");
 
         lbl_kode.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbl_kode.setForeground(new java.awt.Color(222, 222, 222));
         lbl_kode.setText("D<XXXX0001>");
 
+        jLabel4.setForeground(new java.awt.Color(222, 222, 222));
         jLabel4.setText("Nama Barang :");
 
+        jLabel7.setForeground(new java.awt.Color(222, 222, 222));
         jLabel7.setText("Stok :");
 
+        jLabel8.setForeground(new java.awt.Color(222, 222, 222));
         jLabel8.setText("Harga :");
 
         tb_harga.setBackground(new java.awt.Color(244, 244, 244));
@@ -186,6 +191,7 @@ public class DetailStok_Form extends javax.swing.JFrame {
         cb_jenis.setForeground(new java.awt.Color(58, 58, 58));
         cb_jenis.setOpaque(false);
 
+        jLabel9.setForeground(new java.awt.Color(222, 222, 222));
         jLabel9.setText("Jenis :");
 
         tb_stok.setBackground(new java.awt.Color(244, 244, 244));
@@ -234,6 +240,7 @@ public class DetailStok_Form extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tb_nama);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(222, 222, 222));
         jLabel2.setText("DETAIL STOK");
 
         btn_changepicture.setBackground(new java.awt.Color(222, 222, 222));

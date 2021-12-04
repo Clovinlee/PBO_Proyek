@@ -101,13 +101,13 @@ public class DetailAccount_Form extends javax.swing.JFrame {
         this.data_user = data_user;
     }
     
-    public static boolean isNumeric(String str) { 
-    try {  
-        Double.parseDouble(str);  
-        return true;
-    } catch(NumberFormatException e){  
-        return false;  
-        }  
+    public static boolean isNumeric(String str) {
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch(NumberFormatException e){
+            return false;
+        }
     }
     
     /**
@@ -594,8 +594,10 @@ public class DetailAccount_Form extends javax.swing.JFrame {
             err = "@ pada email tidak boleh didepan atau belakang sendiri";
         }else{
             ArrayList<String[]> tmp = DB.query("SELECT count(*) FROM karyawan WHERE username = ?", new Object[] {tb_username.getText()});
-            if(!tmp.get(0)[0].equals("0")){
-                err = "Username sudah terpakai!";
+            if(!tb_username.getText().equals(data_user[2])){
+                if(!tmp.get(0)[0].equals("0")){
+                    err = "Username sudah terpakai!";
+                }
             }
         }
         return err;

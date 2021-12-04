@@ -200,8 +200,10 @@ public class InsertBarang_Form extends javax.swing.JFrame {
 
         pl.setBackground(new java.awt.Color(58, 58, 58));
 
+        jLabel4.setForeground(new java.awt.Color(222, 222, 222));
         jLabel4.setText("Nama Barang:");
 
+        jLabel9.setForeground(new java.awt.Color(222, 222, 222));
         jLabel9.setText("Jenis Barang:");
 
         cb_jenis.setBackground(new java.awt.Color(244, 244, 244));
@@ -209,6 +211,7 @@ public class InsertBarang_Form extends javax.swing.JFrame {
         cb_jenis.setForeground(new java.awt.Color(58, 58, 58));
         cb_jenis.setOpaque(false);
 
+        jLabel10.setForeground(new java.awt.Color(222, 222, 222));
         jLabel10.setText("Stok Barang:");
 
         tb_harga.setBackground(new java.awt.Color(244, 244, 244));
@@ -217,6 +220,7 @@ public class InsertBarang_Form extends javax.swing.JFrame {
         tb_harga.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
         tb_harga.setCaretColor(new java.awt.Color(58, 58, 58));
 
+        jLabel7.setForeground(new java.awt.Color(222, 222, 222));
         jLabel7.setText("Harga Barang:");
 
         btn_tambah.setBackground(new java.awt.Color(222, 222, 222));
@@ -241,6 +245,7 @@ public class InsertBarang_Form extends javax.swing.JFrame {
         tb_stok.setCaretColor(new java.awt.Color(58, 58, 58));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(222, 222, 222));
         jLabel2.setText("INSERT BARANG");
 
         btn_changepicture.setBackground(new java.awt.Color(222, 222, 222));
