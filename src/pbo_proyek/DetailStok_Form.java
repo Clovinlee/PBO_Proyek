@@ -84,7 +84,7 @@ public class DetailStok_Form extends javax.swing.JFrame {
         this.data_stok = data_stok;
     }
     BufferedImage bi;
-     File f;
+    File f;
     // 0 --> File select,
     // 1 --> DB,
     // -1 --> angka random. supaya keluar image not found
@@ -116,6 +116,14 @@ public class DetailStok_Form extends javax.swing.JFrame {
             f = null;
             loadImage("null",0);
         }
+    }
+    public static boolean isNumeric(String str) { 
+    try {  
+        Double.parseDouble(str);  
+        return true;
+    } catch(NumberFormatException e){  
+        return false;  
+        }  
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -420,31 +428,68 @@ public class DetailStok_Form extends javax.swing.JFrame {
 
     private void btn_updatestokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updatestokActionPerformed
         // TODO add your handling code here:
+        boolean valid =true;
         String nama = tb_nama.getText();
         int jenis = cb_jenis.getSelectedIndex();
         String hrg = tb_harga.getText();
         String stok = tb_stok.getText();
         String img_name = data_stok[7];
+        if(tb_nama.getText().isEmpty()){
+            valid =false;
+            JOptionPane.showMessageDialog(null, "Isi nama barang","Error",JOptionPane.INFORMATION_MESSAGE);
+        }
+        if(tb_harga.getText().isEmpty()){
+            valid =false;
+            JOptionPane.showMessageDialog(null, "Isi harga barang","Error",JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            if(isNumeric(tb_harga.getText())==false){
+                valid =false;
+                JOptionPane.showMessageDialog(null, "Isi dengan angka","Error",JOptionPane.INFORMATION_MESSAGE);
+            }else{
+            int stck = Integer.parseInt(tb_harga.getText());
+                if (stck < 0){
+                  valid =false;
+                  JOptionPane.showMessageDialog(null, "Harga Barang tidak boleh kurang dari 0!","Error",JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
+        if(tb_stok.getText().isEmpty()){
+            valid =false;
+            JOptionPane.showMessageDialog(null, "Isi stok barang","Error",JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            if(isNumeric(tb_stok.getText())==false){
+                valid =false;
+                JOptionPane.showMessageDialog(null, "Isi dengan angka","Error",JOptionPane.INFORMATION_MESSAGE);
+            }else{
+                int stck = Integer.parseInt(tb_stok.getText());
+                if (stck < 0){
+                  valid =false;
+                  JOptionPane.showMessageDialog(null, "Stok Barang tidak boleh kurang dari 0!","Error",JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
         if(f != null){
             img_name = data_stok[1] + "." + FilenameUtils.getExtension(f.getName());
         }else{
             img_name = "NULL";
         }
-        int output = DB.update("UPDATE barang SET nama = ?, stok = ?, harga = ?,fk_jenis_barang = ?,images = ?  WHERE id = ?", 
-                new Object[] {nama,stok,hrg,jenis+1,img_name,data_stok[0]});
-        try {
-            if(f != null){
-                    File f_copy = new File(System.getProperty("user.dir")+"/Images/Barang/"+img_name);
-                    FileUtils.copyFile(f, f_copy);
-                }
-        } catch (Exception e) {
-        }
-        
-        if(output != 0){
-            frm_stc.loadDgv();
-            frm_stc.search();
-            frm_stc.setIdx(-1);
-            JOptionPane.showMessageDialog(null, "Sukses ubah data","Sukses",JOptionPane.INFORMATION_MESSAGE);
+        if(valid){
+            int output = DB.update("UPDATE barang SET nama = ?, stok = ?, harga = ?,fk_jenis_barang = ?,images = ?  WHERE id = ?", 
+                    new Object[] {nama,stok,hrg,jenis+1,img_name,data_stok[0]});
+            try {
+                if(f != null){
+                        File f_copy = new File(System.getProperty("user.dir")+"/Images/Barang/"+img_name);
+                        FileUtils.copyFile(f, f_copy);
+                    }
+            } catch (Exception e) {
+            }
+
+            if(output != 0){
+                frm_stc.loadDgv();
+                frm_stc.search();
+                frm_stc.setIdx(-1);
+                JOptionPane.showMessageDialog(null, "Sukses ubah data","Sukses",JOptionPane.INFORMATION_MESSAGE);
+            }
         }
     }//GEN-LAST:event_btn_updatestokActionPerformed
 
