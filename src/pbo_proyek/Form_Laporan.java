@@ -10,7 +10,10 @@ import ExternalCode.JTableEdit;
 import java.awt.Color;
 import java.awt.Font;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.BorderFactory;
@@ -19,7 +22,7 @@ import javax.swing.UIManager;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import java.text.SimpleDateFormat;  
+import java.text.SimpleDateFormat;
 import java.lang.*;
 import javax.swing.JOptionPane;
 /**
@@ -47,7 +50,7 @@ public class Form_Laporan extends javax.swing.JFrame {
     public void styleDgv(){
         JTableHeader header = tb_Htrans.getTableHeader();
         jScrollPane1.getViewport().setBackground(Palette.getDark4());
-            
+        
         header.setFont(new Font("Segoe UI", Font.BOLD, 12));
         header.setOpaque(false);
         
@@ -59,7 +62,7 @@ public class Form_Laporan extends javax.swing.JFrame {
         
         header = tb_Dtrans.getTableHeader();
         jScrollPane2.getViewport().setBackground(Palette.getDark4());
-            
+        
         header.setFont(new Font("Segoe UI", Font.BOLD, 12));
         header.setOpaque(false);
         
@@ -157,22 +160,20 @@ public class Form_Laporan extends javax.swing.JFrame {
         lbl_grandtotal.setText("Grand Total: Rp."+String.valueOf(granddtotal));
     }
     public boolean validSearch(String nota, String kodekaryawan, Date tanggalawal, Date tanggalakhir, String karyawan, String[] data, String selecteddiskon, String diskon){
-        System.out.println(selecteddiskon);
-        System.out.println(diskon);
         if(data[0].toLowerCase().contains(nota.toLowerCase())){
             if(karyawan.toLowerCase().contains(kodekaryawan)){
                 if(selecteddiskon.equalsIgnoreCase("Semua") || selecteddiskon.equalsIgnoreCase(diskon)){
-                Date tgltrans;
-                
-                try {
-                tgltrans = new SimpleDateFormat("yyyy-MM-dd").parse(data[1]);
-                if (tgltrans.after(tanggalawal) && tgltrans.before(tanggalakhir)){
-                        return true;
-                }
-                }
-                catch(Exception e){
+                    Date tgltrans;
                     
-                }
+                    try {
+                        tgltrans = new SimpleDateFormat("yyyy-MM-dd").parse(data[1]);
+                        if (tgltrans.after(tanggalawal) && tgltrans.before(tanggalakhir)){
+                            return true;
+                        }
+                    }
+                    catch(Exception e){
+                        
+                    }
                 }
                 
                 else{
@@ -561,15 +562,15 @@ public class Form_Laporan extends javax.swing.JFrame {
     private void btn_exportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_exportActionPerformed
         // TODO add your handling code here:
         String simpan = "";
-        simpan += 
-        "╔═════════════════════════════════════════╗\n" +
-        "║                                         ║\n" +
-        "║              C O M P U F Y              ║\n" +
-        "║                                         ║\n" +
-        "╠═════════════════════════════════════════╣\n" +
-        "║            LAPORAN TRANSAKSI            ║\n" +
-        "║   -----------------------------------   ║\n"
-        ;
+        simpan +=
+                "╔═════════════════════════════════════════╗\n" +
+                "║                                         ║\n" +
+                "║              C O M P U F Y              ║\n" +
+                "║                                         ║\n" +
+                "╠═════════════════════════════════════════╣\n" +
+                "║            LAPORAN TRANSAKSI            ║\n" +
+                "║   -----------------------------------   ║\n"
+                ;
         for (int i = 0;i < tbl.getRowCount();i++){
             String tanggallapor = tb_Htrans.getModel().getValueAt(i, 1).toString();
             tanggallapor = tanggallapor.substring(0,10);
@@ -583,10 +584,10 @@ public class Form_Laporan extends javax.swing.JFrame {
             String hargadiskon = "";
             if (!diskonlapor.equals("-")){
                 for (String[] l : listdiskon){
-                if (diskonlapor.equalsIgnoreCase(l[1])){
-                    hargadiskon = l[2];
+                    if (diskonlapor.equalsIgnoreCase(l[1])){
+                        hargadiskon = l[2];
+                    }
                 }
-            }
             }
             simpan += "║   "+nomorrnota+"                      ║\n";
             simpan += "║     Tanggal Transaksi: "+tanggallapor+"       ║\n";
@@ -630,14 +631,19 @@ public class Form_Laporan extends javax.swing.JFrame {
         simpan += "╚═════════════════════════════════════════╝";
         
         try {
-            FileWriter fout = new FileWriter("Laporan/laporan_transaksi.txt");
-                BufferedWriter bw = new BufferedWriter(fout);
-                
-                bw.write(simpan);
-                                bw.close();
-                fout.close();
-                JOptionPane.showMessageDialog(null, "Sukses Export Laporan!","Sukses",JOptionPane.INFORMATION_MESSAGE);
-        } catch (Exception e) {
+            File f = new File(System.getProperty("user.dir")+"/Laporan/");
+            f.mkdir();
+            FileWriter fout = new FileWriter(System.getProperty("user.dir")+"/Laporan/"+"laporan_transaksi.txt");
+            BufferedWriter bw = new BufferedWriter(fout);
+            
+            bw.write(simpan);
+            bw.close();
+            fout.close();
+            JOptionPane.showMessageDialog(null, "Sukses Export Laporan!","Sukses",JOptionPane.INFORMATION_MESSAGE);
+        } catch (IOException e) {
+            System.out.println("Folder not found!");
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Error dalam pencetakan laporan!!","Error",JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btn_exportActionPerformed
 
@@ -688,12 +694,12 @@ public class Form_Laporan extends javax.swing.JFrame {
         // TODO add your handling code here:
         String simpan1 = "";
         simpan1 += "╔═════════════════════════════════════════╗\n" +
-        "║                                         ║\n" +
-        "║              C O M P U F Y              ║\n" +
-        "║                                         ║\n" +
-        "╠═════════════════════════════════════════╣\n" +
-        "║               LAPORAN STOK              ║\n"
-        ;
+                "║                                         ║\n" +
+                "║              C O M P U F Y              ║\n" +
+                "║                                         ║\n" +
+                "╠═════════════════════════════════════════╣\n" +
+                "║               LAPORAN STOK              ║\n"
+                ;
         for (int i = 0; i<tbl.getRowCount();i++){
             simpan1 += "║   -----------------------------------   ║\n";
             String nomorrnota = tb_Htrans.getModel().getValueAt(i, 0).toString();
@@ -714,10 +720,10 @@ public class Form_Laporan extends javax.swing.JFrame {
                                 
                                 if (l != Math.ceil(namabarng.chars().count()/17)){
                                     if (l == 0){
-                                       simpan1+= "║     "+namabarng.substring(0,17)+"                   ║\n"; 
+                                        simpan1+= "║     "+namabarng.substring(0,17)+"                   ║\n";
                                     }
                                     else{
-                                      simpan1 += "║     "+namabarng.substring((17*(l)),((17*(l+1))))+"                   ║\n";   
+                                        simpan1 += "║     "+namabarng.substring((17*(l)),((17*(l+1))))+"                   ║\n";
                                     }
                                 }
                                 else{
@@ -762,7 +768,7 @@ public class Form_Laporan extends javax.swing.JFrame {
                 
             }
             
-           
+            
             String namabarng = o[2];
             boolean chckbarang = false;
             for (String[] v : listDtrans){
@@ -779,34 +785,34 @@ public class Form_Laporan extends javax.swing.JFrame {
             if (chckbarang == true){
                 
                 if (ctrspasi != 0){
-                        simpan1 += "║                                         ║\n";
+                    simpan1 += "║                                         ║\n";
                 }
                 ctrspasi += 1;
-                for (int r = 0; r<Math.ceil(namabarng.chars().count()/17)+1;r++){ 
+                for (int r = 0; r<Math.ceil(namabarng.chars().count()/17)+1;r++){
                     
-                if (r != Math.ceil(namabarng.chars().count()/17)){
-                    if (r == 0){
-                        simpan1+= "║     "+namabarng.substring(0,17)+"                   ║\n"; 
+                    if (r != Math.ceil(namabarng.chars().count()/17)){
+                        if (r == 0){
+                            simpan1+= "║     "+namabarng.substring(0,17)+"                   ║\n";
+                        }
+                        else{
+                            simpan1+= "║     "+namabarng.substring(17*(r),((17*(r+1))))+"                   ║\n";
+                        }
+                        
                     }
                     else{
-                      simpan1+= "║     "+namabarng.substring(17*(r),((17*(r+1))))+"                   ║\n";   
+                        simpan1+= "║     "+namabarng.substring(17*(r));
+                        for (int m = 0; m < 17-namabarng.substring(17*(r)).chars().count();m++){
+                            simpan1+= " ";
+                        }
+                        simpan1 += "  ";
+                        for (int n = 0; n < 3-String.valueOf(simpanbarang).chars().count();n++){
+                            simpan1+= " ";
+                        }
+                        simpan1 += simpanbarang+"  "+o[1]+"    ║\n";
+                        
                     }
                     
                 }
-                else{
-                    simpan1+= "║     "+namabarng.substring(17*(r));
-                    for (int m = 0; m < 17-namabarng.substring(17*(r)).chars().count();m++){
-                        simpan1+= " ";
-                    }
-                    simpan1 += "  ";
-                    for (int n = 0; n < 3-String.valueOf(simpanbarang).chars().count();n++){
-                        simpan1+= " ";
-                    }
-                    simpan1 += simpanbarang+"  "+o[1]+"    ║\n";   
-                    
-                }
-                
-            }
 //                simpan1 += "║                                         ║\n";
             }
             
@@ -822,14 +828,16 @@ public class Form_Laporan extends javax.swing.JFrame {
         simpan1 += "╚═════════════════════════════════════════╝";
         
         try {
-            FileWriter fout = new FileWriter("Laporan/laporan_stok.txt");
-                BufferedWriter bw = new BufferedWriter(fout);
-                
-                bw.write(simpan1);
-                                bw.close();
-                fout.close();
-                
-                JOptionPane.showMessageDialog(null, "Sukses Export Laporan!","Sukses",JOptionPane.INFORMATION_MESSAGE);
+            File f = new File(System.getProperty("user.dir")+"/Laporan/");
+            f.mkdir();
+            FileWriter fout = new FileWriter(System.getProperty("user.dir")+"/Laporan/"+"laporan_stok.txt");
+            BufferedWriter bw = new BufferedWriter(fout);
+            
+            bw.write(simpan1);
+            bw.close();
+            fout.close();
+            
+            JOptionPane.showMessageDialog(null, "Sukses Export Laporan!","Sukses",JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btn_export1ActionPerformed
@@ -878,14 +886,14 @@ public class Form_Laporan extends javax.swing.JFrame {
             tb_Dtrans.setModel(tb2);
         }
         else{
-
+            
         }
     }//GEN-LAST:event_tb_HtransMousePressed
-
-    private void dp_tanggalPropertyChange(java.beans.PropertyChangeEvent evt) {                                          
+    
+    private void dp_tanggalPropertyChange(java.beans.PropertyChangeEvent evt) {
         // TODO add your handling code here:
         
-    }                                         
+    }
     /**
      * @param args the command line arguments
      */
