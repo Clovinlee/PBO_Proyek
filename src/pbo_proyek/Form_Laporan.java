@@ -233,7 +233,6 @@ public class Form_Laporan extends javax.swing.JFrame {
         lbl_grandtotal1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(848, 540));
 
         pl.setBackground(new java.awt.Color(84, 84, 96));
         pl.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -335,7 +334,7 @@ public class Form_Laporan extends javax.swing.JFrame {
         btn_export.setBackground(new java.awt.Color(58, 58, 58));
         btn_export.setFont(new java.awt.Font("Yu Gothic UI", 1, 16)); // NOI18N
         btn_export.setForeground(new java.awt.Color(222, 222, 222));
-        btn_export.setText("Laporan Transaksi");
+        btn_export.setText("Laporan Penjualan");
         btn_export.setBorder(null);
         btn_export.setContentAreaFilled(false);
         btn_export.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -404,7 +403,7 @@ public class Form_Laporan extends javax.swing.JFrame {
         btn_export1.setBackground(new java.awt.Color(58, 58, 58));
         btn_export1.setFont(new java.awt.Font("Yu Gothic UI", 1, 16)); // NOI18N
         btn_export1.setForeground(new java.awt.Color(222, 222, 222));
-        btn_export1.setText("Laporan Stok");
+        btn_export1.setText("Laporan Penjualan Stok");
         btn_export1.setBorder(null);
         btn_export1.setContentAreaFilled(false);
         btn_export1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -474,7 +473,7 @@ public class Form_Laporan extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, plLayout.createSequentialGroup()
                                 .addComponent(btn_export, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(27, 27, 27)
-                                .addComponent(btn_export1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btn_export1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING))
@@ -501,7 +500,7 @@ public class Form_Laporan extends javax.swing.JFrame {
                         .addComponent(dp_tanggal1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_find, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(119, Short.MAX_VALUE))))
+                        .addContainerGap(15, Short.MAX_VALUE))))
         );
         plLayout.setVerticalGroup(
             plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -530,7 +529,7 @@ public class Form_Laporan extends javax.swing.JFrame {
                         .addComponent(dp_tanggal, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btn_find, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
