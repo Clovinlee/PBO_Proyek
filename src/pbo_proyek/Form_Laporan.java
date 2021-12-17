@@ -80,6 +80,9 @@ public class Form_Laporan extends javax.swing.JFrame {
     ArrayList<String[]> listkaryawan;
     ArrayList<String[]> listDtrans;
     ArrayList<String[]> listbarang;
+    ArrayList<Integer> ArrayJumlahBarang = new ArrayList<Integer>();
+    ArrayList<String> ArrayNamaBarang = new ArrayList<String>();
+    ArrayList<String> ArrayNamaKode = new ArrayList<String>();
     int selectedidx = -1;
     int granddtotal ;
     public void loadDgv(){
@@ -120,6 +123,7 @@ public class Form_Laporan extends javax.swing.JFrame {
         }
         tb_Htrans.setModel(tbl);
         lbl_grandtotal.setText("Grand Total: Rp."+String.valueOf(granddtotal));
+        lbl_grandtotal1.setText("Total Transaksi : "+String.valueOf(tbl.getRowCount()));
     }
     
     public void search(){
@@ -158,6 +162,7 @@ public class Form_Laporan extends javax.swing.JFrame {
         }
         tb_Htrans.setModel(tbl);
         lbl_grandtotal.setText("Grand Total: Rp."+String.valueOf(granddtotal));
+        lbl_grandtotal1.setText("Total Transaksi : "+String.valueOf(tbl.getRowCount()));
     }
     public boolean validSearch(String nota, String kodekaryawan, Date tanggalawal, Date tanggalakhir, String karyawan, String[] data, String selecteddiskon, String diskon){
         if(data[0].toLowerCase().contains(nota.toLowerCase())){
@@ -225,6 +230,7 @@ public class Form_Laporan extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         btn_export1 = new javax.swing.JButton();
         btn_find = new javax.swing.JButton();
+        lbl_grandtotal1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(848, 540));
@@ -444,6 +450,10 @@ public class Form_Laporan extends javax.swing.JFrame {
             }
         });
 
+        lbl_grandtotal1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lbl_grandtotal1.setForeground(new java.awt.Color(222, 222, 222));
+        lbl_grandtotal1.setText("Grand Total : Rp0");
+
         javax.swing.GroupLayout plLayout = new javax.swing.GroupLayout(pl);
         pl.setLayout(plLayout);
         plLayout.setHorizontalGroup(
@@ -454,6 +464,8 @@ public class Form_Laporan extends javax.swing.JFrame {
                     .addGroup(plLayout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lbl_grandtotal1)
+                        .addGap(88, 88, 88)
                         .addComponent(lbl_grandtotal)
                         .addGap(75, 75, 75))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, plLayout.createSequentialGroup()
@@ -489,7 +501,7 @@ public class Form_Laporan extends javax.swing.JFrame {
                         .addComponent(dp_tanggal1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_find, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(119, Short.MAX_VALUE))))
         );
         plLayout.setVerticalGroup(
             plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -522,7 +534,9 @@ public class Form_Laporan extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
-                    .addComponent(lbl_grandtotal))
+                    .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lbl_grandtotal)
+                        .addComponent(lbl_grandtotal1)))
                 .addGap(9, 9, 9)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(9, 9, 9)
@@ -693,6 +707,9 @@ public class Form_Laporan extends javax.swing.JFrame {
     private void btn_export1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_export1ActionPerformed
         // TODO add your handling code here:
         String simpan1 = "";
+        
+        ArrayList<String[]> listbarangtesting;
+        
         simpan1 += "╔═════════════════════════════════════════╗\n" +
                 "║                                         ║\n" +
                 "║              C O M P U F Y              ║\n" +
@@ -751,8 +768,12 @@ public class Form_Laporan extends javax.swing.JFrame {
         simpan1 += "║   -----------------------------------   ║\n";
         simpan1 += "║   TOTAL PENGELUARAN BARANG              ║\n";
         simpan1 += "║   -----------------------------------   ║\n";
+//        listbarangtesting = DB.query("SELECT b.nama , SUM(dt.qty) FROM barang b , D_Trans DT , H_Trans HT WHERE b.id = DT.fk_barang AND DT.nomor_nota = ");
         int totalbarang = 0;
         int ctrspasi = 0;
+        ArrayJumlahBarang.clear();
+        ArrayNamaBarang.clear();
+        ArrayNamaKode.clear();
         for (String[] o : listbarang){
             int simpanbarang = 0;
             for (String[] p : listDtrans){
@@ -766,7 +787,9 @@ public class Form_Laporan extends javax.swing.JFrame {
                     }
                 }
                 
+                
             }
+            
             
             
             String namabarng = o[2];
@@ -783,11 +806,47 @@ public class Form_Laporan extends javax.swing.JFrame {
                 
             }
             if (chckbarang == true){
+                ArrayJumlahBarang.add(simpanbarang);
+                ArrayNamaBarang.add(namabarng);
+                ArrayNamaKode.add(o[1]);
                 
+            }
+            
+            
+        }
+        String namabarng = "";
+        for (int x = ArrayJumlahBarang.size()-1; x >= 0; x--){
+                    for (int y = ArrayJumlahBarang.size()-1; y > ArrayJumlahBarang.size()-1 - x; y--){
+                        if (ArrayJumlahBarang.get(y)> ArrayJumlahBarang.get(y-1)){
+                            int tempswapangka = ArrayJumlahBarang.get(y);
+                            String tempswapkata = ArrayNamaBarang.get(y);
+                            String tempswapkode = ArrayNamaKode.get(y);
+                            ArrayJumlahBarang.remove(y);
+                            ArrayJumlahBarang.add(y,ArrayJumlahBarang.get(y-1));
+                            ArrayNamaBarang.remove(y);
+                            ArrayNamaBarang.add(y,ArrayNamaBarang.get(y-1));
+                            ArrayNamaKode.remove(y);
+                            ArrayNamaKode.add(y,ArrayNamaKode.get(y-1));
+                            
+                            
+                            ArrayJumlahBarang.remove(y-1);
+                            ArrayJumlahBarang.add(y-1,tempswapangka);
+                            ArrayNamaBarang.remove(y-1);
+                            ArrayNamaBarang.add(y-1,tempswapkata);
+                            ArrayNamaKode.remove(y-1);
+                            ArrayNamaKode.add(y-1,tempswapkode);
+                            
+                            
+                        }
+                    }
+                }
+                for (int f = 0; f < ArrayJumlahBarang.size();f++){
+                namabarng = ArrayNamaBarang.get(f);
                 if (ctrspasi != 0){
                     simpan1 += "║                                         ║\n";
                 }
                 ctrspasi += 1;
+                
                 for (int r = 0; r<Math.ceil(namabarng.chars().count()/17)+1;r++){
                     
                     if (r != Math.ceil(namabarng.chars().count()/17)){
@@ -805,19 +864,16 @@ public class Form_Laporan extends javax.swing.JFrame {
                             simpan1+= " ";
                         }
                         simpan1 += "  ";
-                        for (int n = 0; n < 3-String.valueOf(simpanbarang).chars().count();n++){
+                        for (int n = 0; n < 3-String.valueOf(ArrayJumlahBarang.get(f)).chars().count();n++){
                             simpan1+= " ";
                         }
-                        simpan1 += simpanbarang+"  "+o[1]+"    ║\n";
+                        simpan1 += ArrayJumlahBarang.get(f)+"  "+ArrayNamaKode.get(f)+"    ║\n";
                         
                     }
                     
                 }
 //                simpan1 += "║                                         ║\n";
-            }
-            
-            
-        }
+                }
         simpan1 += "║   -----------------------------------   ║\n";
         simpan1 += "║                     TOTAL BARANG ";
         for (int a = 0; a < 4-String.valueOf(totalbarang).chars().count();a++){
@@ -947,6 +1003,7 @@ public class Form_Laporan extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lbl_grandtotal;
+    private javax.swing.JLabel lbl_grandtotal1;
     private javax.swing.JPanel pl;
     private javax.swing.JTable tb_Dtrans;
     private javax.swing.JTable tb_Htrans;
