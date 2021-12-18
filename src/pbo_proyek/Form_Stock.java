@@ -132,8 +132,8 @@ public class Form_Stock extends javax.swing.JFrame {
                     }
                     
                     int stok_now = Integer.parseInt(data[3]);
-                    if(stok_awal < stok_now || stokawal.equals("")){
-                        if(stok_akhir > stok_now || stokakhir.equals("")){
+                    if(stok_awal <= stok_now || stokawal.equals("")){
+                        if(stok_akhir >= stok_now || stokakhir.equals("")){
                             int harga_awal = -1;
                             int harga_akhir = -1;
                             try {
@@ -151,8 +151,8 @@ public class Form_Stock extends javax.swing.JFrame {
                                 }
                             }
                             int harga_now = Integer.parseInt(data[4]);
-                            if(harga_awal < harga_now || hrgawal.equals("")){
-                                if(harga_akhir > harga_now || hrgakhir.equals("")){
+                            if(harga_awal <= harga_now || hrgawal.equals("")){
+                                if(harga_akhir >= harga_now || hrgakhir.equals("")){
                                     return true;
                                 }
                             }
