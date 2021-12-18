@@ -487,7 +487,9 @@ public class InsertAccount_Form extends javax.swing.JFrame {
     
     public boolean checkAngka(String t){
         try {
-            int a = Integer.parseInt(t);
+            for (char x : t.toCharArray()) {
+                int b = Integer.parseInt(String.valueOf(x));
+            }
         } catch (Exception e) {
             return false;
         }
