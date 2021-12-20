@@ -89,6 +89,7 @@ public class Form_Laporan extends javax.swing.JFrame {
     ArrayList<String> ArrayNamaBarang = new ArrayList<String>();
     ArrayList<String> ArrayNamaKode = new ArrayList<String>();
     ArrayList<String[]> listkategori;
+    ArrayList<String[]> listsemuakategori;
     int selectedidx = -1;
     int granddtotal ;
     boolean chcksearch;
@@ -106,28 +107,8 @@ public class Form_Laporan extends javax.swing.JFrame {
         listkaryawan = DB.query("SELECT * FROM karyawan");
         listbarang = DB.query("SELECT * FROM barang");
         listDtrans = DB.query("SELECT * FROM d_trans");
-        String strquer = "";
-        strquer += "SELECT jenis_barang.nama_jenis, NVL(SUM(d_trans.qty),0) as jml\n" +
-                    "FROM jenis_barang\n" +
-                    "LEFT JOIN barang\n" +
-                    "ON barang.fk_jenis_barang = jenis_barang.id\n" +
-                    "LEFT JOIN d_trans\n" +
-                    "ON d_trans.fk_barang = barang.id\n" +
-                    "LEFT JOIN h_trans\n" +
-                    "ON h_trans.nomor_nota = d_trans.nomor_nota\n" ;
-        strquer +=  "WHERE h_trans.nomor_nota IN (" ;
-                    
-        for (int g = 0; g < tbl.getRowCount();g++){
-            if (g != tbl.getRowCount()-1){
-                strquer += "'"+tbl.getValueAt(g, 0)+"',";
-            }
-            else{
-                strquer += "'"+tbl.getValueAt(g, 0)+"')\n";
-            }
-        }
-        strquer += "GROUP BY jenis_barang.nama_jenis\n" +
-                   "ORDER BY 2 DESC";
-        listkategori = DB.query(strquer);
+        listsemuakategori = DB.query("SELECT * FROM jenis_barang");
+        
         
         int ctr = 1;
         String diskon="";
@@ -154,13 +135,6 @@ public class Form_Laporan extends javax.swing.JFrame {
         tb_Htrans.setModel(tbl);
         lbl_grandtotal.setText("Grand Total: Rp."+String.valueOf(granddtotal));
         lbl_grandtotal1.setText("Total Transaksi : "+String.valueOf(tbl.getRowCount()));
-    }
-    
-    public void search(){
-        chcksearch = true;
-        granddtotal = 0;
-        tbl = new DefaultTableModel(new Object[] {"Nomor Nota","Tanggal Transaksi","Promo","Kode Karyawan","Grand Total"}, 0);
-        tb_Htrans.setDefaultEditor(Object.class, null);
         String strquer = "";
         strquer += "SELECT jenis_barang.nama_jenis, NVL(SUM(d_trans.qty),0) as jml\n" +
                     "FROM jenis_barang\n" +
@@ -183,6 +157,14 @@ public class Form_Laporan extends javax.swing.JFrame {
         strquer += "GROUP BY jenis_barang.nama_jenis\n" +
                    "ORDER BY 2 DESC";
         listkategori = DB.query(strquer);
+    }
+    
+    public void search(){
+        chcksearch = true;
+        granddtotal = 0;
+        tbl = new DefaultTableModel(new Object[] {"Nomor Nota","Tanggal Transaksi","Promo","Kode Karyawan","Grand Total"}, 0);
+        tb_Htrans.setDefaultEditor(Object.class, null);
+        
         String diskon="";
         String karyawan="";
         for (String[] s : listHtrans) {
@@ -216,6 +198,29 @@ public class Form_Laporan extends javax.swing.JFrame {
         tb_Htrans.setModel(tbl);
         lbl_grandtotal.setText("Grand Total: Rp."+String.valueOf(granddtotal));
         lbl_grandtotal1.setText("Total Transaksi : "+String.valueOf(tbl.getRowCount()));
+        String strquer = "";
+        strquer += "SELECT jenis_barang.nama_jenis, NVL(SUM(d_trans.qty),0) as jml\n" +
+                    "FROM jenis_barang\n" +
+                    "LEFT JOIN barang\n" +
+                    "ON barang.fk_jenis_barang = jenis_barang.id\n" +
+                    "LEFT JOIN d_trans\n" +
+                    "ON d_trans.fk_barang = barang.id\n" +
+                    "LEFT JOIN h_trans\n" +
+                    "ON h_trans.nomor_nota = d_trans.nomor_nota\n" ;
+        strquer +=  "WHERE h_trans.nomor_nota IN (" ;
+                    
+        for (int g = 0; g < tbl.getRowCount();g++){
+            if (g != tbl.getRowCount()-1){
+                strquer += "'"+tbl.getValueAt(g, 0)+"',";
+            }
+            else{
+                strquer += "'"+tbl.getValueAt(g, 0)+"')\n";
+            }
+        }
+        strquer += "GROUP BY jenis_barang.nama_jenis\n" +
+                   "ORDER BY 2 DESC";
+        listkategori = DB.query(strquer);
+        
     }
     public boolean validSearch(String nota, String kodekaryawan, Date tanggalawal, Date tanggalakhir, String karyawan, String[] data, String selecteddiskon, String diskon){
         if(data[0].toLowerCase().contains(nota.toLowerCase())){
@@ -1107,6 +1112,38 @@ public class Form_Laporan extends javax.swing.JFrame {
                     }
                     simpan2 += p[1]+"|    ║\n";
                 }
+            }
+        }
+        for (String[] x : listsemuakategori){
+            boolean chckadakategori = false;
+            for (String[] y : listkategori){
+                if (x[1].equals(y[0])){
+                    chckadakategori = true;
+                }
+            }
+            if (chckadakategori == false){
+                simpan2 += "║   |-------------------------|    ║\n";
+            for (int h = 0; h < Math.ceil(x[1].chars().count()/13)+1;h++){
+                if (h != Math.ceil(x[1].chars().count()/13)){
+                                    if (h == 0){
+                                        simpan2+= "║   |"+x[1].substring(0,13)+"|           |    ║\n";
+                                    }
+                                    else{
+                                        simpan2 += "║   |"+x[1].substring((13*(h)),((13*(h+1))))+"|           |    ║\n";
+                                    }
+                                }
+                else{
+                    simpan2 += "║   |"+x[1].substring(13*(h));
+                    for (int m = 0; m < 13-x[1].substring(13*(h)).chars().count();m++){
+                            simpan2+= " ";
+                        }
+                    simpan2 += "| ";
+                    for (int n = 0;n < 9;n++){
+                        simpan2+= " ";
+                    }
+                    simpan2 += "0|    ║\n";
+                }
+            }
             }
         }
         simpan2 += "║   |-------------------------|    ║\n";
