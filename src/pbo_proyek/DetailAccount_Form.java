@@ -643,6 +643,7 @@ public class DetailAccount_Form extends javax.swing.JFrame {
                 frm_acc.loadDgv();
                 frm_acc.search();
                 frm_acc.setIdx(-1);
+                frm_acc.getFrm_menu().loadImage(img_name, 1);
                 JOptionPane.showMessageDialog(null, "Sukses ubah data","Sukses",JOptionPane.INFORMATION_MESSAGE);
             }else{
                 JOptionPane.showMessageDialog(null, "Gagal ubah data!","Error",JOptionPane.ERROR_MESSAGE);

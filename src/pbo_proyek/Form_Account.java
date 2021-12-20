@@ -30,6 +30,17 @@ public class Form_Account extends javax.swing.JFrame {
     /**
      * Creates new form Form_Account
      */
+    
+    private Form_Menu frm_menu;
+
+    public Form_Menu getFrm_menu() {
+        return frm_menu;
+    }
+
+    public void setFrm_menu(Form_Menu frm_menu) {
+        this.frm_menu = frm_menu;
+    }
+    
     public Form_Account() {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());

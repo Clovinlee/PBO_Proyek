@@ -416,7 +416,7 @@ public class Form_Login extends javax.swing.JFrame {
                 dt = new SimpleDateFormat("dd-MM-yyyy").parse(s.get(x)[6]);
             } catch (ParseException ex) {}
             
-            u = new User(s.get(x)[0], s.get(x)[1], s.get(x)[2], s.get(x)[3], s.get(x)[4], s.get(x)[5], s.get(x)[7], dt, s.get(x)[8],s.get(x)[9],s.get(x)[10],s.get(x)[11]);
+            u = new User(s.get(x)[0], s.get(x)[1], s.get(x)[2], s.get(x)[3], s.get(x)[4], s.get(x)[5], s.get(x)[7], dt, s.get(x)[8],s.get(x)[9],s.get(x)[10],s.get(x)[11], s.get(x)[12], s.get(x)[13]);
         }
         
         return u;

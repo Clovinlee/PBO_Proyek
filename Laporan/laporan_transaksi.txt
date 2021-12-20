@@ -5,43 +5,8 @@
 ╠═════════════════════════════════════════╣
 ║            LAPORAN TRANSAKSI            ║
 ║                  PERIODE                ║
-║          2021-11-01 - 2021-12-20        ║
-║   -----------------------------------   ║
-║   NOTA202111090001                      ║
-║     Tanggal Transaksi: 2021-11-09       ║
-║     Kode Karyawan    : WAIV0001         ║
-║     Promo            : AYOBELI          ║
-║     Potongan Promo   : Rp 200,000       ║
-║     Total Transaksi  : Rp 1,250,000     ║
-║   -----------------------------------   ║
-║   NOTA202111100001                      ║
-║     Tanggal Transaksi: 2021-11-10       ║
-║     Kode Karyawan    : GLVL0001         ║
-║     Promo            : POTONGHARGA      ║
-║     Potongan Promo   : Rp 75,000        ║
-║     Total Transaksi  : Rp 2,899,000     ║
-║   -----------------------------------   ║
-║   NOTA202111260001                      ║
-║     Tanggal Transaksi: 2021-11-26       ║
-║     Kode Karyawan    : ALBR0001         ║
-║     Promo            : AYOBELI          ║
-║     Potongan Promo   : Rp 200,000       ║
-║     Total Transaksi  : Rp 250,000       ║
-║   -----------------------------------   ║
-║   NOTA202111260002                      ║
-║     Tanggal Transaksi: 2021-11-26       ║
-║     Kode Karyawan    : ALBR0001         ║
-║     Promo            : -                ║
-║     Potongan Promo   : Rp 0             ║
-║     Total Transaksi  : Rp 150,000       ║
-║   -----------------------------------   ║
-║   NOTA202111260003                      ║
-║     Tanggal Transaksi: 2021-11-26       ║
-║     Kode Karyawan    : ALBR0001         ║
-║     Promo            : AYOBELI          ║
-║     Potongan Promo   : Rp 200,000       ║
-║     Total Transaksi  : Rp 100,000       ║
+║          2021-12-20 - 2021-12-20        ║
 ║   -----------------------------------   ║
 ║                                         ║
-║                Grand Total: Rp 4,649,000║
+║                        Grand Total: Rp 0║
 ╚═════════════════════════════════════════╝

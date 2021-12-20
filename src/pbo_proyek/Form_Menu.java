@@ -15,6 +15,8 @@ import java.awt.Rectangle;
 import java.io.File;
 import java.io.IOException;
 import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
@@ -90,6 +92,37 @@ public class Form_Menu extends javax.swing.JFrame {
         this.setSize(this.getMinimumSize());
         this.setExtendedState(this.NORMAL);
         this.setLocationRelativeTo(null);
+        loadImage(usr.getImages(), 1);
+    }
+    
+     // 0 --> File select,
+    // 1 --> DB,
+    // -1 --> angka random. supaya keluar image not found
+    public void loadImage(String fileName, int mode){
+        InputStream is;
+        Image img;
+        ImageIcon img_icon;
+        BufferedImage bi;
+        try {
+            if(!fileName.equalsIgnoreCase("null") && !fileName.equals("")){
+                if(mode == 0){
+                    is = new FileInputStream(fileName);
+                }else{
+                    is = new FileInputStream(System.getProperty("user.dir")+"/Images/User/"+fileName);
+                }
+            }else{
+                is = Form_Login.class.getResourceAsStream("Images/no_img.png");
+            }
+            bi = ImageIO.read(is);
+            img = bi.getScaledInstance(lbl_profile.getWidth(), -1, Image.SCALE_SMOOTH);
+            img_icon = new ImageIcon(img);
+            lbl_profile.setIcon(img_icon);
+        }catch (FileNotFoundException ex){
+            loadImage("null",0);
+        }
+        catch (Exception ex) {
+            loadImage("null",0);
+        }
     }
     
     public Form_Login getFrm_login() {
@@ -103,6 +136,7 @@ public class Form_Menu extends javax.swing.JFrame {
     
     public void initSubForm(){
         Form_Account frm_acc = new Form_Account();
+        frm_acc.setFrm_menu(this);
         Form_Laporan frm_his = new Form_Laporan();
         Form_Stock frm_stock = new Form_Stock();
         Form_Transaction frm_trans = new Form_Transaction();
@@ -134,6 +168,7 @@ public class Form_Menu extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         lbl_nama = new javax.swing.JLabel();
         lbl_jabatan = new javax.swing.JLabel();
+        lbl_profile = new javax.swing.JLabel();
         pl_menu = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -371,29 +406,37 @@ public class Form_Menu extends javax.swing.JFrame {
         lbl_jabatan.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lbl_jabatan.setText("<Jabatan>");
 
+        lbl_profile.setMaximumSize(new java.awt.Dimension(74, 60));
+        lbl_profile.setMinimumSize(new java.awt.Dimension(74, 60));
+        lbl_profile.setPreferredSize(new java.awt.Dimension(74, 60));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lbl_nama, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(411, Short.MAX_VALUE)
-                        .addComponent(lbl_jabatan, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lbl_nama, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbl_jabatan, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lbl_profile, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lbl_nama)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lbl_jabatan)
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbl_profile, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lbl_nama)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lbl_jabatan)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        lbl_profile.getAccessibleContext().setAccessibleDescription("");
 
         pl_menu.setBackground(new java.awt.Color(84, 84, 96));
 
@@ -401,7 +444,7 @@ public class Form_Menu extends javax.swing.JFrame {
         pl_menu.setLayout(pl_menuLayout);
         pl_menuLayout.setHorizontalGroup(
             pl_menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 575, Short.MAX_VALUE)
         );
         pl_menuLayout.setVerticalGroup(
             pl_menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -415,8 +458,8 @@ public class Form_Menu extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(pl_leftbar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pl_menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(pl_menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -424,7 +467,7 @@ public class Form_Menu extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(pl_menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(pl_leftbar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pl_leftbar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -564,6 +607,7 @@ public class Form_Menu extends javax.swing.JFrame {
     private javax.swing.JLabel lb_logo;
     private javax.swing.JLabel lbl_jabatan;
     private javax.swing.JLabel lbl_nama;
+    private javax.swing.JLabel lbl_profile;
     private java.awt.Panel pl_leftbar;
     private javax.swing.JPanel pl_menu;
     private java.awt.Panel pl_topbar;
