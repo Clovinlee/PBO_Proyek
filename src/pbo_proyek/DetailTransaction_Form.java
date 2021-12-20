@@ -8,6 +8,7 @@ package pbo_proyek;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -450,12 +451,14 @@ public class DetailTransaction_Form extends javax.swing.JFrame {
                 "║                                                    ║\n"+   
                 "╚════════════════════════════════════════════════════╝";
         try {
-            FileWriter fout = new FileWriter("nota/"+kode+".txt");
-                BufferedWriter bw = new BufferedWriter(fout);
-                
-                bw.write(simpan);
-                                bw.close();
-                fout.close();              
+            File f = new File(System.getProperty("user.dir")+"/Nota/");
+            f.mkdir();
+            FileWriter fout = new FileWriter(System.getProperty("user.dir")+"/Nota/"+kode+".txt");
+            BufferedWriter bw = new BufferedWriter(fout);
+            
+            bw.write(simpan);
+            bw.close();
+            fout.close();
         } catch (Exception e) {
         }
     }
