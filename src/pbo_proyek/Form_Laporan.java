@@ -79,6 +79,7 @@ public class Form_Laporan extends javax.swing.JFrame {
     
     DefaultTableModel tbl;
     DefaultTableModel tb2;
+    DefaultTableModel tb3;
     ArrayList<String[]> listHtrans;
     ArrayList<String[]> listdiskon;
     ArrayList<String[]> listkaryawan;
@@ -87,6 +88,7 @@ public class Form_Laporan extends javax.swing.JFrame {
     ArrayList<Integer> ArrayJumlahBarang = new ArrayList<Integer>();
     ArrayList<String> ArrayNamaBarang = new ArrayList<String>();
     ArrayList<String> ArrayNamaKode = new ArrayList<String>();
+    ArrayList<String[]> listkategori;
     int selectedidx = -1;
     int granddtotal ;
     boolean chcksearch;
@@ -95,6 +97,7 @@ public class Form_Laporan extends javax.swing.JFrame {
         listHtrans = DB.query("SELECT * FROM h_trans");
         tbl = new DefaultTableModel(new Object[] {"Nomor Nota","Tanggal Transaksi","Promo","Kode Karyawan","Grand Total"}, 0);
         tb2 = new DefaultTableModel(new Object[] {"Kode Barang","Nama Barang","Harga Barang","Subtotal"}, 0);
+        
         tb_Htrans.setDefaultEditor(Object.class, null);
         listdiskon = DB.query("SELECT * FROM diskon");
         for (String[] s :listdiskon) {
@@ -103,6 +106,28 @@ public class Form_Laporan extends javax.swing.JFrame {
         listkaryawan = DB.query("SELECT * FROM karyawan");
         listbarang = DB.query("SELECT * FROM barang");
         listDtrans = DB.query("SELECT * FROM d_trans");
+        String strquer = "";
+        strquer += "SELECT jenis_barang.nama_jenis, NVL(SUM(d_trans.qty),0) as jml\n" +
+                    "FROM jenis_barang\n" +
+                    "LEFT JOIN barang\n" +
+                    "ON barang.fk_jenis_barang = jenis_barang.id\n" +
+                    "LEFT JOIN d_trans\n" +
+                    "ON d_trans.fk_barang = barang.id\n" +
+                    "LEFT JOIN h_trans\n" +
+                    "ON h_trans.nomor_nota = d_trans.nomor_nota\n" ;
+        strquer +=  "WHERE h_trans.nomor_nota IN (" ;
+                    
+        for (int g = 0; g < tbl.getRowCount();g++){
+            if (g != tbl.getRowCount()-1){
+                strquer += "'"+tbl.getValueAt(g, 0)+"',";
+            }
+            else{
+                strquer += "'"+tbl.getValueAt(g, 0)+"')\n";
+            }
+        }
+        strquer += "GROUP BY jenis_barang.nama_jenis\n" +
+                   "ORDER BY 2 DESC";
+        listkategori = DB.query(strquer);
         
         int ctr = 1;
         String diskon="";
@@ -136,6 +161,28 @@ public class Form_Laporan extends javax.swing.JFrame {
         granddtotal = 0;
         tbl = new DefaultTableModel(new Object[] {"Nomor Nota","Tanggal Transaksi","Promo","Kode Karyawan","Grand Total"}, 0);
         tb_Htrans.setDefaultEditor(Object.class, null);
+        String strquer = "";
+        strquer += "SELECT jenis_barang.nama_jenis, NVL(SUM(d_trans.qty),0) as jml\n" +
+                    "FROM jenis_barang\n" +
+                    "LEFT JOIN barang\n" +
+                    "ON barang.fk_jenis_barang = jenis_barang.id\n" +
+                    "LEFT JOIN d_trans\n" +
+                    "ON d_trans.fk_barang = barang.id\n" +
+                    "LEFT JOIN h_trans\n" +
+                    "ON h_trans.nomor_nota = d_trans.nomor_nota\n" ;
+        strquer +=  "WHERE h_trans.nomor_nota IN (" ;
+                    
+        for (int g = 0; g < tbl.getRowCount();g++){
+            if (g != tbl.getRowCount()-1){
+                strquer += "'"+tbl.getValueAt(g, 0)+"',";
+            }
+            else{
+                strquer += "'"+tbl.getValueAt(g, 0)+"')\n";
+            }
+        }
+        strquer += "GROUP BY jenis_barang.nama_jenis\n" +
+                   "ORDER BY 2 DESC";
+        listkategori = DB.query(strquer);
         String diskon="";
         String karyawan="";
         for (String[] s : listHtrans) {
@@ -237,6 +284,7 @@ public class Form_Laporan extends javax.swing.JFrame {
         btn_export1 = new javax.swing.JButton();
         btn_find = new javax.swing.JButton();
         lbl_grandtotal1 = new javax.swing.JLabel();
+        btn_export3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -459,6 +507,29 @@ public class Form_Laporan extends javax.swing.JFrame {
         lbl_grandtotal1.setForeground(new java.awt.Color(222, 222, 222));
         lbl_grandtotal1.setText("Grand Total : Rp0");
 
+        btn_export3.setBackground(new java.awt.Color(58, 58, 58));
+        btn_export3.setFont(new java.awt.Font("Yu Gothic UI", 1, 16)); // NOI18N
+        btn_export3.setForeground(new java.awt.Color(222, 222, 222));
+        btn_export3.setText("Laporan Jenis Barang");
+        btn_export3.setBorder(null);
+        btn_export3.setContentAreaFilled(false);
+        btn_export3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_export3.setFocusPainted(false);
+        btn_export3.setOpaque(true);
+        btn_export3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_export3MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btn_export3MouseExited(evt);
+            }
+        });
+        btn_export3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_export3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout plLayout = new javax.swing.GroupLayout(pl);
         pl.setLayout(plLayout);
         plLayout.setHorizontalGroup(
@@ -480,6 +551,8 @@ public class Form_Laporan extends javax.swing.JFrame {
                                 .addComponent(btn_export, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(27, 27, 27)
                                 .addComponent(btn_export1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(26, 26, 26)
+                                .addComponent(btn_export3, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING))
@@ -506,7 +579,7 @@ public class Form_Laporan extends javax.swing.JFrame {
                         .addComponent(dp_tanggal1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_find, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(15, Short.MAX_VALUE))))
+                        .addContainerGap(119, Short.MAX_VALUE))))
         );
         plLayout.setVerticalGroup(
             plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -535,7 +608,7 @@ public class Form_Laporan extends javax.swing.JFrame {
                         .addComponent(dp_tanggal, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btn_find, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
@@ -548,7 +621,8 @@ public class Form_Laporan extends javax.swing.JFrame {
                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_export, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_export1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_export3, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(35, 35, 35))
         );
 
@@ -986,6 +1060,77 @@ public class Form_Laporan extends javax.swing.JFrame {
             
         }
     }//GEN-LAST:event_tb_HtransMousePressed
+
+    private void btn_export3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_export3MouseEntered
+        // TODO add your handling code here:
+        btn_export3.setBackground(Palette.getButtonSelectedColor());
+    }//GEN-LAST:event_btn_export3MouseEntered
+
+    private void btn_export3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_export3MouseExited
+        // TODO add your handling code here:
+        btn_export3.setBackground(Palette.getTableDark1());
+    }//GEN-LAST:event_btn_export3MouseExited
+
+    private void btn_export3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_export3ActionPerformed
+        // TODO add your handling code here:
+        String simpan2 = "";
+        
+        simpan2 += "╔══════════════════════════════════╗\n"+
+                "║                                  ║\n"+
+                "║          C O M P U F Y           ║\n"+
+                "║                                  ║\n"+
+                "╠══════════════════════════════════╣\n"+
+                "║       LAPORAN JENIS BARANG       ║\n"+
+                "║   ---------------------------    ║\n"+
+                "║   | NAMA JENIS  | JUMLAH    |    ║\n";
+        int totalbarangkategori = 0;
+        for (String [] p : listkategori){
+            totalbarangkategori += Integer.parseInt(p[1]);
+            simpan2 += "║   |-------------------------|    ║\n";
+            for (int h = 0; h < Math.ceil(p[0].chars().count()/13)+1;h++){
+                if (h != Math.ceil(p[0].chars().count()/13)){
+                                    if (h == 0){
+                                        simpan2+= "║   |"+p[0].substring(0,13)+"|           |    ║\n";
+                                    }
+                                    else{
+                                        simpan2 += "║   |"+p[0].substring((13*(h)),((13*(h+1))))+"|           |    ║\n";
+                                    }
+                                }
+                else{
+                    simpan2 += "║   |"+p[0].substring(13*(h));
+                    for (int m = 0; m < 13-p[0].substring(13*(h)).chars().count();m++){
+                            simpan2+= " ";
+                        }
+                    simpan2 += "| ";
+                    for (int n = 0;n < 10-p[1].chars().count();n++){
+                        simpan2+= " ";
+                    }
+                    simpan2 += p[1]+"|    ║\n";
+                }
+            }
+        }
+        simpan2 += "║   |-------------------------|    ║\n";
+        simpan2 += "║         Total Barang : ";
+        for (int q = 0 ; q < 9-String.valueOf(totalbarangkategori).chars().count(); q++){
+            simpan2+= " ";
+        }
+        simpan2 += String.valueOf(totalbarangkategori)+" ║\n";
+        simpan2 += "╚══════════════════════════════════╝";
+        
+        try {
+            File f = new File(System.getProperty("user.dir")+"/Laporan/");
+            f.mkdir();
+            FileWriter fout = new FileWriter(System.getProperty("user.dir")+"/Laporan/"+"laporan_kategori.txt");
+            BufferedWriter bw = new BufferedWriter(fout);
+            
+            bw.write(simpan2);
+            bw.close();
+            fout.close();
+            
+            JOptionPane.showMessageDialog(null, "Sukses Export Laporan!","Sukses",JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_btn_export3ActionPerformed
     
     private void dp_tanggalPropertyChange(java.beans.PropertyChangeEvent evt) {
         // TODO add your handling code here:
@@ -1030,6 +1175,7 @@ public class Form_Laporan extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_export;
     private javax.swing.JButton btn_export1;
+    private javax.swing.JButton btn_export3;
     private javax.swing.JButton btn_find;
     private javax.swing.JButton btn_refresh;
     private javax.swing.JComboBox<String> cb_diskon;
