@@ -25,6 +25,8 @@ public class User {
     private String status;
     private String fk_jabatan;
     private String nama_jabatan;
+    private String images;
+    private String email;
     private static User user_login;
 
     public static User getUser_login() {
@@ -35,7 +37,7 @@ public class User {
         User.user_login = user_login;
     }
     
-    public User(String id, String kode, String username, String password, String nama, String no_telp, String gender, Date tanggal_lahir, String kota, String alamat, String status, String fk_jabatan) {
+    public User(String id, String kode, String username, String password, String nama, String no_telp, String gender, Date tanggal_lahir, String kota, String alamat, String status, String fk_jabatan, String email, String images) {
         this.id = id;
         this.kode = kode;
         this.username = username;
@@ -48,7 +50,25 @@ public class User {
         this.alamat = alamat;
         this.status = status;
         this.fk_jabatan = fk_jabatan;
+        this.email = email;
+        this.images = images;
         this.nama_jabatan = DB.query("SELECT nama_jabatan from jabatan where id = "+fk_jabatan).get(0)[0];
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getImages() {
+        return images;
+    }
+
+    public void setImages(String images) {
+        this.images = images;
     }
 
     public String getNo_telp() {

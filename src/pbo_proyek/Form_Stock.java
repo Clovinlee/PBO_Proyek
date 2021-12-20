@@ -210,6 +210,8 @@ public class Form_Stock extends javax.swing.JFrame {
 
         pl.setBackground(new java.awt.Color(84, 84, 96));
 
+        jScrollPane1.setForeground(new java.awt.Color(222, 222, 222));
+
         dgv_barang.setBackground(new java.awt.Color(58, 58, 58));
         dgv_barang.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         dgv_barang.setForeground(new java.awt.Color(222, 222, 222));
