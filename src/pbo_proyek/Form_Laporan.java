@@ -24,6 +24,9 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.text.SimpleDateFormat;
 import java.lang.*;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 /**
  *
@@ -43,6 +46,7 @@ public class Form_Laporan extends javax.swing.JFrame {
         initComponents();
         styleDgv();
         loadDgv();
+        chcksearch = false;
     }
     public JPanel getPl() {
         return pl;
@@ -85,6 +89,7 @@ public class Form_Laporan extends javax.swing.JFrame {
     ArrayList<String> ArrayNamaKode = new ArrayList<String>();
     int selectedidx = -1;
     int granddtotal ;
+    boolean chcksearch;
     public void loadDgv(){
         granddtotal = 0;
         listHtrans = DB.query("SELECT * FROM h_trans");
@@ -127,6 +132,7 @@ public class Form_Laporan extends javax.swing.JFrame {
     }
     
     public void search(){
+        chcksearch = true;
         granddtotal = 0;
         tbl = new DefaultTableModel(new Object[] {"Nomor Nota","Tanggal Transaksi","Promo","Kode Karyawan","Grand Total"}, 0);
         tb_Htrans.setDefaultEditor(Object.class, null);
@@ -582,8 +588,26 @@ public class Form_Laporan extends javax.swing.JFrame {
                 "║                                         ║\n" +
                 "╠═════════════════════════════════════════╣\n" +
                 "║            LAPORAN TRANSAKSI            ║\n" +
-                "║   -----------------------------------   ║\n"
+                "║                  PERIODE                ║\n" 
+                
                 ;
+        String tgltransawal;
+        String tgltransakhir;
+        if (chcksearch == true){
+            
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                tgltransawal = formatter.format(dp_tanggal.getDate());
+                tgltransakhir = formatter.format(dp_tanggal1.getDate());;
+                simpan += "║          "+tgltransawal+" - "+tgltransakhir+"        ║\n";
+            
+            
+            
+            
+        }
+        else{
+            simpan += "║                   SEMUA                 ║\n";
+        }
+        simpan += "║   -----------------------------------   ║\n";
         for (int i = 0;i < tbl.getRowCount();i++){
             String tanggallapor = tb_Htrans.getModel().getValueAt(i, 1).toString();
             tanggallapor = tanggallapor.substring(0,10);
@@ -672,6 +696,7 @@ public class Form_Laporan extends javax.swing.JFrame {
 
     private void btn_refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_refreshActionPerformed
         // TODO add your handling code here:
+        chcksearch = false;
         loadDgv();
         cb_diskon.setSelectedIndex(0);
         tb_karyawan.setText("");
@@ -714,8 +739,25 @@ public class Form_Laporan extends javax.swing.JFrame {
                 "║              C O M P U F Y              ║\n" +
                 "║                                         ║\n" +
                 "╠═════════════════════════════════════════╣\n" +
-                "║               LAPORAN STOK              ║\n"
+                "║               LAPORAN STOK              ║\n" +
+                "║                  PERIODE                ║\n"
                 ;
+        String tgltransawal;
+        String tgltransakhir;
+        if (chcksearch == true){
+            
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                tgltransawal = formatter.format(dp_tanggal.getDate());
+                tgltransakhir = formatter.format(dp_tanggal1.getDate());;
+                simpan1 += "║          "+tgltransawal+" - "+tgltransakhir+"        ║\n";
+            
+            
+            
+            
+        }
+        else{
+            simpan1 += "║                   SEMUA                 ║\n";
+        }
         for (int i = 0; i<tbl.getRowCount();i++){
             simpan1 += "║   -----------------------------------   ║\n";
             String nomorrnota = tb_Htrans.getModel().getValueAt(i, 0).toString();

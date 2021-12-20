@@ -4,27 +4,8 @@
 ║                                         ║
 ╠═════════════════════════════════════════╣
 ║            LAPORAN TRANSAKSI            ║
-║   -----------------------------------   ║
-║   NOTA202110130001                      ║
-║     Tanggal Transaksi: 2021-10-13       ║
-║     Kode Karyawan    : LUGE0001         ║
-║     Promo            : BOLEHBELI        ║
-║     Potongan Promo   : Rp 50,000        ║
-║     Total Transaksi  : Rp 268,000       ║
-║   -----------------------------------   ║
-║   NOTA202110210001                      ║
-║     Tanggal Transaksi: 2021-10-21       ║
-║     Kode Karyawan    : WAIV0001         ║
-║     Promo            : BANYAKDISKON     ║
-║     Potongan Promo   : Rp 100,000       ║
-║     Total Transaksi  : Rp 625,000       ║
-║   -----------------------------------   ║
-║   NOTA202110300001                      ║
-║     Tanggal Transaksi: 2021-10-30       ║
-║     Kode Karyawan    : LUGE0001         ║
-║     Promo            : BANYAKDISKON     ║
-║     Potongan Promo   : Rp 100,000       ║
-║     Total Transaksi  : Rp 669,000       ║
+║                  PERIODE                ║
+║          2021-11-01 - 2021-12-20        ║
 ║   -----------------------------------   ║
 ║   NOTA202111090001                      ║
 ║     Tanggal Transaksi: 2021-11-09       ║
@@ -62,5 +43,5 @@
 ║     Total Transaksi  : Rp 100,000       ║
 ║   -----------------------------------   ║
 ║                                         ║
-║                Grand Total: Rp 6,211,000║
+║                Grand Total: Rp 4,649,000║
 ╚═════════════════════════════════════════╝
