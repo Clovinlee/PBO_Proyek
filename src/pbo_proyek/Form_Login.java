@@ -395,7 +395,7 @@ public class Form_Login extends javax.swing.JFrame {
                 this.setVisible(false);
                 resetForm();
             }else{
-                JOptionPane.showMessageDialog(null, "Insufficient Privileges. Hanya untuk Manajer / Inventaris!", "Error Login", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Insufficient Privileges. Hanya untuk Manajer / Kasir!", "Error Login", JOptionPane.ERROR_MESSAGE);
             }
             
         }
