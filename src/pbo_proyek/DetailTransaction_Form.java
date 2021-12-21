@@ -358,7 +358,7 @@ public class DetailTransaction_Form extends javax.swing.JFrame {
             cl.setVerticalAlignment(Element.ALIGN_MIDDLE);
             table.addCell(cl);
             
-            cl = new PdfPCell(new Phrase(kode.substring(0,3)+"********"+kode.substring(12, 15)));
+            cl = new PdfPCell(new Phrase(kode.substring(0,4)+"********"+kode.substring(12, 16)));
             cl.setHorizontalAlignment(Element.ALIGN_CENTER);
             table.addCell(cl);
             
