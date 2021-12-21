@@ -49,7 +49,6 @@ public class Form_Laporan extends javax.swing.JFrame {
         initComponents();
         styleDgv();
         loadDgv();
-        chcksearch = false;
     }
     public JPanel getPl() {
         return pl;
@@ -95,7 +94,6 @@ public class Form_Laporan extends javax.swing.JFrame {
     ArrayList<String[]> listsemuakategori;
     int selectedidx = -1;
     int granddtotal ;
-    boolean chcksearch;
     public void loadDgv(){
         granddtotal = 0;
         listHtrans = DB.query("SELECT * FROM h_trans");
@@ -163,7 +161,6 @@ public class Form_Laporan extends javax.swing.JFrame {
     }
     
     public void search(){
-        chcksearch = true;
         granddtotal = 0;
         tbl = new DefaultTableModel(new Object[] {"Nomor Nota","Tanggal Transaksi","Promo","Kode Karyawan","Grand Total"}, 0);
         tb_Htrans.setDefaultEditor(Object.class, null);
@@ -683,7 +680,11 @@ public class Form_Laporan extends javax.swing.JFrame {
             p_temp.setAlignment(Element.ALIGN_CENTER);
             doc.add(p_temp);
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-            p_temp = new Paragraph(sdf.format(dp_tanggal.getDate()) +" - "+ sdf.format(dp_tanggal1.getDate()),myFont(12, Font.BOLD));
+            if(searched == true){
+                p_temp = new Paragraph(sdf.format(dp_tanggal.getDate()) +" - "+ sdf.format(dp_tanggal1.getDate()),myFont(12, Font.BOLD));
+            }else{
+                p_temp = new Paragraph("Semua",myFont(12,Font.BOLD));
+            }
             p_temp.setAlignment(Element.ALIGN_CENTER);
             doc.add(p_temp);
             doc.add(new Paragraph(" "));
@@ -745,7 +746,7 @@ public class Form_Laporan extends javax.swing.JFrame {
 
     private void btn_refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_refreshActionPerformed
         // TODO add your handling code here:
-        chcksearch = false;
+        searched = false;
         loadDgv();
         cb_diskon.setSelectedIndex(0);
         tb_karyawan.setText("");
@@ -776,7 +777,9 @@ public class Form_Laporan extends javax.swing.JFrame {
         // TODO add your handling code here:
         btn_export1.setBackground(Palette.getTableDark1());
     }//GEN-LAST:event_btn_export1MouseExited
-
+    
+    boolean searched = false;
+    
     private void btn_export1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_export1ActionPerformed
         // TODO add your handling code here:
         ArrayList<String> namabrg = new ArrayList<>();
@@ -798,7 +801,11 @@ public class Form_Laporan extends javax.swing.JFrame {
             p_temp.setAlignment(Element.ALIGN_CENTER);
             doc.add(p_temp);
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-            p_temp = new Paragraph(sdf.format(dp_tanggal.getDate()) +" - "+ sdf.format(dp_tanggal1.getDate()),myFont(12, Font.BOLD));
+            if(searched == true){
+                p_temp = new Paragraph(sdf.format(dp_tanggal.getDate()) +" - "+ sdf.format(dp_tanggal1.getDate()),myFont(12, Font.BOLD));
+            }else{
+                p_temp = new Paragraph("Semua",myFont(12,Font.BOLD));
+            }
             p_temp.setAlignment(Element.ALIGN_CENTER);
             doc.add(p_temp);
             doc.add(new Paragraph(" "));
@@ -894,6 +901,7 @@ public class Form_Laporan extends javax.swing.JFrame {
     private void btn_findActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_findActionPerformed
         // TODO add your handling code here:
         search();
+        searched = true;
         // CALL SEARCH EVERY THIS BUTTON PRESSED
     }//GEN-LAST:event_btn_findActionPerformed
 
@@ -964,7 +972,11 @@ public class Form_Laporan extends javax.swing.JFrame {
             p_temp.setAlignment(Element.ALIGN_CENTER);
             doc.add(p_temp);
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-            p_temp = new Paragraph(sdf.format(dp_tanggal.getDate()) +" - "+ sdf.format(dp_tanggal1.getDate()),myFont(12, Font.BOLD));
+            if(searched == true){
+                p_temp = new Paragraph(sdf.format(dp_tanggal.getDate()) +" - "+ sdf.format(dp_tanggal1.getDate()),myFont(12, Font.BOLD));
+            }else{
+                p_temp = new Paragraph("Semua",myFont(12,Font.BOLD));
+            }
             p_temp.setAlignment(Element.ALIGN_CENTER);
             doc.add(p_temp);
             doc.add(new Paragraph(" "));
