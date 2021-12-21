@@ -129,7 +129,7 @@ public class Form_Laporan extends javax.swing.JFrame {
                 }
             }
             granddtotal += Integer.parseInt(s[2]);
-            tbl.addRow(new Object[] {s[0],s[1],diskon,karyawan,s[2]});
+            tbl.addRow(new Object[] {s[0],s[1],diskon,karyawan,"Rp"+String.format("%,d",Integer.parseInt(s[2]))});
             diskon = "-";
             ctr++;
         }
@@ -189,7 +189,7 @@ public class Form_Laporan extends javax.swing.JFrame {
                 cbpilih = cb_diskon.getSelectedItem().toString();
             }
             if(validSearch(tb_nota.getText().toLowerCase(),tb_karyawan.getText().toLowerCase(),dp_tanggal.getDate(),dp_tanggal1.getDate(),karyawan,s,cbpilih,diskon)){
-                tbl.addRow(new Object[] {s[0],s[1],diskon,karyawan,s[2]});
+                tbl.addRow(new Object[] {s[0],s[1],diskon,karyawan,"Rp"+String.format("%,d",Integer.parseInt(s[2]))});
                 
                 granddtotal += Integer.parseInt(s[2]);
             }
@@ -926,7 +926,7 @@ public class Form_Laporan extends javax.swing.JFrame {
                             kode = j[1];
                         }
                     }
-                    tb2.addRow(new Object[] {kode,barang,harga,s[4]});
+                    tb2.addRow(new Object[] {kode,barang,"Rp"+String.format("%,d",Integer.parseInt(harga)),"Rp"+String.format("%,d",Integer.parseInt(s[4]))});
                 }
                 
             }

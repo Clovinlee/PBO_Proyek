@@ -82,7 +82,7 @@ public class Form_Stock extends javax.swing.JFrame {
                     jenis = j[1];
                 }
             }
-            tbl.addRow(new Object[] {ctr,s[1],s[2],s[3],s[4],jenis});
+            tbl.addRow(new Object[] {ctr,s[1],s[2],s[3],"Rp"+String.format("%,d", Integer.parseInt(s[4])),jenis});
             ctr++;
         }
         dgv_barang.setModel(tbl);
@@ -103,7 +103,7 @@ public class Form_Stock extends javax.swing.JFrame {
                 }
             }
             if(validSearch(tb_kode.getText(),tb_namabarang.getText(),tb_stok1.getText(),tb_stok2.getText(),tb_harga1.getText(),tb_harga2.getText(),cb_jenisbarang.getSelectedItem().toString(),stok,jns)){
-                tbl.addRow(new Object[] {ctr,stok[1],stok[2],stok[3],stok[4],jns});
+                tbl.addRow(new Object[] {ctr,stok[1],stok[2],stok[3],"Rp"+String.format("%,d", Integer.parseInt(stok[4])),jns});
                 ctr++;
             }
         }
