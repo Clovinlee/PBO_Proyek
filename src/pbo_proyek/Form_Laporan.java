@@ -5,15 +5,12 @@
 */
 package pbo_proyek;
 
-import javax.swing.JPanel;
-import ExternalCode.JTableEdit;
+import com.itextpdf.text.BaseColor;
 import java.awt.Color;
 import java.awt.Font;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.BorderFactory;
@@ -23,11 +20,17 @@ import javax.swing.plaf.ColorUIResource;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.text.SimpleDateFormat;
-import java.lang.*;
-import java.text.ParseException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.Rectangle;
+import java.io.FileOutputStream;
+
 /**
  *
  * @author chris
@@ -137,15 +140,15 @@ public class Form_Laporan extends javax.swing.JFrame {
         lbl_grandtotal1.setText("Total Transaksi : "+String.valueOf(tbl.getRowCount()));
         String strquer = "";
         strquer += "SELECT jenis_barang.nama_jenis, NVL(SUM(d_trans.qty),0) as jml\n" +
-                    "FROM jenis_barang\n" +
-                    "LEFT JOIN barang\n" +
-                    "ON barang.fk_jenis_barang = jenis_barang.id\n" +
-                    "LEFT JOIN d_trans\n" +
-                    "ON d_trans.fk_barang = barang.id\n" +
-                    "LEFT JOIN h_trans\n" +
-                    "ON h_trans.nomor_nota = d_trans.nomor_nota\n" ;
+                "FROM jenis_barang\n" +
+                "LEFT JOIN barang\n" +
+                "ON barang.fk_jenis_barang = jenis_barang.id\n" +
+                "LEFT JOIN d_trans\n" +
+                "ON d_trans.fk_barang = barang.id\n" +
+                "LEFT JOIN h_trans\n" +
+                "ON h_trans.nomor_nota = d_trans.nomor_nota\n" ;
         strquer +=  "WHERE h_trans.nomor_nota IN (" ;
-                    
+        
         for (int g = 0; g < tbl.getRowCount();g++){
             if (g != tbl.getRowCount()-1){
                 strquer += "'"+tbl.getValueAt(g, 0)+"',";
@@ -155,7 +158,7 @@ public class Form_Laporan extends javax.swing.JFrame {
             }
         }
         strquer += "GROUP BY jenis_barang.nama_jenis\n" +
-                   "ORDER BY 2 DESC";
+                "ORDER BY 2 DESC";
         listkategori = DB.query(strquer);
     }
     
@@ -200,15 +203,15 @@ public class Form_Laporan extends javax.swing.JFrame {
         lbl_grandtotal1.setText("Total Transaksi : "+String.valueOf(tbl.getRowCount()));
         String strquer = "";
         strquer += "SELECT jenis_barang.nama_jenis, NVL(SUM(d_trans.qty),0) as jml\n" +
-                    "FROM jenis_barang\n" +
-                    "LEFT JOIN barang\n" +
-                    "ON barang.fk_jenis_barang = jenis_barang.id\n" +
-                    "LEFT JOIN d_trans\n" +
-                    "ON d_trans.fk_barang = barang.id\n" +
-                    "LEFT JOIN h_trans\n" +
-                    "ON h_trans.nomor_nota = d_trans.nomor_nota\n" ;
+                "FROM jenis_barang\n" +
+                "LEFT JOIN barang\n" +
+                "ON barang.fk_jenis_barang = jenis_barang.id\n" +
+                "LEFT JOIN d_trans\n" +
+                "ON d_trans.fk_barang = barang.id\n" +
+                "LEFT JOIN h_trans\n" +
+                "ON h_trans.nomor_nota = d_trans.nomor_nota\n" ;
         strquer +=  "WHERE h_trans.nomor_nota IN (" ;
-                    
+        
         for (int g = 0; g < tbl.getRowCount();g++){
             if (g != tbl.getRowCount()-1){
                 strquer += "'"+tbl.getValueAt(g, 0)+"',";
@@ -218,7 +221,7 @@ public class Form_Laporan extends javax.swing.JFrame {
             }
         }
         strquer += "GROUP BY jenis_barang.nama_jenis\n" +
-                   "ORDER BY 2 DESC";
+                "ORDER BY 2 DESC";
         listkategori = DB.query(strquer);
         
     }
@@ -656,110 +659,77 @@ public class Form_Laporan extends javax.swing.JFrame {
         // TODO add your handling code here:
         btn_export.setBackground(Palette.getTableDark1());
     }//GEN-LAST:event_btn_exportMouseExited
-
+    
+    public com.itextpdf.text.Font myFont(float fontSize, int type){
+        com.itextpdf.text.Font df = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, fontSize, type);
+        return df;
+    }
+    
     private void btn_exportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_exportActionPerformed
         // TODO add your handling code here:
-        String simpan = "";
-        simpan +=
-                "╔═════════════════════════════════════════╗\n" +
-                "║                                         ║\n" +
-                "║              C O M P U F Y              ║\n" +
-                "║                                         ║\n" +
-                "╠═════════════════════════════════════════╣\n" +
-                "║            LAPORAN TRANSAKSI            ║\n" +
-                "║                  PERIODE                ║\n" 
-                
-                ;
-        String tgltransawal;
-        String tgltransakhir;
-        if (chcksearch == true){
-            
-                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-                tgltransawal = formatter.format(dp_tanggal.getDate());
-                tgltransakhir = formatter.format(dp_tanggal1.getDate());;
-                simpan += "║          "+tgltransawal+" - "+tgltransakhir+"        ║\n";
-            
-            
-            
-            
-        }
-        else{
-            simpan += "║                   SEMUA                 ║\n";
-        }
-        simpan += "║   -----------------------------------   ║\n";
-        for (int i = 0;i < tbl.getRowCount();i++){
-            String tanggallapor = tb_Htrans.getModel().getValueAt(i, 1).toString();
-            tanggallapor = tanggallapor.substring(0,10);
-            String karyawanlapor = tb_Htrans.getModel().getValueAt(i, 3).toString();
-            String totallapor = tb_Htrans.getModel().getValueAt(i, 4).toString();
-            String nomorrnota = tb_Htrans.getModel().getValueAt(i, 0).toString();
-            String diskonlapor = tb_Htrans.getModel().getValueAt(i, 2).toString();
-            if (diskonlapor.equals("-")){
-                diskonlapor = "-";
-            }
-            String hargadiskon = "";
-            if (!diskonlapor.equals("-")){
-                for (String[] l : listdiskon){
-                    if (diskonlapor.equalsIgnoreCase(l[1])){
-                        hargadiskon = l[2];
-                    }
-                }
-            }
-            simpan += "║   "+nomorrnota+"                      ║\n";
-            simpan += "║     Tanggal Transaksi: "+tanggallapor+"       ║\n";
-            simpan += "║     Kode Karyawan    : "+karyawanlapor+"         ║\n";
-            simpan += "║     Promo            : "+diskonlapor;
-            for (int n = 0 ; n < 17-diskonlapor.chars().count();n++){
-                simpan += " ";
-            }
-            simpan += "║\n";
-            if (diskonlapor.equals("-")){
-                simpan += "║     Potongan Promo   : Rp 0             ║\n";
-            }
-            else{
-                int angkadiskon = Integer.parseInt(hargadiskon);
-                hargadiskon = String.format("%,d", angkadiskon);
-                simpan += "║     Potongan Promo   : Rp "+hargadiskon;
-                for(int o = 0; o < 14-hargadiskon.chars().count();o++){
-                    simpan += " ";
-                }
-                simpan += "║\n";
-            }
-            int angkalapor = Integer.parseInt(totallapor);
-            totallapor = String.format("%,d", angkalapor);
-            simpan += "║     Total Transaksi  : Rp "+totallapor;
-            for (int j = 0;j< 14-totallapor.chars().count();j++){
-                simpan+= " ";
-            }
-            simpan += "║\n";
-            simpan += "║   -----------------------------------   ║\n";
-            
-        }
-        simpan += "║                                         ║\n";
-        simpan += "║";
-        int angkagrand = Integer.parseInt(lbl_grandtotal.getText().substring(16));
-        String tulisangrand = String.format("%,d", angkagrand);
-        for (int m = 0; m<25-tulisangrand.chars().count();m++){
-            simpan += " ";
-        }
-        
-        simpan += "Grand Total: Rp "+ tulisangrand+"║\n";
-        simpan += "╚═════════════════════════════════════════╝";
-        
         try {
             File f = new File(System.getProperty("user.dir")+"/Laporan/");
             f.mkdir();
-            FileWriter fout = new FileWriter(System.getProperty("user.dir")+"/Laporan/"+"laporan_transaksi.txt");
-            BufferedWriter bw = new BufferedWriter(fout);
+            Document doc = new Document();
+            PdfWriter.getInstance(doc, new FileOutputStream(System.getProperty("user.dir")+"/Laporan/"+"laporan_penjualan.pdf"));
+            doc.open();
+            Paragraph p_judul = new Paragraph("COMPUFY", new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 26, Font.BOLD));
+            p_judul.setAlignment(Element.ALIGN_CENTER);
+            doc.add(p_judul);
+            Paragraph p_subjudul = new Paragraph("Laporan Penjualan", new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 20, Font.BOLD));
+            p_subjudul.setAlignment(Element.ALIGN_CENTER);
+            doc.add(p_subjudul);
+            Paragraph p_temp = new Paragraph("PERIODE",myFont(12, Font.BOLD));
+            p_temp.setAlignment(Element.ALIGN_CENTER);
+            doc.add(p_temp);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            p_temp = new Paragraph(sdf.format(dp_tanggal.getDate()) +" - "+ sdf.format(dp_tanggal1.getDate()),myFont(12, Font.BOLD));
+            p_temp.setAlignment(Element.ALIGN_CENTER);
+            doc.add(p_temp);
+            doc.add(new Paragraph(" "));
+            doc.add(new Paragraph(" "));
             
-            bw.write(simpan);
-            bw.close();
-            fout.close();
-            JOptionPane.showMessageDialog(null, "Sukses Export Laporan!","Sukses",JOptionPane.INFORMATION_MESSAGE);
-        } catch (IOException e) {
-            System.out.println("Folder not found!");
-        }catch (Exception e){
-            JOptionPane.showMessageDialog(null, "Error dalam pencetakan laporan!!","Error",JOptionPane.ERROR_MESSAGE);
+            PdfPTable table = new PdfPTable(2);
+            PdfPCell cl;
+            
+            int grandTotal = 0;
+            
+            for(int i = 0; i < tb_Htrans.getRowCount(); i++){
+                String nomornota = tb_Htrans.getModel().getValueAt(i, 0).toString();
+                cl = new PdfPCell(new Phrase(nomornota,myFont(12, Font.BOLD)));
+                cl.setColspan(2);
+                cl.setBackgroundColor(BaseColor.YELLOW);
+                cl.setPaddingBottom(5);
+                
+                table.addCell(cl);
+                table.setHorizontalAlignment(Element.ALIGN_CENTER);
+                ArrayList<String[]> hquery = DB.query("select h.nomor_nota, h.tanggal, h.grand_total, NVL(d.nama,'-') AS namapotongan, NVL(d.potongan,0) AS potongan, h.grand_total, h.fk_karyawan from h_trans h LEFT JOIN diskon d ON h.fk_diskon = d.id where h.nomor_nota = '"+nomornota+"'ORDER BY h.tanggal ASC");
+                for (String[] s : hquery) {
+                    table.addCell("Tanggal Transaksi");
+                    table.addCell(s[1]);
+                    table.addCell("Potongan");
+                    table.addCell("Rp"+String.format("%,d", Integer.parseInt(s[4])));
+                    table.addCell(new Phrase("Grand Total", myFont(12, Font.BOLD)));
+                    table.addCell(new Phrase("Rp"+String.format("%,d", Integer.parseInt(s[5])), myFont(12, Font.BOLD)));
+                    grandTotal += Integer.parseInt(s[5]);
+                }
+                if(i != tb_Htrans.getRowCount()-1){
+                    cl = new PdfPCell(new Phrase(" "));
+                    cl.setBorder(Rectangle.OUT_TOP);
+                    cl.setColspan(2);
+                    table.addCell(cl);
+                }
+            }
+            
+            doc.add(table);
+            
+            doc.add(new Paragraph(" "));
+            doc.add(new Paragraph("Grand Total : Rp"+String.format("%,d",grandTotal),myFont(16, Font.BOLD)));
+            
+            doc.close();
+            JOptionPane.showMessageDialog(null, "Sukses export laporan!");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }//GEN-LAST:event_btn_exportActionPerformed
 
@@ -809,212 +779,105 @@ public class Form_Laporan extends javax.swing.JFrame {
 
     private void btn_export1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_export1ActionPerformed
         // TODO add your handling code here:
-        String simpan1 = "";
-        
-        ArrayList<String[]> listbarangtesting;
-        
-        simpan1 += "╔═════════════════════════════════════════╗\n" +
-                "║                                         ║\n" +
-                "║              C O M P U F Y              ║\n" +
-                "║                                         ║\n" +
-                "╠═════════════════════════════════════════╣\n" +
-                "║               LAPORAN STOK              ║\n" +
-                "║                  PERIODE                ║\n"
-                ;
-        String tgltransawal;
-        String tgltransakhir;
-        if (chcksearch == true){
-            
-                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-                tgltransawal = formatter.format(dp_tanggal.getDate());
-                tgltransakhir = formatter.format(dp_tanggal1.getDate());;
-                simpan1 += "║          "+tgltransawal+" - "+tgltransakhir+"        ║\n";
-            
-            
-            
-            
-        }
-        else{
-            simpan1 += "║                   SEMUA                 ║\n";
-        }
-        for (int i = 0; i<tbl.getRowCount();i++){
-            simpan1 += "║   -----------------------------------   ║\n";
-            String nomorrnota = tb_Htrans.getModel().getValueAt(i, 0).toString();
-            simpan1 += "║   "+nomorrnota+"                      ║\n";
-            for (String[] j : listDtrans){
-                int ctrspasi = 0;
-                if (j[0].equals(nomorrnota)){
-                    
-                    for (String[] k: listbarang){
-                        if (k[0].equals(j[1])){
-                            
-                            if (ctrspasi != 0){
-                                simpan1 += "║                                         ║\n";
-                            }
-                            String namabarng = k[2];
-                            
-                            for (int l = 0; l<Math.ceil(namabarng.chars().count()/17)+1;l++){
-                                
-                                if (l != Math.ceil(namabarng.chars().count()/17)){
-                                    if (l == 0){
-                                        simpan1+= "║     "+namabarng.substring(0,17)+"                   ║\n";
-                                    }
-                                    else{
-                                        simpan1 += "║     "+namabarng.substring((17*(l)),((17*(l+1))))+"                   ║\n";
-                                    }
-                                }
-                                else{
-                                    simpan1+= "║     "+namabarng.substring(17*(l));
-                                    for (int m = 0; m < 17-namabarng.substring(17*(l)).chars().count();m++){
-                                        simpan1+= " ";
-                                    }
-                                    simpan1 += "  ";
-                                    for (int n = 0; n < 3-j[2].chars().count();n++){
-                                        simpan1+= " ";
-                                    }
-                                    simpan1 += j[2]+"  "+k[1]+"    ║\n";
-                                    
-                                }
-                            }
-                            ctrspasi += 1;
-                        }
-                    }
-                    
-                    
-                }
-            }
-            
-        }
-        simpan1 += "║   -----------------------------------   ║\n";
-        simpan1 += "║   TOTAL PENGELUARAN BARANG              ║\n";
-        simpan1 += "║   -----------------------------------   ║\n";
-//        listbarangtesting = DB.query("SELECT b.nama , SUM(dt.qty) FROM barang b , D_Trans DT , H_Trans HT WHERE b.id = DT.fk_barang AND DT.nomor_nota = ");
-        int totalbarang = 0;
-        int ctrspasi = 0;
-        ArrayJumlahBarang.clear();
-        ArrayNamaBarang.clear();
-        ArrayNamaKode.clear();
-        for (String[] o : listbarang){
-            int simpanbarang = 0;
-            for (String[] p : listDtrans){
-                for (int q = 0; q < tbl.getRowCount();q++){
-                    String nomorrnota = tb_Htrans.getModel().getValueAt(q, 0).toString();
-                    if (nomorrnota.equals(p[0])){
-                        if (p[1].equals(o[0])){
-                            simpanbarang += Integer.parseInt(p[2]);
-                            totalbarang += Integer.parseInt(p[2]);
-                        }
-                    }
-                }
-                
-                
-            }
-            
-            
-            
-            String namabarng = o[2];
-            boolean chckbarang = false;
-            for (String[] v : listDtrans){
-                for (int e = 0; e<tbl.getRowCount();e++){
-                    String nomorrnota = tb_Htrans.getModel().getValueAt(e, 0).toString();
-                    if(v[0].equals(nomorrnota)){
-                        if (o[0].equals(v[1])){
-                            chckbarang = true;
-                        }
-                    }
-                }
-                
-            }
-            if (chckbarang == true){
-                ArrayJumlahBarang.add(simpanbarang);
-                ArrayNamaBarang.add(namabarng);
-                ArrayNamaKode.add(o[1]);
-                
-            }
-            
-            
-        }
-        String namabarng = "";
-        for (int x = ArrayJumlahBarang.size()-1; x >= 0; x--){
-                    for (int y = ArrayJumlahBarang.size()-1; y > ArrayJumlahBarang.size()-1 - x; y--){
-                        if (ArrayJumlahBarang.get(y)> ArrayJumlahBarang.get(y-1)){
-                            int tempswapangka = ArrayJumlahBarang.get(y);
-                            String tempswapkata = ArrayNamaBarang.get(y);
-                            String tempswapkode = ArrayNamaKode.get(y);
-                            ArrayJumlahBarang.remove(y);
-                            ArrayJumlahBarang.add(y,ArrayJumlahBarang.get(y-1));
-                            ArrayNamaBarang.remove(y);
-                            ArrayNamaBarang.add(y,ArrayNamaBarang.get(y-1));
-                            ArrayNamaKode.remove(y);
-                            ArrayNamaKode.add(y,ArrayNamaKode.get(y-1));
-                            
-                            
-                            ArrayJumlahBarang.remove(y-1);
-                            ArrayJumlahBarang.add(y-1,tempswapangka);
-                            ArrayNamaBarang.remove(y-1);
-                            ArrayNamaBarang.add(y-1,tempswapkata);
-                            ArrayNamaKode.remove(y-1);
-                            ArrayNamaKode.add(y-1,tempswapkode);
-                            
-                            
-                        }
-                    }
-                }
-                for (int f = 0; f < ArrayJumlahBarang.size();f++){
-                namabarng = ArrayNamaBarang.get(f);
-                if (ctrspasi != 0){
-                    simpan1 += "║                                         ║\n";
-                }
-                ctrspasi += 1;
-                
-                for (int r = 0; r<Math.ceil(namabarng.chars().count()/17)+1;r++){
-                    
-                    if (r != Math.ceil(namabarng.chars().count()/17)){
-                        if (r == 0){
-                            simpan1+= "║     "+namabarng.substring(0,17)+"                   ║\n";
-                        }
-                        else{
-                            simpan1+= "║     "+namabarng.substring(17*(r),((17*(r+1))))+"                   ║\n";
-                        }
-                        
-                    }
-                    else{
-                        simpan1+= "║     "+namabarng.substring(17*(r));
-                        for (int m = 0; m < 17-namabarng.substring(17*(r)).chars().count();m++){
-                            simpan1+= " ";
-                        }
-                        simpan1 += "  ";
-                        for (int n = 0; n < 3-String.valueOf(ArrayJumlahBarang.get(f)).chars().count();n++){
-                            simpan1+= " ";
-                        }
-                        simpan1 += ArrayJumlahBarang.get(f)+"  "+ArrayNamaKode.get(f)+"    ║\n";
-                        
-                    }
-                    
-                }
-//                simpan1 += "║                                         ║\n";
-                }
-        simpan1 += "║   -----------------------------------   ║\n";
-        simpan1 += "║                     TOTAL BARANG ";
-        for (int a = 0; a < 4-String.valueOf(totalbarang).chars().count();a++){
-            simpan1 += " ";
-        }
-        simpan1 += String.valueOf(totalbarang)+"   ║\n";
-        simpan1 += "║                                         ║\n";
-        simpan1 += "╚═════════════════════════════════════════╝";
+        ArrayList<String> namabrg = new ArrayList<>();
+        ArrayList<Integer> jmlbrg = new ArrayList<>();
         
         try {
             File f = new File(System.getProperty("user.dir")+"/Laporan/");
             f.mkdir();
-            FileWriter fout = new FileWriter(System.getProperty("user.dir")+"/Laporan/"+"laporan_stok.txt");
-            BufferedWriter bw = new BufferedWriter(fout);
+            Document doc = new Document();
+            PdfWriter.getInstance(doc, new FileOutputStream(System.getProperty("user.dir")+"/Laporan/"+"laporan_stok.pdf"));
+            doc.open();
+            Paragraph p_judul = new Paragraph("COMPUFY", new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 26, Font.BOLD));
+            p_judul.setAlignment(Element.ALIGN_CENTER);
+            doc.add(p_judul);
+            Paragraph p_subjudul = new Paragraph("Laporan Stok Penjualan", new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 20, Font.BOLD));
+            p_subjudul.setAlignment(Element.ALIGN_CENTER);
+            doc.add(p_subjudul);
+            Paragraph p_temp = new Paragraph("PERIODE",myFont(12,Font.BOLD));
+            p_temp.setAlignment(Element.ALIGN_CENTER);
+            doc.add(p_temp);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            p_temp = new Paragraph(sdf.format(dp_tanggal.getDate()) +" - "+ sdf.format(dp_tanggal1.getDate()),myFont(12, Font.BOLD));
+            p_temp.setAlignment(Element.ALIGN_CENTER);
+            doc.add(p_temp);
+            doc.add(new Paragraph(" "));
+            doc.add(new Paragraph(" "));
             
-            bw.write(simpan1);
-            bw.close();
-            fout.close();
+            PdfPTable table = new PdfPTable(2);
+            PdfPCell cl;
             
-            JOptionPane.showMessageDialog(null, "Sukses Export Laporan!","Sukses",JOptionPane.INFORMATION_MESSAGE);
+            int grandTotal = 0;
+            
+            for(int i = 0; i < tb_Htrans.getRowCount(); i++){
+                String nomornota = tb_Htrans.getModel().getValueAt(i, 0).toString();
+                cl = new PdfPCell(new Phrase(nomornota,myFont(12, Font.BOLD)));
+                cl.setColspan(2);
+                cl.setBackgroundColor(BaseColor.YELLOW);
+                cl.setPaddingBottom(5);
+                
+                table.addCell(cl);
+                table.setHorizontalAlignment(Element.ALIGN_CENTER);
+                ArrayList<String[]> dquery = DB.query("select d.nomor_nota, b.nama, d.qty, d.harga, d.subtotal from d_trans d join barang b on d.fk_barang = b.id WHERE d.nomor_nota = '"+nomornota+"' ORDER BY d.harga ASC");
+                table.addCell(new Phrase("Nama Barang",myFont(12, Font.BOLD)));
+                table.addCell(new Phrase("Qty",myFont(12, Font.BOLD)));
+                for (String[] s : dquery) {
+                    table.addCell(s[1]);
+                    table.addCell(s[2]);
+                    grandTotal += Integer.parseInt(s[2]);
+                    int idx = namabrg.indexOf(s[1]);
+                    if(idx == -1){
+                        namabrg.add(s[1]);
+                        jmlbrg.add(Integer.parseInt(s[2]));
+                    }else{
+                        jmlbrg.set(idx, jmlbrg.get(idx)+Integer.parseInt(s[2]));
+                    }
+                }
+                if(i != tb_Htrans.getRowCount()-1){
+                    cl = new PdfPCell(new Phrase(" "));
+                    cl.setBorder(Rectangle.OUT_TOP);
+                    cl.setColspan(2);
+                    table.addCell(cl);
+                }
+            }
+            
+            doc.add(table);
+            
+            for(int i = 0; i < jmlbrg.size(); i++){
+                for(int j = 0; j < jmlbrg.size()-1; j++){
+                    if(jmlbrg.get(i) > jmlbrg.get(j)){
+                        int temp = jmlbrg.get(i);
+                        jmlbrg.set(i, jmlbrg.get(j));
+                        jmlbrg.set(j, temp);
+                        
+                        String tempS = namabrg.get(i);
+                        namabrg.set(i, namabrg.get(j));
+                        namabrg.set(j, tempS);
+                    }
+                }
+            }
+            
+            doc.add(new Paragraph(" "));
+            table = new PdfPTable(2);
+            cl = new PdfPCell(new Phrase("Rekap Jumlah Penjualan Barang", myFont(16, Font.BOLD)));
+            cl.setColspan(2);
+            cl.setBackgroundColor(BaseColor.YELLOW);
+            cl.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cl.setPaddingBottom(5);
+            table.addCell(cl);
+            table.addCell(new Phrase("Nama Barang",myFont(12,Font.BOLD)));
+            table.addCell(new Phrase("Jumlah Barang",myFont(12,Font.BOLD)));
+            for(int i = 0; i < namabrg.size(); i++){
+                table.addCell(namabrg.get(i));
+                table.addCell(jmlbrg.get(i).toString());
+            }
+            table.addCell(new Phrase("Total Barang",myFont(12, Font.BOLD)));
+            table.addCell(new Phrase(String.valueOf(grandTotal),myFont(12,Font.BOLD)));
+            doc.add(table);
+            doc.close();
+            JOptionPane.showMessageDialog(null, "Sukses export laporan!");
         } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }//GEN-LAST:event_btn_export1ActionPerformed
 
@@ -1078,94 +941,109 @@ public class Form_Laporan extends javax.swing.JFrame {
 
     private void btn_export3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_export3ActionPerformed
         // TODO add your handling code here:
-        String simpan2 = "";
-        
-        simpan2 += "╔══════════════════════════════════╗\n"+
-                "║                                  ║\n"+
-                "║          C O M P U F Y           ║\n"+
-                "║                                  ║\n"+
-                "╠══════════════════════════════════╣\n"+
-                "║       LAPORAN JENIS BARANG       ║\n"+
-                "║   ---------------------------    ║\n"+
-                "║   | NAMA JENIS  | JUMLAH    |    ║\n";
-        int totalbarangkategori = 0;
-        for (String [] p : listkategori){
-            totalbarangkategori += Integer.parseInt(p[1]);
-            simpan2 += "║   |-------------------------|    ║\n";
-            for (int h = 0; h < Math.ceil(p[0].chars().count()/13)+1;h++){
-                if (h != Math.ceil(p[0].chars().count()/13)){
-                                    if (h == 0){
-                                        simpan2+= "║   |"+p[0].substring(0,13)+"|           |    ║\n";
-                                    }
-                                    else{
-                                        simpan2 += "║   |"+p[0].substring((13*(h)),((13*(h+1))))+"|           |    ║\n";
-                                    }
-                                }
-                else{
-                    simpan2 += "║   |"+p[0].substring(13*(h));
-                    for (int m = 0; m < 13-p[0].substring(13*(h)).chars().count();m++){
-                            simpan2+= " ";
-                        }
-                    simpan2 += "| ";
-                    for (int n = 0;n < 10-p[1].chars().count();n++){
-                        simpan2+= " ";
-                    }
-                    simpan2 += p[1]+"|    ║\n";
-                }
-            }
+        ArrayList<String> namajns = new ArrayList<>();
+        ArrayList<Integer> jmljns = new ArrayList<>();
+        ArrayList<String[]> qnama = DB.query("select nama_jenis from jenis_barang");
+        for (String[] s : qnama) {
+            namajns.add(s[0]);
+            jmljns.add(0);
         }
-        for (String[] x : listsemuakategori){
-            boolean chckadakategori = false;
-            for (String[] y : listkategori){
-                if (x[1].equals(y[0])){
-                    chckadakategori = true;
-                }
-            }
-            if (chckadakategori == false){
-                simpan2 += "║   |-------------------------|    ║\n";
-            for (int h = 0; h < Math.ceil(x[1].chars().count()/13)+1;h++){
-                if (h != Math.ceil(x[1].chars().count()/13)){
-                                    if (h == 0){
-                                        simpan2+= "║   |"+x[1].substring(0,13)+"|           |    ║\n";
-                                    }
-                                    else{
-                                        simpan2 += "║   |"+x[1].substring((13*(h)),((13*(h+1))))+"|           |    ║\n";
-                                    }
-                                }
-                else{
-                    simpan2 += "║   |"+x[1].substring(13*(h));
-                    for (int m = 0; m < 13-x[1].substring(13*(h)).chars().count();m++){
-                            simpan2+= " ";
-                        }
-                    simpan2 += "| ";
-                    for (int n = 0;n < 9;n++){
-                        simpan2+= " ";
-                    }
-                    simpan2 += "0|    ║\n";
-                }
-            }
-            }
-        }
-        simpan2 += "║   |-------------------------|    ║\n";
-        simpan2 += "║         Total Barang : ";
-        for (int q = 0 ; q < 9-String.valueOf(totalbarangkategori).chars().count(); q++){
-            simpan2+= " ";
-        }
-        simpan2 += String.valueOf(totalbarangkategori)+" ║\n";
-        simpan2 += "╚══════════════════════════════════╝";
-        
         try {
             File f = new File(System.getProperty("user.dir")+"/Laporan/");
             f.mkdir();
-            FileWriter fout = new FileWriter(System.getProperty("user.dir")+"/Laporan/"+"laporan_kategori.txt");
-            BufferedWriter bw = new BufferedWriter(fout);
+            Document doc = new Document();
+            PdfWriter.getInstance(doc, new FileOutputStream(System.getProperty("user.dir")+"/Laporan/"+"laporan_kategori.pdf"));
+            doc.open();
+            Paragraph p_judul = new Paragraph("COMPUFY", new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 26, Font.BOLD));
+            p_judul.setAlignment(Element.ALIGN_CENTER);
+            doc.add(p_judul);
+            Paragraph p_subjudul = new Paragraph("Laporan Stok Penjualan per Kategori", new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, 20, Font.BOLD));
+            p_subjudul.setAlignment(Element.ALIGN_CENTER);
+            doc.add(p_subjudul);
+            Paragraph p_temp = new Paragraph("PERIODE",myFont(12,Font.BOLD));
+            p_temp.setAlignment(Element.ALIGN_CENTER);
+            doc.add(p_temp);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            p_temp = new Paragraph(sdf.format(dp_tanggal.getDate()) +" - "+ sdf.format(dp_tanggal1.getDate()),myFont(12, Font.BOLD));
+            p_temp.setAlignment(Element.ALIGN_CENTER);
+            doc.add(p_temp);
+            doc.add(new Paragraph(" "));
+            doc.add(new Paragraph(" "));
             
-            bw.write(simpan2);
-            bw.close();
-            fout.close();
+            PdfPTable table = new PdfPTable(2);
+            PdfPCell cl;
             
-            JOptionPane.showMessageDialog(null, "Sukses Export Laporan!","Sukses",JOptionPane.INFORMATION_MESSAGE);
+            int grandTotal = 0;
+            
+            for(int i = 0; i < tb_Htrans.getRowCount(); i++){
+                String nomornota = tb_Htrans.getModel().getValueAt(i, 0).toString();
+                cl = new PdfPCell(new Phrase(nomornota,myFont(12, Font.BOLD)));
+                cl.setColspan(2);
+                cl.setBackgroundColor(BaseColor.YELLOW);
+                cl.setPaddingBottom(5);
+                
+                table.addCell(cl);
+                table.setHorizontalAlignment(Element.ALIGN_CENTER);
+                ArrayList<String[]> dquery = DB.query("select j.nama_jenis, NVL(sum(d.qty),0) as jml from d_trans d right join barang b on b.id = d.fk_barang right join jenis_barang j on j.id = b.fk_jenis_barang where d.nomor_nota = '"+nomornota+"' group by j.nama_jenis order by 2 asc");
+                table.addCell(new Phrase("Nama Jenis",myFont(12, Font.BOLD)));
+                table.addCell(new Phrase("Qty",myFont(12, Font.BOLD)));
+                for (String[] s : dquery) {
+                    table.addCell(s[0]);
+                    table.addCell(s[1]);
+                    grandTotal += Integer.parseInt(s[1]);
+                    int idx = namajns.indexOf(s[0]);
+                    if(idx == -1){
+                        namajns.add(s[0]);
+                        jmljns.add(Integer.parseInt(s[1]));
+                    }else{
+                        jmljns.set(idx, jmljns.get(idx)+Integer.parseInt(s[1]));
+                    }
+                }
+                if(i != tb_Htrans.getRowCount()-1){
+                    cl = new PdfPCell(new Phrase(" "));
+                    cl.setBorder(Rectangle.OUT_TOP);
+                    cl.setColspan(2);
+                    table.addCell(cl);
+                }
+            }
+            
+            doc.add(table);
+            
+            for(int i = 0; i < jmljns.size(); i++){
+                for(int j = 0; j < jmljns.size()-1; j++){
+                    if(jmljns.get(i) > jmljns.get(j)){
+                        int temp = jmljns.get(i);
+                        jmljns.set(i, jmljns.get(j));
+                        jmljns.set(j, temp);
+                        
+                        String tempS = namajns.get(i);
+                        namajns.set(i, namajns.get(j));
+                        namajns.set(j, tempS);
+                    }
+                }
+            }
+            
+            doc.add(new Paragraph(" "));
+            table = new PdfPTable(2);
+            cl = new PdfPCell(new Phrase("Rekap Jumlah Penjualan Barang per Kategori", myFont(16, Font.BOLD)));
+            cl.setColspan(2);
+            cl.setBackgroundColor(BaseColor.YELLOW);
+            cl.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cl.setPaddingBottom(5);
+            table.addCell(cl);
+            table.addCell(new Phrase("Nama Jenis",myFont(12,Font.BOLD)));
+            table.addCell(new Phrase("Jumlah Barang",myFont(12,Font.BOLD)));
+            for(int i = 0; i < namajns.size(); i++){
+                table.addCell(namajns.get(i));
+                table.addCell(jmljns.get(i).toString());
+            }
+            table.addCell(new Phrase("Total Barang",myFont(12, Font.BOLD)));
+            table.addCell(new Phrase(String.valueOf(grandTotal),myFont(12,Font.BOLD)));
+            doc.add(table);
+            doc.close();
+            JOptionPane.showMessageDialog(null, "Sukses export laporan!");
         } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }//GEN-LAST:event_btn_export3ActionPerformed
     

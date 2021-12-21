@@ -5,11 +5,23 @@
 */
 package pbo_proyek;
 
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Font;
+import java.awt.Rectangle;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -280,13 +292,13 @@ public class DetailTransaction_Form extends javax.swing.JFrame {
         frm_menu.setEnabled(true);
         this.dispose();
     }//GEN-LAST:event_btn_cancelActionPerformed
-
+    
     private int potongan = 0;
-
+    
     public int getPotongan() {
         return potongan;
     }
-
+    
     public void setPotongan(int potongan) {
         this.potongan = potongan;
     }
@@ -312,154 +324,95 @@ public class DetailTransaction_Form extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_confirmActionPerformed
     
+    public com.itextpdf.text.Font myFont(float fontSize, int type){
+        com.itextpdf.text.Font df = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.HELVETICA, fontSize, type);
+        return df;
+    }
+    
     public void generateNota(String kode, int grand_total, String id_karyawan, ArrayList<String[]> listCart,int potongan,int bayar,int kembalian){
         //TODO : ALAN & ESTIFAN
         // CODE
         // kode, harga, qty, subtotal <-- STRUKTUR LISTCART
         //Variabel : potongan, bayar, kembalian
-        String simpan = "";
-        LocalDateTime mydate = LocalDateTime.now();
-        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy  (HH:mm:ss)");
-        String date = mydate.format(myFormatObj);
-        simpan += 
-        "╔════════════════════════════════════════════════════╗\n" +
-        "║                                                    ║\n" +
-        "║                   C O M P U F Y                    ║\n" +
-        "║                                                    ║\n" +
-        "╠════════════════════════════════════════════════════╣\n"
-        ;
-        String kodenota = kode.substring(0,4)+"********"+kode.substring(kode.length()-4,kode.length());
-        simpan += String.format("║%-52s║"," "+kodenota+"  "+date+"  "+id_karyawan)+"\n";;
-        simpan += "║————————————————————————————————————————————————————║\n";
-        simpan += "║                                                    ║\n";
-        
-        for(String[] a :frm_trans.listBarang){
-             for(String[] s: listCart){
-                 if(a[1].equals(s[0])){
-                     for(int l =0;l<Math.ceil(a[2].chars().count()/19)+1;l++){
-                         if(l != Math.ceil(a[2].chars().count()/19)){
-                             if(l==0){
-                                 simpan+=String.format("║%-52s║"," "+a[2].substring(0,19))+"\n";
-                             }
-                             else{
-                                 simpan+=String.format("║%-52s║"," "+a[2].substring(19*(l),(19*(l+1))))+"\n";
-                             }   
-                         }
-                         else{
-                             simpan+=String.format("║%-20s"," "+a[2].substring(17*(l)));
-                               
-                             
-                             simpan+=String.format("  %-3s",s[2]);
-                             
-                             if(s[1].length()>=7){
-                                 simpan+=String.format("  %,d",Integer.parseInt(s[1]));
-                                for (int j = 0;j< 11-s[1].chars().count();j++){
-                                simpan+= " ";
-                                }
-                             }
-                             else{
-                                 simpan+=String.format("  %,d",Integer.parseInt(s[1]));
-                                for (int j = 0;j< 12-s[1].chars().count();j++){
-                                simpan+= " ";
-                                }
-                             }
-                             
-                             if(s[3].length()>=7){
-                                simpan+=String.format("%,d",Integer.parseInt(s[3]));
-                                for (int j = 0;j< 10-s[3].chars().count();j++){
-                                simpan+= " ";
-                                }
-                             }
-                             else{
-                                simpan+=String.format("%,d",Integer.parseInt(s[3]));
-                                for (int j = 0;j< 11-s[3].chars().count();j++){
-                                simpan+= " ";
-                                }
-                             }
-                             
-                             simpan += "║\n";
-                             simpan+="║                                                    ║\n";
-                         }
-                     }               
-                 }                
-            }
-        }
-
-        simpan+="║                           ———————————————————————— ║\n";
-        simpan+=String.format("║                              Potongan  %,d",potongan);
-        if(String.valueOf(potongan).length()>=7){
-            for (int j = 0;j< 10-String.valueOf(potongan).length();j++){
-            simpan+= " ";
-            }
-        }
-        else if(String.valueOf(potongan).length()<=2){
-            for (int j = 0;j< 12-String.valueOf(potongan).length();j++){
-            simpan+= " ";
-            }
-        }
-        else{
-            for (int j = 0;j< 11-String.valueOf(potongan).length();j++){
-            simpan+= " ";
-            }
-        }
-        simpan += "║\n";
-        simpan+=String.format("║                           Grand Total  %,d",grand_total);   
-        if(String.valueOf(grand_total).length()>=7){
-            for (int j = 0;j< 10-String.valueOf(grand_total).length();j++){
-            simpan+= " ";
-            }
-        }
-        else{
-            for (int j = 0;j< 11-String.valueOf(grand_total).length();j++){
-            simpan+= " ";
-            }
-        }
-        simpan += "║\n";
-        simpan+="║                           ———————————————————————— ║\n";
-        simpan+=String.format("║                           Total Bayar  %,d",bayar);   
-        if(String.valueOf(bayar).length()>=7){
-            for (int j = 0;j< 10-String.valueOf(bayar).length();j++){
-            simpan+= " ";
-            }
-        }
-        else{
-            for (int j = 0;j< 11-String.valueOf(bayar).length();j++){
-            simpan+= " ";
-            }
-        }
-        simpan += "║\n";
-        simpan+=String.format("║                       Total Kembalian  %,d",kembalian); 
-        if(String.valueOf(kembalian).length()>=7){
-            for (int j = 0;j< 10-String.valueOf(kembalian).length();j++){
-            simpan+= " ";
-            }
-        }
-        else if(String.valueOf(kembalian).length()<=2){
-            for (int j = 0;j< 12-String.valueOf(potongan).length();j++){
-            simpan+= " ";
-            }
-        }
-        else{
-            for (int j = 0;j< 11-String.valueOf(kembalian).length();j++){
-            simpan+= " ";
-            }
-        }
-        
-        simpan += "║\n";
-        simpan+="║                                                    ║\n"+   
-                "║  =============== www.compufy.com ================  ║\n"+ 
-                "║                                                    ║\n"+   
-                "╚════════════════════════════════════════════════════╝";
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat sdf_time = new SimpleDateFormat("hh:mm:ss");
+        Date dtnow = new Date();
+        String d = sdf.format(dtnow);
+        String d_time = sdf_time.format(dtnow);
         try {
             File f = new File(System.getProperty("user.dir")+"/Nota/");
             f.mkdir();
-            FileWriter fout = new FileWriter(System.getProperty("user.dir")+"/Nota/"+kode+".txt");
-            BufferedWriter bw = new BufferedWriter(fout);
+            Document doc = new Document();
+            PdfWriter.getInstance(doc, new FileOutputStream(System.getProperty("user.dir")+"/Nota/"+kode+".pdf"));
+            doc.open();
             
-            bw.write(simpan);
-            bw.close();
-            fout.close();
+            PdfPTable table = new PdfPTable(4);
+            PdfPCell cl;
+            
+            cl = new PdfPCell(new Phrase("COMPUFY", myFont(18, Font.BOLD)));
+            cl.setPaddingTop(20);
+            cl.setPaddingBottom(20);
+            cl.setRowspan(3);
+            cl.setColspan(4);
+            cl.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cl.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            table.addCell(cl);
+            
+            cl = new PdfPCell(new Phrase(kode.substring(0,3)+"********"+kode.substring(12, 15)));
+            cl.setHorizontalAlignment(Element.ALIGN_CENTER);
+            table.addCell(cl);
+            
+            cl = new PdfPCell(new Phrase(d));
+            cl.setHorizontalAlignment(Element.ALIGN_CENTER);
+            table.addCell(cl);
+            
+            cl = new PdfPCell(new Phrase("("+d_time+")"));
+            cl.setHorizontalAlignment(Element.ALIGN_CENTER);
+            table.addCell(cl);
+            
+            cl = new PdfPCell(new Phrase(id_karyawan));
+            cl.setHorizontalAlignment(Element.ALIGN_CENTER);
+            table.addCell(cl);
+            
+            
+            for (String[] s : listCart) {
+                String namabarang = DB.query("select nama from barang where kode = '"+s[0]+"'").get(0)[0];
+                table.addCell(namabarang);
+                table.addCell(s[2]);
+                table.addCell("Rp"+String.format("%,d", Integer.parseInt(s[1])));
+                table.addCell("Rp"+String.format("%,d", Integer.parseInt(s[3])));
+            }
+            
+            cl = new PdfPCell(new Phrase(" "));
+            cl.setColspan(2);
+            table.addCell(cl);
+            table.addCell("Potongan");
+            table.addCell("Rp"+String.format("%,d", potongan));
+            
+            table.addCell(cl);
+            table.addCell(new Phrase("Grand Total",myFont(12, Font.BOLD)));
+            table.addCell(new Phrase("Rp"+String.format("%,d", grand_total),myFont(12, Font.BOLD)));
+            
+            table.addCell(cl);
+            table.addCell("Total Bayar");
+            table.addCell("Rp"+String.format("%,d", bayar));
+            
+            table.addCell(cl);
+            table.addCell("Kembalian");
+            table.addCell("Rp"+String.format("%,d", kembalian));
+            
+            cl = new PdfPCell(new Phrase("www.compufy.com"));
+            cl.setColspan(4);
+            cl.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cl.setPaddingBottom(5);
+            cl.setPaddingTop(5);
+            table.addCell(cl);
+            
+            doc.add(table);
+            
+            doc.close();
         } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
     
