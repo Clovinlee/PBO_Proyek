@@ -1,12 +1,14 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+* To change this license header, choose License Headers in Project Properties.
+* To change this template file, choose Tools | Templates
+* and open the template in the editor.
+*/
 package pbo_proyek;
 
+import java.awt.Image;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -14,7 +16,7 @@ import javax.swing.JOptionPane;
  * @author chris
  */
 public class DetailJenisBarang_Form extends javax.swing.JFrame {
-
+    
     /**
      * Creates new form DetailJenisBarang_Form
      */
@@ -26,7 +28,11 @@ public class DetailJenisBarang_Form extends javax.swing.JFrame {
     public DetailJenisBarang_Form() {
         initComponents();
         loadDt();
+        Image img = new ImageIcon(this.getClass().getResource("Images/logo_compufy.png")).getImage();
+        this.setIconImage(img);
+        this.setTitle("Detail Jenis Barang");
     }
+    
     private void loadDt(){
         DefaultListModel listModel = new DefaultListModel();
         listJenis = DB.query("SELECT * FROM JENIS_BARANG");
@@ -42,7 +48,7 @@ public class DetailJenisBarang_Form extends javax.swing.JFrame {
     public Form_Stock getFrm_stock() {
         return frm_stock;
     }
-
+    
     public void setFrm_stock(Form_Stock frm_stock) {
         this.frm_stock = frm_stock;
     }
@@ -246,7 +252,7 @@ public class DetailJenisBarang_Form extends javax.swing.JFrame {
         // TODO add your handling code here:
         setState(this.ICONIFIED);
     }//GEN-LAST:event_lbl_minimize3MouseClicked
-
+    
     int state_mode = -1; //-1 not full, 1 full screen
     private int x,y;
     
@@ -280,24 +286,24 @@ public class DetailJenisBarang_Form extends javax.swing.JFrame {
         String namajenis = tb_nama.getText();
         if(tb_nama.getText().isEmpty()){ JOptionPane.showMessageDialog(null, "Isi nama jenis!","Error",JOptionPane.INFORMATION_MESSAGE);}
         else{
-        if(modejenis.equals("update")){
+            if(modejenis.equals("update")){
                 int up = DB.update("Update jenis_barang SET nama_jenis = ? WHERE id = ?", new Object[] {namajenis,idx+1});
                 if(up != 0){
-                frm_stock.loadDgv();
-                frm_stock.search();
-                frm_stock.setIdx(-1);
-                loadDt();
-                JOptionPane.showMessageDialog(null, "Sukses ubah data","Sukses",JOptionPane.INFORMATION_MESSAGE);
-        }
-        }else if(modejenis.equals("insert")){
-             boolean valid = DB.insert("INSERT INTO jenis_barang(id,nama_jenis) VALUES(?, ?)", new Object[] {idakhir,namajenis});
+                    frm_stock.loadDgv();
+                    frm_stock.search();
+                    frm_stock.setIdx(-1);
+                    loadDt();
+                    JOptionPane.showMessageDialog(null, "Sukses ubah data","Sukses",JOptionPane.INFORMATION_MESSAGE);
+                }
+            }else if(modejenis.equals("insert")){
+                boolean valid = DB.insert("INSERT INTO jenis_barang(id,nama_jenis) VALUES(?, ?)", new Object[] {idakhir,namajenis});
                 if(valid){
-                JOptionPane.showMessageDialog(null, "Insert Sukses!","Sukses",JOptionPane.INFORMATION_MESSAGE);
-                frm_stock.loadDgv();
-                frm_stock.search();
-                frm_stock.setIdx(-1);
-                loadDt();
-                //this.dispose();
+                    JOptionPane.showMessageDialog(null, "Insert Sukses!","Sukses",JOptionPane.INFORMATION_MESSAGE);
+                    frm_stock.loadDgv();
+                    frm_stock.search();
+                    frm_stock.setIdx(-1);
+                    loadDt();
+                    //this.dispose();
                 }else{
                     JOptionPane.showMessageDialog(null, "Insert gagal!","Error",JOptionPane.ERROR_MESSAGE);
                 }
@@ -312,7 +318,7 @@ public class DetailJenisBarang_Form extends javax.swing.JFrame {
         tb_nama.setText("");
         btn_updatejns.setText("Insert");
     }//GEN-LAST:event_btn_clearActionPerformed
-
+    
     /**
      * @param args the command line arguments
      */
@@ -320,8 +326,8 @@ public class DetailJenisBarang_Form extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+        * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+        */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -339,7 +345,7 @@ public class DetailJenisBarang_Form extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(DetailJenisBarang_Form.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

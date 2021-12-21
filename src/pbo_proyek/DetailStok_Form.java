@@ -33,6 +33,9 @@ public class DetailStok_Form extends javax.swing.JFrame {
     public DetailStok_Form() {
         initComponents();
         loadcmb();
+        Image img = new ImageIcon(this.getClass().getResource("Images/logo_compufy.png")).getImage();
+        this.setIconImage(img);
+        this.setTitle("Detail Barang");
     }
     
     public DetailStok_Form(String[] data){
@@ -241,7 +244,7 @@ public class DetailStok_Form extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(222, 222, 222));
-        jLabel2.setText("DETAIL STOK");
+        jLabel2.setText("DETAIL BARANG");
 
         btn_changepicture.setBackground(new java.awt.Color(222, 222, 222));
         btn_changepicture.setFont(new java.awt.Font("Yu Gothic UI", 1, 14)); // NOI18N
@@ -293,7 +296,7 @@ public class DetailStok_Form extends javax.swing.JFrame {
                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(plLayout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 290, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 260, Short.MAX_VALUE)
                         .addComponent(jLabel2)
                         .addContainerGap())
                     .addGroup(plLayout.createSequentialGroup()

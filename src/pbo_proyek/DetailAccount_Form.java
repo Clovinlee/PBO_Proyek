@@ -45,6 +45,9 @@ public class DetailAccount_Form extends javax.swing.JFrame {
         btng1.add(rb_laki);
         btng1.add(rb_perempuan);
         f = null;
+        Image img = new ImageIcon(this.getClass().getResource("Images/logo_compufy.png")).getImage();
+        this.setIconImage(img);
+        this.setTitle("Detail Account");
     }
     
     public DetailAccount_Form(String[] data){

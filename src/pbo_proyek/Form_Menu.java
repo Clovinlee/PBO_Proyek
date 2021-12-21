@@ -62,6 +62,9 @@ public class Form_Menu extends javax.swing.JFrame {
         }
         interruptor_default = interruptor.getSize();
         this.setMinimumSize(new Dimension(1030,612));
+        Image img = new ImageIcon(this.getClass().getResource("Images/logo_compufy.png")).getImage();
+        this.setIconImage(img);
+        this.setTitle("Menu");
     }
     
     Dimension interruptor_default;
@@ -95,7 +98,7 @@ public class Form_Menu extends javax.swing.JFrame {
         loadImage(usr.getImages(), 1);
     }
     
-     // 0 --> File select,
+    // 0 --> File select,
     // 1 --> DB,
     // -1 --> angka random. supaya keluar image not found
     public void loadImage(String fileName, int mode){

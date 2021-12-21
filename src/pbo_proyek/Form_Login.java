@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import ExternalCode.ComponentResizer;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -39,6 +40,9 @@ public class Form_Login extends javax.swing.JFrame {
         try{
         }catch(Exception ex){
         }
+        Image img = new ImageIcon(this.getClass().getResource("Images/logo_compufy.png")).getImage();
+        this.setIconImage(img);
+        this.setTitle("Login");
     }
     
     Form_Menu frm_menu;

@@ -43,6 +43,9 @@ public class InsertAccount_Form extends javax.swing.JFrame {
         bi = null;
         f = null;
         loadImage("",-1);
+        Image img = new ImageIcon(this.getClass().getResource("Images/logo_compufy.png")).getImage();
+        this.setIconImage(img);
+        this.setTitle("Insert Account");
     }
     
     /**

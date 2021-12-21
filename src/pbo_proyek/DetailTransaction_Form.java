@@ -16,6 +16,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.Rectangle;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -26,6 +27,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -39,6 +41,9 @@ public class DetailTransaction_Form extends javax.swing.JFrame {
      */
     public DetailTransaction_Form() {
         initComponents();
+        Image img = new ImageIcon(this.getClass().getResource("Images/logo_compufy.png")).getImage();
+        this.setIconImage(img);
+        this.setTitle("Detail Pembayaran");
     }
     
     private Color grn = new Color(43,167,73);

@@ -44,6 +44,9 @@ public class InsertBarang_Form extends javax.swing.JFrame {
         for (String[] s :listJenis) {
             cb_jenis.addItem(s[1]);
         }
+        Image img = new ImageIcon(this.getClass().getResource("Images/logo_compufy.png")).getImage();
+        this.setIconImage(img);
+        this.setTitle("Insert Barang");
         
     }
     private Form_Stock frm_acc;
