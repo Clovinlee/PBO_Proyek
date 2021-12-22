@@ -29,6 +29,7 @@ import java.util.Date;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.border.Border;
 
 /**
  *
@@ -316,12 +317,16 @@ public class DetailTransaction_Form extends javax.swing.JFrame {
             if(promo > 0){
                 promo_q = String.valueOf(promo);
             }
-            boolean valid = DB.trans("INSERT INTO h_trans VALUES(?, ?, ?, ?, ?)", new Object[] {kode,new Date(),grand_total, promo_q, User.getUser_login().getId()},listCart,kode);
+             boolean valid = DB.trans("INSERT INTO h_trans VALUES(?, ?, ?, ?, ?)", new Object[] {kode,new Date(),grand_total, promo_q, User.getUser_login().getId()},listCart,kode);
             if(valid == false){
                 JOptionPane.showMessageDialog(null, "Transaksi Gagal!","Error",JOptionPane.ERROR_MESSAGE);
             }else{
-                generateNota(kode, grand_total, User.getUser_login().getKode(), listCart,frm_trans.getPotongan(),bayar,kembalian);
-                JOptionPane.showMessageDialog(null, "Transaksi Sukses!","Sukses",JOptionPane.INFORMATION_MESSAGE);
+                Boolean validnota = generateNota(kode, grand_total, User.getUser_login().getKode(), listCart,frm_trans.getPotongan(),bayar,kembalian);
+                if(validnota){
+                    JOptionPane.showMessageDialog(null, "Transaksi Sukses!","Sukses",JOptionPane.INFORMATION_MESSAGE);
+                }else{
+                    JOptionPane.showMessageDialog(null, "Transaksi Gagal!","Error",JOptionPane.ERROR_MESSAGE);
+                }
             }
             frm_menu.setEnabled(true);
             frm_trans.clearCart();
@@ -334,7 +339,7 @@ public class DetailTransaction_Form extends javax.swing.JFrame {
         return df;
     }
     
-    public void generateNota(String kode, int grand_total, String id_karyawan, ArrayList<String[]> listCart,int potongan,int bayar,int kembalian){
+    public boolean generateNota(String kode, int grand_total, String id_karyawan, ArrayList<String[]> listCart,int potongan,int bayar,int kembalian){
         //TODO : ALAN & ESTIFAN
         // CODE
         // kode, harga, qty, subtotal <-- STRUKTUR LISTCART
@@ -351,45 +356,35 @@ public class DetailTransaction_Form extends javax.swing.JFrame {
             PdfWriter.getInstance(doc, new FileOutputStream(System.getProperty("user.dir")+"/Nota/"+kode+".pdf"));
             doc.open();
             
-            PdfPTable table = new PdfPTable(4);
+            PdfPTable table = new PdfPTable(5);
             PdfPCell cl;
             
             cl = new PdfPCell(new Phrase("COMPUFY", myFont(18, Font.BOLD)));
             cl.setPaddingTop(20);
             cl.setPaddingBottom(20);
             cl.setRowspan(3);
-            cl.setColspan(4);
+            cl.setColspan(5);
             cl.setHorizontalAlignment(Element.ALIGN_CENTER);
             cl.setVerticalAlignment(Element.ALIGN_MIDDLE);
             table.addCell(cl);
             
-            cl = new PdfPCell(new Phrase(kode.substring(0,4)+"********"+kode.substring(12, 16)));
-            cl.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cl = new PdfPCell(new Phrase(kode.substring(0,4)+"********"+kode.substring(12, 16)+"             "+d+"          "+"("+d_time+")                   "+id_karyawan));
+            cl.setColspan(5);
             table.addCell(cl);
             
-            cl = new PdfPCell(new Phrase(d));
-            cl.setHorizontalAlignment(Element.ALIGN_CENTER);
-            table.addCell(cl);
             
-            cl = new PdfPCell(new Phrase("("+d_time+")"));
-            cl.setHorizontalAlignment(Element.ALIGN_CENTER);
-            table.addCell(cl);
-            
-            cl = new PdfPCell(new Phrase(id_karyawan));
-            cl.setHorizontalAlignment(Element.ALIGN_CENTER);
-            table.addCell(cl);
             
             
             for (String[] s : listCart) {
-                String namabarang = DB.query("select nama from barang where kode = '"+s[0]+"'").get(0)[0];
-                table.addCell(namabarang);
-                table.addCell(s[2]);
-                table.addCell("Rp"+String.format("%,d", Integer.parseInt(s[1])));
-                table.addCell("Rp"+String.format("%,d", Integer.parseInt(s[3])));
+                table.addCell(s[0]);
+                table.addCell(s[1]);
+                table.addCell(s[3]);
+                table.addCell("Rp"+String.format("%,d", Integer.parseInt(s[2])));
+                table.addCell("Rp"+String.format("%,d", Integer.parseInt(s[4])));
             }
             
             cl = new PdfPCell(new Phrase(" "));
-            cl.setColspan(2);
+            cl.setColspan(3);
             table.addCell(cl);
             table.addCell("Potongan");
             table.addCell("Rp"+String.format("%,d", potongan));
@@ -407,7 +402,7 @@ public class DetailTransaction_Form extends javax.swing.JFrame {
             table.addCell("Rp"+String.format("%,d", kembalian));
             
             cl = new PdfPCell(new Phrase("www.compufy.com"));
-            cl.setColspan(4);
+            cl.setColspan(5);
             cl.setHorizontalAlignment(Element.ALIGN_CENTER);
             cl.setPaddingBottom(5);
             cl.setPaddingTop(5);
@@ -416,8 +411,10 @@ public class DetailTransaction_Form extends javax.swing.JFrame {
             doc.add(table);
             
             doc.close();
+            return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            return false;
         }
     }
     

@@ -9,19 +9,14 @@ package pbo_proyek;
 import java.awt.Color;
 import java.awt.Font;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import javax.swing.table.TableModel;
 
 /**
  *
@@ -40,11 +35,11 @@ public class Form_Transaction extends javax.swing.JFrame {
     }
     
     private Form_Menu frm_menu;
-
+    
     public Form_Menu getFrm_menu() {
         return frm_menu;
     }
-
+    
     public void setFrm_menu(Form_Menu frm_menu) {
         this.frm_menu = frm_menu;
     }
@@ -54,20 +49,20 @@ public class Form_Transaction extends javax.swing.JFrame {
     }
     
     ArrayList<String[]> listPromo = new ArrayList<>();
-    public void loadPromo(){
+    private void loadPromo(){
         listPromo = DB.query("SELECT * FROM diskon");
         for (String[] s : listPromo) {
             cb_promo.addItem(s[1]);
         }
     }
     
-    public void loadCmb(){
+    private void loadCmb(){
         listJenis = DB.query("SELECT * FROM jenis_barang");
         for (String[] s : listJenis) {
             cb_jenisbarang.addItem(s[1]);
         }
     }
-   
+    
     
     private int grand_total = 0;
     private int potongan = 0;
@@ -75,11 +70,13 @@ public class Form_Transaction extends javax.swing.JFrame {
     public int getPotongan(){
         return potongan;
     }
-    public void loadDgv(){
+    DefaultTableModel tbl;
+    
+    private void loadDgv(){
         listBarang = DB.query("select b.id, b.kode, b.nama, b.harga, j.nama_jenis from barang b, jenis_barang j where b.status = 1 AND j.id = b.fk_jenis_barang;");
         tbl = new DefaultTableModel(new Object[] {"Kode","Nama","Harga","Jenis Barang"}, 0);
         for (String[] s : listBarang) {
-            tbl.addRow(new Object[]{s[1],s[2],s[3],s[4]});
+            tbl.addRow(new Object[]{s[1],s[2],"Rp"+String.format("%,d",Integer.parseInt(s[3])),s[4]});
         }
         dgv_barangtrans.setModel(tbl);
         dgv_barangtrans.setDefaultEditor(Object.class, null);
@@ -87,23 +84,19 @@ public class Form_Transaction extends javax.swing.JFrame {
     }
     
     public void clearCart(){
-        // tbl_cart = new DefaultTableModel(new Object[] {"Kode","Nama","Harga","Qty","Subtotal"},0);
-        // dgv_cart.setModel(tbl_cart);
-        while(tbl_cart.getRowCount() > 0){
-            tbl_cart.removeRow(0);
+        for(int i = tbl_cart.getRowCount()-1; i>=0; i--){
+            tbl_cart.removeRow(i);
         }
+        listCart.clear();
         grand_total = 0;
-        potongan = 0;
-        lbl_diskon.setText("Diskon : Rp"+String.format("%,d", potongan));
         cb_promo.setSelectedIndex(0);
-        countGrandtotal();
     }
     
     ArrayList<String[]> listBarang = new ArrayList<>();
     ArrayList<String[]> listJenis = new ArrayList<>();
     DefaultTableModel tbl_cart;
     
-    public void styleDgv(){
+    private void styleDgv(){
         JTableHeader header = dgv_barangtrans.getTableHeader();
         jScrollPane1.getViewport().setBackground(Palette.getDark4());
         
@@ -143,8 +136,6 @@ public class Form_Transaction extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         cb_jenisbarang = new javax.swing.JComboBox<>();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        dgv_cart = new javax.swing.JTable();
         lbl_grandtotal = new javax.swing.JLabel();
         lbl_diskon = new javax.swing.JLabel();
         btn_checkout = new javax.swing.JButton();
@@ -153,6 +144,8 @@ public class Form_Transaction extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         cb_promo = new javax.swing.JComboBox<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        dgv_cart = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -241,43 +234,6 @@ public class Form_Transaction extends javax.swing.JFrame {
                 cb_jenisbarangItemStateChanged(evt);
             }
         });
-
-        dgv_cart.setBackground(new java.awt.Color(58, 58, 58));
-        dgv_cart.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        dgv_cart.setForeground(new java.awt.Color(222, 222, 222));
-        dgv_cart.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {"CABE0001", "Cabel Belut", "120000", "2", "240000"},
-                {"KAKA0001", "Kacer Kacur", "50000", "4", "200000"},
-                {"MEBU0001", "Merdu Buang", "10000", "7", "70000"},
-                {"USAK0003", "Usia Aki", "35000", "2", "70000"}
-            },
-            new String [] {
-                "Kode", "Nama", "Harga", "Qty", "Subtotal"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, true, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        dgv_cart.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
-        dgv_cart.setGridColor(new java.awt.Color(255, 255, 255));
-        dgv_cart.setOpaque(false);
-        dgv_cart.setRowHeight(25);
-        dgv_cart.setSelectionBackground(new java.awt.Color(90, 90, 90));
-        dgv_cart.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        dgv_cart.setShowVerticalLines(false);
-        dgv_cart.getTableHeader().setReorderingAllowed(false);
-        dgv_cart.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                dgv_cartPropertyChange(evt);
-            }
-        });
-        jScrollPane2.setViewportView(dgv_cart);
 
         lbl_grandtotal.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         lbl_grandtotal.setForeground(new java.awt.Color(222, 222, 222));
@@ -380,6 +336,44 @@ public class Form_Transaction extends javax.swing.JFrame {
             }
         });
 
+        dgv_cart.setBackground(new java.awt.Color(58, 58, 58));
+        dgv_cart.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        dgv_cart.setForeground(new java.awt.Color(222, 222, 222));
+        dgv_cart.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {"CABE0001", "Cabel Belut", "120000", "2", "240000"},
+                {"KAKA0001", "Kacer Kacur", "50000", "4", "200000"},
+                {"MEBU0001", "Merdu Buang", "10000", "7", "70000"},
+                {"USAK0003", "Usia Aki", "35000", "2", "70000"}
+            },
+            new String [] {
+                "Kode", "Nama", "Harga", "Qty", "Subtotal"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, true, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        dgv_cart.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
+        dgv_cart.setGridColor(new java.awt.Color(255, 255, 255));
+        dgv_cart.setOpaque(false);
+        dgv_cart.setRowHeight(25);
+        dgv_cart.setSelectionBackground(new java.awt.Color(90, 90, 90));
+        dgv_cart.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        dgv_cart.setShowVerticalLines(false);
+        dgv_cart.getTableHeader().setReorderingAllowed(false);
+        dgv_cart.setUpdateSelectionOnSort(false);
+        dgv_cart.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                dgv_cartPropertyChange(evt);
+            }
+        });
+        jScrollPane2.setViewportView(dgv_cart);
+
         javax.swing.GroupLayout plLayout = new javax.swing.GroupLayout(pl);
         pl.setLayout(plLayout);
         plLayout.setHorizontalGroup(
@@ -405,8 +399,14 @@ public class Form_Transaction extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(plLayout.createSequentialGroup()
+                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(lbl_grandtotal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, plLayout.createSequentialGroup()
+                                .addGap(30, 30, 30)
+                                .addComponent(lbl_diskon, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(plLayout.createSequentialGroup()
                         .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addGroup(plLayout.createSequentialGroup()
                                 .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(plLayout.createSequentialGroup()
@@ -419,15 +419,9 @@ public class Form_Transaction extends javax.swing.JFrame {
                                         .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel4)
                                             .addComponent(cb_promo, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGap(0, 10, Short.MAX_VALUE)))
-                        .addGap(8, 8, 8))
-                    .addGroup(plLayout.createSequentialGroup()
-                        .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(lbl_grandtotal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, plLayout.createSequentialGroup()
-                                .addGap(30, 30, 30)
-                                .addComponent(lbl_diskon, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addGap(18, 18, 18))))
         );
         plLayout.setVerticalGroup(
             plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -467,7 +461,7 @@ public class Form_Transaction extends javax.swing.JFrame {
                         .addGroup(plLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btn_checkout, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btn_clear, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE))
                 .addGap(16, 16, 16))
         );
 
@@ -484,46 +478,102 @@ public class Form_Transaction extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    ArrayList<Object[]> listCart = new ArrayList<>();
     private void dgv_barangtransMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dgv_barangtransMousePressed
         // TODO add your handling code here:
+        // id, b.kode, b.nama, b.harga, j.nama_jenis
         if(evt.getClickCount() == 2){
-            idx = dgv_barangtrans.getSelectedRow();
+            String kode = dgv_barangtrans.getValueAt(dgv_barangtrans.getSelectedRow(), 0).toString();
+            int idx = getIdx(kode);
             if(idx != -1){
-                DefaultTableModel temp_tbl = (DefaultTableModel)dgv_barangtrans.getModel();
-                int exist = -1;
-                String kode1 = temp_tbl.getValueAt(idx, 0).toString();
-                for(int i = 0; i < tbl_cart.getRowCount(); i++){
-                    String kode2 = tbl_cart.getValueAt(i, 0).toString();
-                    if(kode1.equals(kode2)){
-                        exist = i;
-                    }
-                }
-                if(exist != -1){
-                    tbl_cart.setValueAt(Integer.parseInt(tbl_cart.getValueAt(exist, 3).toString())+1, exist, 3);
+                int exist = checkExist(kode);
+                if(exist == -1){
+                    int harga = Integer.valueOf(listBarang.get(idx)[3]);
+                    listCart.add(new Object[] {kode, listBarang.get(idx)[2],harga,1,harga});
                 }else{
-                    String nama = temp_tbl.getValueAt(idx, 1).toString();
-                    int harga = Integer.valueOf(temp_tbl.getValueAt(idx, 2).toString());
-                    tbl_cart.addRow(new Object[] {kode1,nama,harga,1,harga});
+                    // Add qty exist
+                    listCart.get(exist)[3] = Integer.parseInt(listCart.get(exist)[3].toString())+1;
+                    tbl_cart.setValueAt(listCart.get(exist)[3], exist, 3);
                 }
-                countSubtotal();
-                countGrandtotal();
+                updateCart();
             }
         }
     }//GEN-LAST:event_dgv_barangtransMousePressed
     
-    public void countGrandtotal(){
-        if(tbl_cart != null){
-            grand_total = 0;
-            for(int i = 0; i < tbl_cart.getRowCount(); i++){
-                grand_total += Integer.valueOf(tbl_cart.getValueAt(i, 4).toString());
+    public void updateCart(){
+        if(tbl_cart != null && listCart.size() > 0){
+            ArrayList<Integer> listDelete = new ArrayList<>();
+            
+            if(tbl_cart.getRowCount() == listCart.size()){
+                for(int i = 0; i < listCart.size(); i++){
+                    int harga = 0;
+                    harga = Integer.parseInt(listCart.get(i)[2].toString());
+                    int qty = Integer.parseInt(listCart.get(i)[3].toString());
+                    try {
+                        qty = Integer.parseInt(tbl_cart.getValueAt(i, 3).toString());
+                    } catch (Exception e) {
+                        qty = -1;
+                    }
+                    int subtotal = harga * qty;
+                    listCart.get(i)[4] = subtotal;
+                    if(qty <= 0){
+                        listDelete.add(i);
+                    }else{
+                        listCart.get(i)[3] = qty;
+                    }
+                }
             }
-            grand_total -= potongan;
-            if(grand_total < 0){
-                grand_total = 0;
+            
+            for(int i = tbl_cart.getRowCount()-1; i >= 0; i--){
+                tbl_cart.removeRow(i);
             }
-            lbl_grandtotal.setText("Grand Total : Rp"+String.format("%,d",grand_total));
+            
+            for(int i = listDelete.size()-1; i>= 0; i--){
+                int x = listDelete.get(i);
+                listCart.remove(x);
+            }
+            
+            for(int i = 0; i < listCart.size(); i++){
+                String kode = listCart.get(i)[0].toString();
+                String nama = listCart.get(i)[1].toString();
+                int harga = 0;
+                harga = Integer.parseInt(listCart.get(i)[2].toString());
+                int qty = Integer.parseInt(listCart.get(i)[3].toString());
+                int subtotal = harga * qty;
+                
+                tbl_cart.addRow(new Object[] {kode, nama, "Rp"+String.format("%,d",harga),qty,"Rp"+String.format("%,d",subtotal)});
+            }
+            
+            countGrandTotal();
         }
+    }
+    
+    private void countGrandTotal(){
+        grand_total = 0;
+        for (Object[] o : listCart) {
+            grand_total += Integer.parseInt(o[4].toString());
+        }
+        grand_total -= potongan;
+        lbl_grandtotal.setText("Grand Total : Rp"+String.format("%,d",grand_total));
+    }
+    
+    public int getIdx(String kode){
+        for(int i = 0; i < listBarang.size(); i++){
+            if(listBarang.get(i)[1].equalsIgnoreCase(kode)){
+                return i;
+            }
+        }
+        return -1;
+    }
+    
+    public int checkExist(String kode){
+        for(int i = 0; i < listCart.size(); i++){
+            if(listCart.get(i)[0].toString().equalsIgnoreCase(kode)){
+                return i;
+            }
+        }
+        return -1;
     }
     
     private void cb_jenisbarangItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_jenisbarangItemStateChanged
@@ -565,18 +615,11 @@ public class Form_Transaction extends javax.swing.JFrame {
     int idx = -1;
     private void btn_refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_refreshActionPerformed
         // TODO add your handling code here:
-        idx = -1;
         tb_kode.setText("");
         tb_nama.setText("");
         cb_jenisbarang.setSelectedIndex(0);
         search();
     }//GEN-LAST:event_btn_refreshActionPerformed
-
-    private void dgv_cartPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dgv_cartPropertyChange
-        // TODO add your handling code here:
-        countSubtotal();
-        countGrandtotal();
-    }//GEN-LAST:event_dgv_cartPropertyChange
 
     private void btn_clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_clearActionPerformed
         // TODO add your handling code here:
@@ -595,15 +638,16 @@ public class Form_Transaction extends javax.swing.JFrame {
 
     private void cb_promoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_promoItemStateChanged
         // TODO add your handling code here:
-        if(cb_promo.getSelectedItem().toString().equalsIgnoreCase("Tidak ada")){
-            potongan = 0;
-        }else{
-            potongan = Integer.parseInt(listPromo.get(cb_promo.getSelectedIndex()-1)[2]);
+        potongan = 0;
+        for(int i = 0; i < listPromo.size(); i++){
+            if(cb_promo.getSelectedItem().toString().equalsIgnoreCase(listPromo.get(i)[1])){
+                potongan = Integer.parseInt(listPromo.get(i)[2]);
+            }
         }
-        countGrandtotal();
-        lbl_diskon.setText("Diskon : Rp"+String.format("%,d", potongan));
+        lbl_diskon.setText("Diskon : Rp"+String.format("%,d",potongan));
+        countGrandTotal();
     }//GEN-LAST:event_cb_promoItemStateChanged
-
+    
     private void btn_checkoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_checkoutActionPerformed
         // TODO add your handling code here:
         if(tbl_cart.getRowCount() <= 0){
@@ -615,11 +659,13 @@ public class Form_Transaction extends javax.swing.JFrame {
             String ctr = DB.query("SELECT LPAD(COUNT(*)+1,4,'0') FROM h_trans WHERE nomor_nota LIKE '%"+nota+"%'").get(0)[0];
             nota += ctr;
             //TODO : INSERT QUERY
+            
             ArrayList<String[]> temp_listcart = new ArrayList<>();
-            for(int i = 0; i < tbl_cart.getRowCount(); i++){
-                String[] tmp = new String[] {tbl_cart.getValueAt(i, 0).toString(), tbl_cart.getValueAt(i, 2).toString(),tbl_cart.getValueAt(i, 3).toString(),tbl_cart.getValueAt(i, 4).toString()};
+            for(int i = 0; i < listCart.size(); i++){
+                String[] tmp = new String[] {listCart.get(i)[0].toString(), listCart.get(i)[1].toString(), listCart.get(i)[2].toString(), listCart.get(i)[3].toString(), listCart.get(i)[4].toString()};
                 temp_listcart.add(tmp);
             }
+
             DetailTransaction_Form frm_trans = new DetailTransaction_Form(grand_total, nota, cb_promo.getSelectedIndex(), temp_listcart,frm_menu);
             frm_trans.setPotongan(potongan);
             frm_trans.setVisible(true);
@@ -627,33 +673,11 @@ public class Form_Transaction extends javax.swing.JFrame {
             frm_menu.setEnabled(false);
         }
     }//GEN-LAST:event_btn_checkoutActionPerformed
-    
-    public void countSubtotal(){
-        TableModel temp;
-        temp = dgv_cart.getModel();
-        ArrayList<Integer> listDelete = new ArrayList<>();
-        for(int i = 0; i < temp.getRowCount(); i++){
-            int harga = Integer.parseInt(temp.getValueAt(i, 2).toString());
-            int qty = 0;
-            try {
-                qty = Integer.parseInt(temp.getValueAt(i, 3).toString());
-            } catch (Exception e) {
-            }
-            if(qty <= 0){
-                listDelete.add(i);
-            }
-            temp.setValueAt(harga*qty, i, 4);
-            temp.setValueAt(qty, i, 3);
-        }
-        for(int i = listDelete.size()-1; i>= 0; i--){
-            ((DefaultTableModel)temp).removeRow(listDelete.get(i));
-        }
-        if(dgv_cart.getRowCount() != 0){
-            dgv_cart.setRowSelectionInterval(0, 0);
-        }
-    }
-    
-    DefaultTableModel tbl;
+
+    private void dgv_cartPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dgv_cartPropertyChange
+        // TODO add your handling code here:
+        updateCart();
+    }//GEN-LAST:event_dgv_cartPropertyChange
     
     public void search(){
         // b.id, b.kode, b.nama, b.harga, j.nama_jenis

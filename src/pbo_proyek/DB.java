@@ -73,7 +73,7 @@ public class DB {
             for (String[] s : listDetail) {
                 //kode, harga, qty, subtotal
                 String id_barang = DB.query("SELECT id FROM barang WHERE kode = '"+s[0]+"'").get(0)[0];
-                valid = DB.insert("INSERT INTO d_trans VALUES(?, ?, ?, ?, ?)", new Object[] {kode, id_barang, s[2], s[1], s[3]});
+                valid = DB.insert("INSERT INTO d_trans VALUES(?, ?, ?, ?, ?)", new Object[] {kode, id_barang, s[3], s[2], s[4]});
                 if(valid == false){
                     int b = 5/0;
                 }
